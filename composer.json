@@ -1,0 +1,16 @@
+{
+  "name": "frankverhoeven/fv-code-highlighter",
+  "description": "FV Code Highlighter",
+  "type": "project",
+  "keywords": [
+    "frankverhoeven",
+    "code",
+    "highlighter"
+  ],
+  "homepage": "https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^5.6"
+  }
+}
