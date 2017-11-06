@@ -61,18 +61,15 @@ to the root of your current theme directory and start editing.
 
 == Frequently Asked Questions ==
 
-Q: Is there a live example around?
-A: My friend Stefan Vervoort over at http://www.divitodesign.com/ is using the plugin for some time now!
-
 Q: Can this plugin be used to highlight code in comments?
 A: Yes! Using the [code][/code] tags in comments will work. Even bbPress topics/replies are supported.
 
 Q: I have a great idea for this plugin, could I make a suggestion?
-A: Sure you can! Let me know about it at http://www.frank-verhoeven.com/forums/forum/fv-code-highlighter/feature-requests/.
+A: Sure you can! Let me know about it at https://frankverhoeven.me/forums/forum/fv-code-highlighter/feature-requests/.
 
 Q: What to do if I found a bug?
 A: Please report the bug to me as soon as possible. This way I can solve the problem and make the plugin better for everyone.
-Visit the forums at http://www.frank-verhoeven.com/forums/forum/fv-code-highlighter/bug-reports/.
+Visit the forums at https://frankverhoeven.me/forums/forum/fv-code-highlighter/bug-reports/.
 
 
 

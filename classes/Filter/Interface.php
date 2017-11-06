@@ -3,7 +3,7 @@
 /**
  * FvCodeHighlighter_Filter_Interface
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 interface FvCodeHighlighter_Filter_Interface
 {

@@ -3,9 +3,9 @@
 /**
  * Plugin Name: FV Code Highlighter
  * Description: Highlight your code, Dreamweaver style.
- * Plugin URI:  http://www.frank-verhoeven.com/wordpress-plugin-fv-code-highlighter/
+ * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
- * Author URI:  http://www.frank-verhoeven.com/
+ * Author URI:  https://frankverhoeven.me/
  * Version:     1.8
  */
 
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) exit;
 /**
  * FvCodeHighlighter
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 if (!class_exists('FvCodeHighlighter'))
 {

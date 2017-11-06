@@ -3,7 +3,7 @@
 /**
  * FvCodeHighlighter_Loader
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 class FvCodeHighlighter_Loader implements FvCodeHighlighter_Loader_Interface
 {

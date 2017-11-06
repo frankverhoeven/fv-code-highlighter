@@ -3,7 +3,7 @@
 /**
  * FvCodeHighlighter_Container_Abstract
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 abstract class FvCodeHighlighter_Container_Abstract
 {

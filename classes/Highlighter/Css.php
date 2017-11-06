@@ -3,7 +3,7 @@
 /**
  * FvCodeHighlighter_Highlighter_Css
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 class FvCodeHighlighter_Highlighter_Css extends FvCodeHighlighter_Highlighter
 {

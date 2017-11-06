@@ -2,7 +2,7 @@
  * Toolbox functions.
  *
  * @version 1.0
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 (function($) {
 

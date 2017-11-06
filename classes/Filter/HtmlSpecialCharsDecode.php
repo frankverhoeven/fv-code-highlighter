@@ -3,7 +3,7 @@
 /**
  * FvCodeHighlighter_Filter_HtmlSpecialCharsDecode
  *
- * @author Frank Verhoeven <info@frank-verhoeven.com>
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 class FvCodeHighlighter_Filter_HtmlSpecialCharsDecode implements FvCodeHighlighter_Filter_Interface
 {
