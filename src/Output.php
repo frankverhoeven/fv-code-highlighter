@@ -127,7 +127,7 @@ class Output
         wp_enqueue_style('fvch-styles');
 
         if ($this->options->getOption('fvch-toolbox')) {
-            wp_enqueue_script('fvch-toolbox', plugins_url('public/js/toolbox.js', dirname(__FILE__)), ['jquery'], '1.0', true);
+            wp_enqueue_script('fvch-toolbox', plugins_url('public/js/toolbox.min.js', dirname(__FILE__)), ['jquery'], '1.1', true);
         }
     }
 

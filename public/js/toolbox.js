@@ -1,7 +1,7 @@
 /**
  * Toolbox functions.
  *
- * @version 1.0
+ * @version 1.1
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 (function($) {
@@ -10,16 +10,17 @@
         $('.fvch-toolbox').removeClass('fvch-hide-if-no-js');
 
         $('.fvch-toolbox-icon-select').click(function() {
-            var element = document.getElementById( $(this).parents('.fvch-codeblock').attr('id').replace('codeblock', 'code') );
+            var range;
+            var $codeBlock = $(this).parents('.fvch-codeblock').find('.fvch-code pre');
 
             if (document.body.createTextRange) { // ms
-                var range = document.body.createTextRange();
-                range.moveToElementText(element);
+                range = document.body.createTextRange();
+                range.moveToElementText($codeBlock[0]);
                 range.select();
             } else if (window.getSelection) { // moz, opera, webkit
                 var selection = window.getSelection();
-                var range = document.createRange();
-                range.selectNodeContents(element);
+                range = document.createRange();
+                range.selectNodeContents($codeBlock[0]);
                 selection.removeAllRanges();
                 selection.addRange(range);
             }
@@ -27,6 +28,3 @@
     });
 
 })(jQuery);
-
-
-
