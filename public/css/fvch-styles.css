@@ -10,16 +10,15 @@
  * @author  Frank Verhoeven <hi@frankverhoeven.me>
  */
 
- .fvch-hide-if-no-js {
-     display: none !important;
- }
+.fvch-hide-if-no-js {
+	display: none !important;
+}
 
 .fvch-codeblock {
 	border:  1px solid #e2e2e2;
-	margin: 0;
-	padding: 0 !important;
-	margin-bottom: 1em;
-	border-radius: 4px;
+    padding: 0 !important;
+    margin: 0 0 1em;
+    border-radius: 4px;
 	overflow: auto;
     position: relative;
 }

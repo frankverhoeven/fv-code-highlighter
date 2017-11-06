@@ -118,12 +118,12 @@ class Output
      */
     public function enqueueScripts()
     {
-        $stylesheet = plugins_url('public/css/fvch-styles.css', dirname(__FILE__));
+        $stylesheet = plugins_url('public/css/fvch-styles.min.css', dirname(__FILE__));
         if (file_exists(get_stylesheet_directory() . '/fvch-styles.css')) {
             $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.css';
         }
 
-        wp_register_style('fvch-styles', $stylesheet, false, '1.1');
+        wp_register_style('fvch-styles', $stylesheet, false, '1.2');
         wp_enqueue_style('fvch-styles');
 
         if ($this->options->getOption('fvch-toolbox')) {
@@ -146,7 +146,7 @@ class Output
         $background = $background[ $this->options->getOption('fvch-background') ];
 
         $font = [
-            'Andale Mono'	=> "'Andale Mono', Courier New', Courier, monospace",
+            'Andale Mono'	=> "'Andale Mono', 'Courier New', Courier, monospace",
             'Courier'		=> "Courier, 'Courier New', Courier, monospace",
             'Courier New'	=> "'Courier New', Courier, monospace",
             'Menlo'			=> "'Menlo', 'Courier New', Courier, monospace",

@@ -33,7 +33,7 @@ class Admin
 	{
         if ($this->optionsPageHook != $hook) return;
 
-        wp_register_style('fvch-admin-css', plugins_url('public/css/admin.css', dirname(__FILE__)), false, '1.0');
+        wp_register_style('fvch-admin-css', plugins_url('public/css/admin.min.css', dirname(__FILE__)), false, '1.0');
         wp_enqueue_style('fvch-admin-css');
         wp_enqueue_style('farbtastic');
 
