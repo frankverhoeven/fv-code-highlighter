@@ -1,10 +1,9 @@
 === FV Code Highlighter ===
 
 Contributors:       Frank Verhoeven
-Donate link:        https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=SB62B7H867Y4C&lc=US&item_name=Frank%20Verhoeven&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted
 Tags:               Formatting, Code, Highlight, Code Highlighting
 Requires at least:  3.2
-Tested up to:       3.4
+Tested up to:       4.3
 Stable tag:         1.8
 
 Highlight your code, Dreamweaver style.
