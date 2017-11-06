@@ -12,10 +12,14 @@ use Exception;
 class Cache
 {
 	/**
-	 * Cache dir
 	 * @var string
 	 */
 	protected $cacheDir;
+
+    /**
+     * @var bool
+     */
+	protected $enabled = true;
 
     /**
      * __construct()
@@ -25,7 +29,12 @@ class Cache
      */
 	public function __construct($cacheDir)
     {
-		$this->setCacheDir(realpath($cacheDir) . '/');
+		$this->cacheDir = realpath($cacheDir) . '/';
+
+		// Disable cache if dir is not writable
+		if (!wp_is_writable($cacheDir)) {
+		    $this->enabled = false;
+        }
 	}
 
 	/**
@@ -61,6 +70,9 @@ class Cache
 	 */
 	public function cacheFileExists($name)
     {
+        if (!$this->enabled)
+            return false;
+
 		return file_exists($this->getCacheDir() . $name);
 	}
 
@@ -74,11 +86,10 @@ class Cache
 	 */
 	public function createCacheFile($name, $content)
     {
-		if ($handle = fopen($this->getCacheDir() . $name, 'w+')) {
-			fwrite($handle, $content);
-			fclose($handle);
-		}
+        if (!$this->enabled)
+            return $this;
 
+        file_put_contents($this->getCacheDir() . $name, $content);
 		return $this;
 	}
 
@@ -92,7 +103,10 @@ class Cache
      */
 	public function getCacheFile($name)
     {
-		if (!$this->cacheFileExists($name)) {
+        if (!$this->enabled)
+            return $this;
+
+        if (!$this->cacheFileExists($name)) {
 			throw new Exception('The requested cache file does not exist');
 		}
 
@@ -107,7 +121,10 @@ class Cache
 	 */
 	public function clear()
     {
-		if ($dr = opendir($this->getCacheDir())) {
+        if (!$this->enabled)
+            return $this;
+
+        if ($dr = opendir($this->getCacheDir())) {
 			while (false !== ($file = readdir($dr))) {
 				if ('.' != $file && '..' != $file) {
 					unlink($this->getCacheDir() . $file);

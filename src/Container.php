@@ -91,8 +91,11 @@ class Container
 			return $this->objects['cache'];
 		}
 
-		return $this->objects['cache'] = new Cache(
-			$this->getOptions()->getOption('fvch-cache-dir')
-		);
+		$cacheDir = $this->getOptions()->getOption('fvch-cache-dir');
+		if ('' == $cacheDir || !is_dir($cacheDir)) {
+		    $cacheDir = $this->getOptions()->getDefaultOption('fvch-cache-dir');
+        }
+
+		return $this->objects['cache'] = new Cache($cacheDir);
 	}
 }

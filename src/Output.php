@@ -6,7 +6,7 @@ use FvCodeHighlighter\Filter\HtmlSpecialCharsDecode;
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 
 /**
- * FvCodeHighlighter_Output
+ * Output
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
