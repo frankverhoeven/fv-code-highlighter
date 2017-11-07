@@ -18,13 +18,21 @@ class Output
     protected $options;
 
     /**
+     * @var Cache
+     */
+    private $cache;
+
+    /**
      * __construct()
      *
      * @param Options $options
+     * @param Cache $cache
+     * @version 20171107
      */
-    public function __construct(Options $options)
+    public function __construct(Options $options, Cache $cache)
     {
         $this->options = $options;
+        $this->cache = $cache;
     }
 
     /**
@@ -58,10 +66,8 @@ class Output
                 $code = $filter->filter(trim($codes['code'][ $i ]));
 
                 $cacheFile = sha1($code);
-                $cache = Container::getInstance()->getCache();
-
-                if ($cache->cacheFileExists($cacheFile)) {
-                    $code = $cache->getCacheFile($cacheFile);
+                if ($this->cache->cacheFileExists($cacheFile)) {
+                    $code = $this->cache->getCacheFile($cacheFile);
                 } else {
                     if (class_exists($class)) {
                         /* @var $highlighter AbstractHighlighter */
@@ -70,7 +76,7 @@ class Output
                                             ->getCode();
 
                         unset($highlighter);
-                        $cache->createCacheFile($cacheFile, $code);
+                        $this->cache->createCacheFile($cacheFile, $code);
                     } else {
                         $code = esc_html($code);
                     }
@@ -139,20 +145,20 @@ class Output
     public function displayHead()
     {
         $background = [
-            'notepaper'	=> 'url(' . plugins_url('public/images/notepaper.png', dirname(__FILE__)) . ') top left repeat',
-            'white'		=> '#fff',
-            'custom'    => esc_attr($this->options->getOption('fvch-background-custom'))
+            'notepaper' => 'url(' . plugins_url('public/images/notepaper.png', dirname(__FILE__)) . ') top left repeat',
+            'white' => '#fff',
+            'custom' => esc_attr($this->options->getOption('fvch-background-custom'))
         ];
-        $background = $background[ $this->options->getOption('fvch-background') ];
+        $background = $background[$this->options->getOption('fvch-background')];
 
         $font = [
-            'Andale Mono'	=> "'Andale Mono', 'Courier New', Courier, monospace",
-            'Courier'		=> "Courier, 'Courier New', Courier, monospace",
-            'Courier New'	=> "'Courier New', Courier, monospace",
-            'Menlo'			=> "'Menlo', 'Courier New', Courier, monospace",
-            'Monaco'		=> "'Monaco', 'Courier New', Courier, monospace"
+            'Andale Mono' => "'Andale Mono', 'Courier New', Courier, monospace",
+            'Courier' => "Courier, 'Courier New', Courier, monospace",
+            'Courier New' => "'Courier New', Courier, monospace",
+            'Menlo' => "'Menlo', 'Courier New', Courier, monospace",
+            'Monaco' => "'Monaco', 'Courier New', Courier, monospace"
         ];
-        $font = $font[ $this->options->getOption('fvch-font-family') ];
+        $font = $font[$this->options->getOption('fvch-font-family')];
 
         $fontSize = esc_attr($this->options->getOption('fvch-font-size')) . 'px';
         ?>
@@ -160,12 +166,14 @@ class Output
             .fvch-codeblock {
                 background: <?php echo $background; ?>;
             }
+
             .fvch-codeblock pre, .fvch-line-numbers pre {
                 background: <?php echo $background; ?>;
                 line-height: <?php echo 'notepaper' == $this->options->getOption('fvch-background') ? '18px' : '1.3em'; ?>;
                 font-family: <?php echo $font; ?>;
                 font-size: <?php echo $fontSize; ?>;
             }
+
             .fvch-line-numbers pre {
                 background: #e2e2e2;
             }

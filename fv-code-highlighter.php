@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: FV Code AbstractHighlighter
+ * Plugin Name: FV Code Highlighter
  * Description: Highlight your code, Dreamweaver style.
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
@@ -16,7 +16,7 @@
     $autoloader->register();
 
     try {
-        $app = new \FvCodeHighlighter\Application\Application([]);
+        $app = new \FvCodeHighlighter\Application\Application();
         $app->run();
     } catch (Exception $e) {
         if (defined('WP_DEBUG') && true === WP_DEBUG) {
