@@ -8,7 +8,7 @@
             $('.fvch-background-example.fvch-custom').css('background-color', color);
         }).setColor( $('#fvch-background-custom').val() );
 
-        $('.fvch-background-option.custom').click(function(e)
+        $('.fvch-background-option.custom').click(function()
         {
             $('#fvch-colorpicker').show();
         });

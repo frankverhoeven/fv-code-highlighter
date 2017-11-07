@@ -66,19 +66,13 @@ class Options
     {
 ?>
 <div class="wrap fvch-options-page">
-	<h2><?php _e('FV Code AbstractHighlighter Options'); ?></h2>
+	<h2><?php _e('FV Code Highlighter Options'); ?></h2>
 	<?php settings_errors(); ?>
 
     <div class="fvch-support">
-        <!--
-        <form class="donate-form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input name="cmd" type="hidden" value="_s-xclick" /> <input name="encrypted" type="hidden" value="-----BEGIN PKCS7-----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-----END PKCS7-----" />
-            <p>
-                <?php _e('Please consider supporting this plugin', 'fvch'); ?><br />
-                <input name="submit" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" type="image" />
-            </p>
-        </form>
-        -->
+        <a href="https://www.paypal.me/FrankVerhoeven" class="button button-primary">
+            <?php _e('Donate me a beer :)', 'fvch'); ?>
+        </a>
     </div>
 
 	<form method="post" action="themes.php?page=fvch-options">

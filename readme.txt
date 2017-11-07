@@ -1,10 +1,11 @@
 === FV Code Highlighter ===
 
-Contributors:       Frank Verhoeven
+Contributors:       frankverhoeven
 Tags:               Formatting, Code, Highlight, Code Highlighting
+Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
-Tested up to:       4.3
-Stable tag:         1.8
+Tested up to:       4.8.3
+Stable tag:         1.9
 
 Highlight your code, Dreamweaver style.
 
@@ -76,6 +77,15 @@ Visit the forums at https://frankverhoeven.me/forums/forum/fv-code-highlighter/b
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+
+= 1.9 =
+
+* Improvement: Code cleanup
+* Fix: Switch to new author domain
+* Fix: Cacher tried to delete the entire hdd in certain circumstances
+* Fix: Updater check
+* Fix: Code toolbox selection
 
 
 = 1.8 =

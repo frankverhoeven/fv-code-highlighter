@@ -38,7 +38,7 @@ class Options
 	protected function setDefaultOptions()
 	{
 		$this->defaultOptions = [
-			'fvch_version'          => Version::getVersion(),
+			'fvch_version'          => Version::getCurrentVersion(),
 			'fvch-cache-dir'        => __DIR__ . '/../cache',
 			'fvch-font-family'      => 'Monaco',
 			'fvch-font-size'        => '11',

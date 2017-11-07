@@ -2,7 +2,7 @@
 
 namespace FvCodeHighlighter\Admin;
 
-use FvCodeHighlighter\Container;
+use FvCodeHighlighter\Options as PluginOptions;
 
 /**
  * FvCodeHighlighter_Admin
@@ -15,13 +15,21 @@ class Admin
      * @var string
      */
     protected $optionsPageHook;
+    /**
+     * @var PluginOptions
+     */
+    private $options;
 
     /**
      * __construct()
      *
+     * @param PluginOptions $options
+     * @version 20171107
      */
-	public function __construct()
-	{}
+	public function __construct(PluginOptions $options)
+	{
+        $this->options = $options;
+    }
 
     /**
      * Enqueue scripts/styles.
@@ -33,11 +41,11 @@ class Admin
 	{
         if ($this->optionsPageHook != $hook) return;
 
-        wp_register_style('fvch-admin-css', plugins_url('public/css/admin.min.css', dirname(__FILE__)), false, '1.0');
+        wp_register_style('fvch-admin-css', plugins_url('public/css/admin.min.css', dirname(__FILE__, 2)), false, '1.1');
         wp_enqueue_style('fvch-admin-css');
         wp_enqueue_style('farbtastic');
 
-        wp_enqueue_script('fvch-admin-js', plugins_url('public/js/admin.js', dirname(__FILE__)), ['jquery', 'farbtastic'], '1.0');
+        wp_enqueue_script('fvch-admin-js', plugins_url('public/js/admin.min.js', dirname(__FILE__, 2)), ['jquery', 'farbtastic'], '1.0');
 	}
 
     /**
@@ -47,8 +55,8 @@ class Admin
 	public function adminMenu()
 	{
 		$this->optionsPageHook = add_theme_page(
-			__('FV Code AbstractHighlighter Options', 'fvch'),
-			__('Code AbstractHighlighter', 'fvch'),
+			__('FV Code Highlighter Options', 'fvch'),
+			__('Code Highlighter', 'fvch'),
 			'edit_themes',
 			'fvch-options',
 			[$this, 'optionsPage']
@@ -58,10 +66,11 @@ class Admin
     /**
      * Display the admin page.
      *
+     * @version 20171107
      */
     public function optionsPage()
     {
-        $optionsPage = new Options(Container::getInstance()->getOptions());
+        $optionsPage = new Options($this->options);
 
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
             $optionsPage->updateOptions();

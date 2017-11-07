@@ -3,32 +3,56 @@
 namespace FvCodeHighlighter\Application;
 
 use FvCodeHighlighter\Admin\Admin;
-use FvCodeHighlighter\Container;
+use FvCodeHighlighter\Cache;
 use FvCodeHighlighter\Installer;
+use FvCodeHighlighter\Options;
 use FvCodeHighlighter\Output;
 
 /**
  * Bootstrap
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
- * @version 20171106
  */
 class Bootstrap
 {
     /**
+     * @var Options
+     */
+    private $options;
+
+    /**
+     * @var Cache
+     */
+    private $cache;
+
+    /**
+     * __construct()
+     *
+     * @param Options $options
+     * @param Cache $cache
+     * @version 20171107
+     */
+    public function __construct(Options $options, Cache $cache)
+    {
+        $this->options = $options;
+        $this->cache = $cache;
+    }
+
+    /**
      * Run the installer if necessary.
      *
-     * @version 20171103
+     * @version 20171107
      */
     public function initInstaller()
     {
-        $installer = new Installer();
+        $installer = new Installer($this->options, $this->cache);
+
+        $installer->hasUpdate();
 
         if ($installer->isInstall()) {
-            $installer->doInstall();
+            $installer->install();
         } elseif ($installer->isUpdate()) {
-            $installer->doUpdate();
-            Container::getInstance()->getCache()->clear();
+            $installer->update();
         }
     }
 
@@ -39,7 +63,7 @@ class Bootstrap
      */
     public function initOutput()
     {
-        $output = new Output(Container::getInstance()->getOptions());
+        $output = new Output($this->options, $this->cache);
 
         // WordPress
         add_filter('the_content',           [$output, 'highlightCode'], 3);
@@ -58,11 +82,11 @@ class Bootstrap
      *
      * @version 20171103
      */
-    protected function initAdmin()
+    public function initAdmin()
     {
         if (!is_admin()) return;
 
-        $admin = new Admin();
+        $admin = new Admin($this->options);
 
         add_action('admin_enqueue_scripts',	 [$admin, 'enqueueScripts']);
         add_action('admin_menu',            [$admin, 'adminMenu']);
