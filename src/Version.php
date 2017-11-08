@@ -9,31 +9,31 @@ namespace FvCodeHighlighter;
  */
 final class Version
 {
-	/**
-	 * @var string
-	 */
-	CONST CURRENT_VERSION = '1.9';
+    /**
+     * @var string
+     */
+    const CURRENT_VERSION = '1.9';
 
     /**
      * @var string
      */
-	const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/current';
+    const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/current';
 
     /**
      * @var string
      */
-	private static $latestVersion = null;
+    private static $latestVersion = null;
 
-	/**
-	 * Get the current plugin version.
-	 *
-	 * @return string
+    /**
+     * Get the current plugin version.
+     *
+     * @return string
      * @version 20171103
-	 */
-	public static function getCurrentVersion()
-	{
-		return self::CURRENT_VERSION;
-	}
+     */
+    public static function getCurrentVersion()
+    {
+        return self::CURRENT_VERSION;
+    }
 
     /**
      * Fetch the latest version from the api
@@ -64,5 +64,5 @@ final class Version
         }
 
         return self::$latestVersion;
-	}
+    }
 }
