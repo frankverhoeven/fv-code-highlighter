@@ -7,201 +7,345 @@ namespace FvCodeHighlighter\Parser;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Key {
-	
-	protected $_start;
-	protected $_includeStart;
-	protected $_end;
-	protected $_includeEnd;
-	protected $_startPre;
-	protected $_startSuf;
-	protected $_endPre;
-	protected $_endSuf;
-	protected $_css;
-	protected $_sub;
-	protected $_callback;
-	
-	public function __construct(array $options= []) {
+class Key
+{
+    /**
+     * @var string|array
+     */
+    protected $start;
+    /**
+     * @var bool
+     */
+    protected $includeStart;
+    /**
+     * @var string|array
+     */
+    protected $end;
+    /**
+     * @var bool
+     */
+    protected $includeEnd;
+    /**
+     * @var string
+     */
+    protected $startPre;
+    /**
+     * @var string
+     */
+    protected $startSuf;
+    /**
+     * @var string
+     */
+    protected $endPre;
+    /**
+     * @var string
+     */
+    protected $endSuf;
+    /**
+     * @var string
+     */
+    protected $css;
+    /**
+     * @var array
+     */
+    protected $sub;
+    /**
+     * @var callable
+     */
+    protected $callback;
+
+    /**
+     * @param array $options
+     */
+    public function __construct(array $options = null)
+    {
 		$this->setIncludeStart(true);
 		$this->setIncludeEnd(true);
 		
-		if (!empty($options)) {
+		if (null !== $options) {
 			$this->setOptions($options);
 		}
 	}
-	
-	public function setOptions(array $options) {
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
 		$methods = get_class_methods($this);
+		$keys = array_keys($options);
 		
-		foreach ($options as $name=>$value) {
+		foreach ($keys as $name) {
 			$method = 'set' . ucfirst($name);
 			
 			if (in_array($method, $methods)) {
-				$this->$method($value);
+				$this->$method($options[$name]);
 			}
 		}
 	}
-	
-	
-	public function setStart($start) {
-		$this->_start = $start;
-		return $this;
+
+    /**
+     * @param $start
+     */
+    public function setStart($start)
+    {
+		$this->start = $start;
 	}
-	public function getStart() {
-		return $this->_start;
+
+    /**
+     * @return array|string
+     */
+    public function getStart()
+    {
+		return $this->start;
 	}
-	
-	public function setIncludeStart($includeStart) {
-		$this->_includeStart = $includeStart;
-		return $this;
+
+    /**
+     * @param $includeStart
+     */
+    public function setIncludeStart($includeStart)
+    {
+		$this->includeStart = $includeStart;
 	}
-	public function getIncludeStart() {
-		return $this->_includeStart;
+
+    /**
+     * @return bool
+     */
+    public function getIncludeStart()
+    {
+		return $this->includeStart;
 	}
-	
-	public function setEnd($end) {
-		$this->_end = $end;
-		return $this;
+
+    /**
+     * @param $end
+     */
+    public function setEnd($end)
+    {
+		$this->end = $end;
 	}
-	public function getEnd() {
-		return $this->_end;
+
+    /**
+     * @return array|string
+     */
+    public function getEnd()
+    {
+		return $this->end;
 	}
-	
-	public function setIncludeEnd($includeEnd) {
-		$this->_includeEnd = $includeEnd;
-		return $this;
+
+    /**
+     * @param $includeEnd
+     */
+    public function setIncludeEnd($includeEnd)
+    {
+		$this->includeEnd = $includeEnd;
 	}
-	public function getIncludeEnd() {
-		return $this->_includeEnd;
+
+    /**
+     * @return bool
+     */
+    public function getIncludeEnd()
+    {
+		return $this->includeEnd;
 	}
-	
-	public function setStartPre($startPre) {
-		$this->_startPre = $startPre;
-		return $this;
+
+    /**
+     * @param $startPre
+     */
+    public function setStartPre($startPre)
+    {
+		$this->startPre = $startPre;
 	}
-	public function getStartPre() {
-		return $this->_startPre;
+
+    /**
+     * @return string
+     */
+    public function getStartPre()
+    {
+		return $this->startPre;
 	}
-	
-	public function setStartSuf($startStartSuf) {
-		$this->_startSuf = $startStartSuf;
-		return $this;
+
+    /**
+     * @param $startStartSuf
+     */
+    public function setStartSuf($startStartSuf)
+    {
+		$this->startSuf = $startStartSuf;
 	}
-	public function getStartSuf() {
-		return $this->_startSuf;
+
+    /**
+     * @return string
+     */
+    public function getStartSuf()
+    {
+		return $this->startSuf;
 	}
-	
-	public function setEndPre($endPre) {
-		$this->_endPre = $endPre;
-		return $this;
+
+    /**
+     * @param $endPre
+     */
+    public function setEndPre($endPre)
+    {
+		$this->endPre = $endPre;
 	}
-	public function getEndPre() {
-		return $this->_endPre;
+
+    /**
+     * @return string
+     */
+    public function getEndPre()
+    {
+		return $this->endPre;
 	}
-	
-	public function setEndSuf($endEndSuf) {
-		$this->_endSuf = $endEndSuf;
-		return $this;
+
+    /**
+     * @param $endEndSuf
+     */
+    public function setEndSuf($endEndSuf)
+    {
+		$this->endSuf = $endEndSuf;
 	}
-	public function getEndSuf() {
-		return $this->_endSuf;
+
+    /**
+     * @return string
+     */
+    public function getEndSuf()
+    {
+		return $this->endSuf;
 	}
-	
-	public function setCss($css) {
-		$this->_css = $css;
-		return $this;
+
+    /**
+     * @param $css
+     */
+    public function setCss($css)
+    {
+		$this->css = $css;
 	}
-	public function getCss() {
-		return $this->_css;
+
+    /**
+     * @return string
+     */
+    public function getCss()
+    {
+		return $this->css;
 	}
-	
-	public function setSub($sub) {
-		$this->_sub = $sub;
-		return $this;
+
+    /**
+     * @param $sub
+     */
+    public function setSub($sub)
+    {
+		$this->sub = $sub;
 	}
-	public function getSub() {
-		return $this->_sub;
+
+    /**
+     * @return array
+     */
+    public function getSub()
+    {
+		return $this->sub;
 	}
-	
-	public function setCallback($callback) {
-		$this->_callback = $callback;
-		return $this;
+
+    /**
+     * @param $callback
+     */
+    public function setCallback($callback)
+    {
+		$this->callback = $callback;
 	}
-	public function getCallback() {
-		return $this->_callback;
+
+    /**
+     * @return callable
+     */
+    public function getCallback()
+    {
+		return $this->callback;
 	}
-	
-	
-	public function hasMultipleStarts() {
+
+
+    /**
+     * @return bool
+     */
+    public function hasMultipleStarts()
+    {
 		return is_array($this->getStart());
 	}
-	
-	public function hasEnd() {
-		if (null == $this->getEnd() || !$this->getEnd()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasEnd()
+    {
+		return (bool) $this->getEnd();
 	}
-	
-	public function hasMultipleEnds() {
+
+    /**
+     * @return bool
+     */
+    public function hasMultipleEnds()
+    {
 		return is_array($this->getEnd());
 	}
-	
-	public function includeEnd() {
+
+    /**
+     * @return bool
+     */
+    public function includeEnd()
+    {
 		return $this->getIncludeEnd();
 	}
-	
-	public function includeStart() {
+
+    /**
+     * @return bool
+     */
+    public function includeStart()
+    {
 		return $this->getIncludeStart();
 	}
-	
-	public function hasSub() {
-		if (null == $this->getSub() || !$this->getSub()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasSub()
+    {
+		return (bool) $this->getSub();
 	}
-	
-	public function hasCallback() {
-		if (null == $this->getCallback() || !$this->getCallback()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasCallback()
+    {
+		return (bool) $this->getCallback();
 	}
-	
-	public function hasStartPre() {
-		if (null == $this->getStartPre() || !$this->getStartPre()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasStartPre()
+    {
+		return (bool) $this->getStartPre();
 	}
-	
-	public function hasStartSuf() {
-		if (null == $this->getStartSuf() || !$this->getStartSuf()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasStartSuf()
+    {
+		return (bool) $this->getStartSuf();
 	}
-	
-	public function hasEndPre() {
-		if (null == $this->getEndPre() || !$this->getEndPre()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasEndPre()
+    {
+		return (bool) $this->getEndPre();
 	}
-	
-	public function hasEndSuf() {
-		if (null == $this->getEndSuf() || !$this->getEndSuf()) {
-			return false;
-		}
-		
-		return true;
+
+    /**
+     * @return bool
+     */
+    public function hasEndSuf()
+    {
+		return (bool) $this->getEndSuf();
 	}
-	
 }

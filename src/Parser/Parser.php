@@ -151,7 +151,7 @@ class Parser
 	 * @param int $increment (optional)
 	 * @return $this
 	 */
-	public function increasePointer($increment=1)
+	public function increasePointer($increment = 1)
     {
         $this->pointer += (int) $increment;
 		return $this;

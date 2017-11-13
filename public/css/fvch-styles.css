@@ -11,23 +11,35 @@
  */
 
 .fvch-hide-if-no-js {
-	display: none !important;
+    display: none !important;
 }
 
 .fvch-codeblock {
-	border:  1px solid #e2e2e2;
+    background:  url(../images/notepaper.png) top left repeat;
+    border:  1px solid #d2d2d2;
     padding: 0 !important;
     margin: 0 0 1em;
-    border-radius: 4px;
-	overflow: auto;
+    border-radius: 3px;
+    overflow-x: auto;
     position: relative;
+    font-size:  10px;
 }
 
 .fvch-codeblock table,
-.fvch-codeblock table tr,
-.fvch-codeblock table tr td {
+.fvch-codeblock tr,
+.fvch-codeblock td,
+.fvch-codeblock pre {
     padding: 0;
     margin: 0;
+}
+
+.fvch-codeblock pre {
+    white-space: pre;
+    padding-left: .5em;
+    font-family:  "Monaco", "Courier New", Courier, monospace;
+    border: none !important;
+    background: none !important;
+    color: inherit !important;
 }
 
 .fvch-toolbox {
@@ -35,10 +47,10 @@
     top: 0;
     right: 0;
     display: none;
-    border-left: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2;
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-left: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
     background: #fff;
     padding: 3px 6px 0;
 }
@@ -51,27 +63,45 @@
     border: none !important;
     background: none !important;
     cursor: pointer !important;
-    margin: 0 4px 0 0 !important;
+    margin: 0 4px 4px 0 !important;
     padding: 2px !important;
+    height: 20px;
 }
 
 .fvch-toolbox .fvch-toolbox-icon:last-child {
     margin-right:  0 !important;
 }
 
-.fvch-codeblock pre {
-	font-family:  "Monaco", "Courier New", Courier, monospace;
-	background:  url(../images/notepaper.png) top left repeat;
-	font-size:  10px;
-	padding:  0 3px !important;
-	margin: 0 !important;
-	text-align:  left;
-	white-space: pre;
+td.fvch-line-number {
+    text-align: right;
+    color: #666;
+    width: 1%;
+    min-width: 30px;
+    padding: 0 .5em;
+    background: #e2e2e2;
+    border-right: 1px solid #d2d2d2;
+    user-select: none;
+}
+td.fvch-line-number:before {
+    content: attr(data-line-number);
 }
 
-.fvch-line-numbers pre {
-	text-align: right;
-	color: #666;
+
+.general {
+    color: #000;
+    font-weight: normal;
+}
+.general-number {
+    color: #f00;
+}
+.general-operator {
+    color: #00f;
+}
+.general-brackets {
+    color: #009;
+}
+.general-string {
+    color: #c00;
 }
 
 
@@ -79,129 +109,129 @@
  * CSS
  */
 .css {
-	color: #f0f;
+    color: #f0f;
 }
 .css-background {
-	background-color: #fff;
+    background-color: #fff;
 }
 .css-import {
-	color: #099;
-	font-weight: bold;
+    color: #099;
+    font-weight: bold;
 }
 .css-media {
-	color: #900;
-	font-weight: bold;
+    color: #900;
+    font-weight: bold;
 }
 .css-comment {
-	color: #999;
+    color: #999;
 }
 .css-important {
-	color: #f00;
-	font-weight: bold;
+    color: #f00;
+    font-weight: bold;
 }
 .css-property {
-	color: #009;
+    color: #009;
 }
 .css-selector {
-	color: #f0f;
+    color: #f0f;
 }
 .css-string {
-	color: #060;
-	font-weight: normal;
+    color: #060;
+    font-weight: normal;
 }
 .css-value {
-	color: #00f;
+    color: #00f;
 }
 .css-rest {
-	color: #f0f;
-	font-weight: bold;
+    color: #f0f;
+    font-weight: bold;
 }
 
 /**
  * (x)HTML
  */
 .html {
-	font-weight: normal;
-	color: #000;
+    font-weight: normal;
+    color: #000;
 }
 .html-anchor-element {
-	color: #060;
+    color: #060;
 }
 .html-attribute {
-	color: #00f;
+    color: #00f;
 }
 .html-comment {
-	color: #999;
+    color: #999;
 }
 .html-form-element {
-	color: #f90;
+    color: #f90;
 }
 .html-image-element {
-	color: #909;
+    color: #909;
 }
 .html-object-element {
-	color: #900;
+    color: #900;
 }
 .html-other-element {
-	color: #009;
+    color: #009;
 }
 .html-script-element {
-	color: #900;
+    color: #900;
 }
 .html-special-char {
-	color: #000;
-	font-weight: bold;
+    color: #000;
+    font-weight: bold;
 }
 .html-style-element {
-	color: #909;
+    color: #909;
 }
 .html-table-element {
-	color: #099;
+    color: #099;
 }
 .html-text {
-	color: #000;
+    color: #000;
 }
 
 /**
  * PHP
  */
 .php {
-	color: #000;
-	font-weight: normal;
+    color: #000;
+    font-weight: normal;
 }
 .php-script-tag {
-	color: #f00;
-	font-weight: bold;
+    color: #d00;
+    font-weight: bold;
 }
 .php-comment {
-	color: #f90;
+    color: #f90;
 }
 .php-constant {
-	color: #520;
+    color: #520;
 }
 .php-function {
-	color: #00f;
+    color: #00f;
 }
 .php-number {
-	color: #f00;
+    color: #f00;
 }
 .php-operator {
-	color: #00f;
+    color: #00f;
 }
 .php-brackets {
-	color: #009;
+    color: #009;
 }
 .php-keyword {
-	color: #006600;
+    color: #006600;
 }
 .php-string {
-	color: #c00;
+    color: #c00;
 }
 .php-var-type {
-	color: #099;
+    color: #099;
 }
 .php-var {
-	color: #06f;
+    color: #06f;
 }
 
 /**
@@ -210,60 +240,60 @@
 .xml {
 }
 .xml-string {
-	color: #060;
+    color: #060;
 }
 .xml-comment, .xml-comment span {
-	color: #999;
+    color: #999;
 }
 .xml-number {
-	color: #f00;
+    color: #f00;
 }
 .xml-element {
-	color: #009;
+    color: #009;
 }
 .xml-text {
-	color: #000;
+    color: #000;
 }
 
 /**
  * JavaScript
  */
-.js {
-	color: #000;
+.javascript {
+    color: #000;
 }
 .js-string {
-	color: #00f;
+    color: #00f;
 }
 .js-bracket {
-	color: #009;
-	font-weight: bold;
+    color: #009;
+    font-weight: bold;
 }
 .js-client-keyword {
-	color: #909;
+    color: #909;
 }
 .js-comment {
-	color: #999;
+    color: #999;
 }
 .js-function-keyword {
-	color: #000;
-	font-weight: bold;
+    color: #000;
+    font-weight: bold;
 }
 .js-native-keyword {
-	color: #099;
+    color: #099;
 }
 .js-number {
-	color: #f00;
+    color: #f00;
 }
 .js-operator {
-	color: #00f;
+    color: #00f;
 }
 .js-regexp {
-	color: #060;
+    color: #060;
 }
 .js-reserved-keyword {
-	color: #009;
-	font-weight: bold;
+    color: #009;
+    font-weight: bold;
 }
 .js-string {
-	color: #00f;
+    color: #00f;
 }

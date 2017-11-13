@@ -54,7 +54,7 @@ class Xml extends AbstractHighlighter
 		$parser->setKeys($this->keys)
 			   ->parse();
 		
-		$this->setCode('<span class="xml">' . $parser->getParsedCode() . '</span>');
+		$this->setCode($parser->getParsedCode());
 		
 		return $this;
 	}

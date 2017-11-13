@@ -2,6 +2,8 @@
 
 namespace FvCodeHighlighter;
 
+use FvCodeHighlighter;
+
 /**
  * Version
  *
@@ -12,13 +14,11 @@ final class Version
     /**
      * @var string
      */
-    const CURRENT_VERSION = '1.9';
-
+    const CURRENT_VERSION = FvCodeHighlighter::VERSION;
     /**
      * @var string
      */
     const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/current';
-
     /**
      * @var string
      */
@@ -54,6 +54,7 @@ final class Version
                     'wordpress_url'     => get_bloginfo('wpurl'),
                     'wordpress_version' => $wp_version,
                     'plugin_version'    => self::getCurrentVersion(),
+                    'php_version'       => phpversion(),
                 ],
             ]);
 

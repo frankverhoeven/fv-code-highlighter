@@ -10,19 +10,14 @@ namespace FvCodeHighlighter\Parser;
 class Block extends Parser
 {
 	/**
-	 * Block starter
 	 * @var string
 	 */
 	protected $start;
-	
 	/**
-	 * Block end
 	 * @var string
 	 */
 	protected $end;
-	
 	/**
-	 * CSS class
 	 * @var string
 	 */
 	protected $cssClass;
@@ -31,23 +26,21 @@ class Block extends Parser
 	 * init()
 	 *
 	 * @param array $options
-	 * @return $this
 	 */
-	public function init(array $options= []) {
-		if (!empty($options)) {
+	public function init(array $options = null)
+    {
+		if (null !== $options) {
 			$this->setOptions($options);
 		}
-		
-		return $this;
 	}
 	
 	/**
 	 * setOptions()
 	 *
 	 * @param array $options
-	 * @return $this
 	 */
-	public function setOptions(array $options) {
+	public function setOptions(array $options)
+    {
 		$methods = get_class_methods($this);
 		
 		foreach ($options as $key=>$value) {
@@ -57,19 +50,16 @@ class Block extends Parser
 				$this->$func($value);
 			}
 		}
-		
-		return $this;
 	}
 	
 	/**
 	 * setStart()
 	 *
 	 * @param string $start
-	 * @return $this
 	 */
-	public function setStart($start) {
+	public function setStart($start)
+    {
 		$this->start = (string) $start;
-		return $this;
 	}
 	
 	/**
@@ -77,7 +67,8 @@ class Block extends Parser
 	 *
 	 * @return string
 	 */
-	public function getStart() {
+	public function getStart()
+    {
 		return $this->start;
 	}
 	
@@ -85,11 +76,10 @@ class Block extends Parser
 	 * setEnd()
 	 *
 	 * @param string $end
-	 * @return $this
 	 */
-	public function setEnd($end) {
+	public function setEnd($end)
+    {
 		$this->end = (string) $end;
-		return $this;
 	}
 	
 	/**
@@ -97,7 +87,8 @@ class Block extends Parser
 	 *
 	 * @return string
 	 */
-	public function getEnd() {
+	public function getEnd()
+    {
 		return $this->end;
 	}
 	
@@ -105,11 +96,10 @@ class Block extends Parser
 	 * setCssClass()
 	 *
 	 * @param string $class
-	 * @return $this
 	 */
-	public function setCssClass($class) {
+	public function setCssClass($class)
+    {
 		$this->cssClass = (string) $class;
-		return $this;
 	}
 	
 	/**
@@ -117,7 +107,8 @@ class Block extends Parser
 	 *
 	 * @return string
 	 */
-	public function getCssClass() {
+	public function getCssClass()
+    {
 		return $this->cssClass;
 	}
 }

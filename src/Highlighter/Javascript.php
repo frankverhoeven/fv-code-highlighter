@@ -341,7 +341,7 @@ class Javascript extends AbstractHighlighter
 			   ->parse();
 		
 		
-		$this->setCode('<span class="js">' . $parser->getParsedCode() . '</span>');
+		$this->setCode($parser->getParsedCode());
 		
 		return $this;
 	}

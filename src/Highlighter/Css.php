@@ -182,7 +182,7 @@ class Css extends AbstractHighlighter
 		$code = str_replace(':<span class="css-value">', '<span class="css-selector">:</span><span class="css-value">', $parser->getParsedCode());
 		$code = preg_replace('/\}(\s*?)\}/', '}\\1<span class="css-media">}</span>', $code);
 
-		$this->setCode('<span class="css">' . $code . '</span>');
+		$this->setCode($code);
 
 		return $this;
 	}

@@ -121,7 +121,7 @@ class Html extends AbstractHighlighter
 		}
 
 
-		$this->setCode('<span class="html">' . $code . '</span>');
+		$this->setCode($code);
 
 		return $this;
 	}
