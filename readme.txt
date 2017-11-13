@@ -4,8 +4,8 @@ Contributors:       frankverhoeven
 Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
-Tested up to:       4.8.3
-Stable tag:         1.9
+Tested up to:       4.9
+Stable tag:         1.9.1
 
 Highlight your code, Dreamweaver style.
 
@@ -25,10 +25,12 @@ completely customize the output of the plugin.
 == Screenshots ==
 
 1. The configuration page.
-2. CSS Code
-3. (x)HTML Code
-4. JavaScript Code
-5. PHP Code
+2. PHP Code with notepaper background and toolbox
+3. General Code
+4. CSS Code
+5. (x)HTML Code
+6. JavaScript Code
+7. PHP Code
 
 
 
@@ -47,9 +49,10 @@ In order to successfully use this plugin, you will need the following:
 = Installation Steps =
 
 1. Upload the folder `fv-code-highlighter` to the `/wp-content/plugins/` directory.
+1. Make sure the cache dir `/wp-content/plugins/fv-code-highlighter/cache` is writable by your webserver.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Choose your preferred settings on the options page: WP Admin > Appearance > Code Highlighter.
-1. Place your code between [code type=codetype] .. code .. [/code] tags to use the highlighter. Replace codetype with the type of code you like to highlight (e.g. php).
+1. Place your code between [code type=codetype] .. code .. [/code] tags to use the highlighter. Replace `codetype` with the type of code you like to highlight (e.g. php).
 
 
 = Custom Color Scheme =
@@ -66,17 +69,27 @@ Q: Can this plugin be used to highlight code in comments?
 A: Yes! Using the [code][/code] tags in comments will work. Even bbPress topics/replies are supported.
 
 Q: I have a great idea for this plugin, could I make a suggestion?
-A: Sure you can! Let me know about it at https://frankverhoeven.me/forums/forum/fv-code-highlighter/feature-requests/.
+A: Sure you can! [Let me know about it](https://frankverhoeven.me/forums/forum/fv-code-highlighter/feature-requests/).
 
 Q: What to do if I found a bug?
 A: Please report the bug to me as soon as possible. This way I can solve the problem and make the plugin better for everyone.
-Visit the forums at https://frankverhoeven.me/forums/forum/fv-code-highlighter/bug-reports/.
+Visit the forums at [https://frankverhoeven.me/forums/forum/fv-code-highlighter/bug-reports/](https://frankverhoeven.me/forums/forum/fv-code-highlighter/bug-reports/).
 
 
 
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+
+= 1.9.1 =
+
+* New: A general highlighter for unsupported code types
+* Improvement: Changed the html that displays code
+* Improvement: Performance improvements
+* Improvement: Updated PHP keywords & functions
+* Change: Cache is now disabled if WP_DEBUG = true, make sure it is set to false on production!
+* Fix: Fixed various styling issues
 
 
 = 1.9 =
@@ -95,13 +108,3 @@ For more details on changes, please visit the [WordPress Trac](http://plugins.tr
 * Improvement: Various optimizations and bug fixes for the code parser.
 * Improvement: Better support for customizing the highlighting colors.
 * Improvement: Various other fixes and improvements.
-
-
-= 1.7.1 =
-
-* Fixed problems with the xml highlighter.
-
-
-= 1.7 =
-
-* Beta release.

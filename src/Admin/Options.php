@@ -118,19 +118,19 @@ class Options
 				<td>
 					<label class="fvch-background-option description notepaper">
 						<input type="radio" name="fvch-background" value="notepaper" id="fvch-background_0" <?php checked('notepaper', $this->options->getOption('fvch-background')); ?> />
-						<div class="fvch-background-example fvch-notepaper"></div>
+						<span class="fvch-background-example fvch-notepaper"></span>
 						<span><?php _e('Notepaper', 'fvch'); ?></span>
 					</label>
 					<label class="fvch-background-option description white">
 						<input type="radio" name="fvch-background" value="white" id="fvch-background_1" <?php checked('white', $this->options->getOption('fvch-background')); ?> />
-						<div class="fvch-background-example fvch-white"></div>
+						<span class="fvch-background-example fvch-white"></span>
 						<span><?php _e('White', 'fvch'); ?></span>
 					</label>
 					<label class="fvch-background-option description custom">
 						<input type="radio" name="fvch-background" value="custom" id="fvch-background_3" <?php checked('custom', $this->options->getOption('fvch-background')); ?> />
-						<div class="fvch-background-example fvch-custom" style="background-color: <?php esc_attr_e($this->options->getOption('fvch-background-custom')); ?>;">
-                            <div id="fvch-colorpicker"></div>
-                        </div>
+						<span class="fvch-background-example fvch-custom" style="background-color: <?php esc_attr_e($this->options->getOption('fvch-background-custom')); ?>;">
+                            <span id="fvch-colorpicker"></span>
+                        </span>
                         <input type="hidden" name="fvch-background-custom" id="fvch-background-custom" value="<?php esc_attr_e($this->options->getOption('fvch-background-custom')); ?>" />
 						<span><?php _e('Custom', 'fvch'); ?></span>
 					</label>

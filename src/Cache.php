@@ -31,8 +31,8 @@ class Cache
     {
 		$this->cacheDir = realpath($cacheDir) . '/';
 
-		// Disable cache if dir is not writable
-		if (!wp_is_writable($cacheDir)) {
+		// Disable cache if $cacheDir is not writable, or if we're debugging
+		if (!wp_is_writable($cacheDir) || true === WP_DEBUG) {
 		    $this->enabled = false;
         }
 	}

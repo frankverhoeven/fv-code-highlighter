@@ -11,7 +11,7 @@
 
         $('.fvch-toolbox-icon-select').click(function() {
             var range;
-            var $codeBlock = $(this).parents('.fvch-codeblock').find('.fvch-code pre');
+            var $codeBlock = $(this).parents('.fvch-codeblock').find('.fvch-code');
 
             if (document.body.createTextRange) { // ms
                 range = document.body.createTextRange();
