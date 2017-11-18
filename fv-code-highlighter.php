@@ -6,12 +6,12 @@
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
  * Author URI:  https://frankverhoeven.me/
- * Version:     1.9.1
+ * Version:     2.0
  */
 
 final class FvCodeHighlighter
 {
-    const VERSION = '1.9.1';
+    const VERSION = '2.0';
 
     /**
      * Setup the autoloader

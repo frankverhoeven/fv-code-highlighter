@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         1.9.1
+Stable tag:         2.0
 
 Highlight your code, Dreamweaver style.
 
@@ -28,7 +28,7 @@ completely customize the output of the plugin.
 2. PHP Code with notepaper background and toolbox
 3. General Code
 4. CSS Code
-5. (x)HTML Code
+5. HTML Code with embedded CSS and Javascript
 6. JavaScript Code
 7. PHP Code
 
@@ -68,6 +68,9 @@ to the root of your current theme directory and start editing.
 Q: Can this plugin be used to highlight code in comments?
 A: Yes! Using the [code][/code] tags in comments will work. Even bbPress topics/replies are supported.
 
+Q: My PHP code is not highlighted correctly?
+A: With version 2.0 and up, it is required to start PHP code with PHP tags (<?php, <?=)
+
 Q: I have a great idea for this plugin, could I make a suggestion?
 A: Sure you can! [Let me know about it](https://frankverhoeven.me/forums/forum/fv-code-highlighter/feature-requests/).
 
@@ -80,6 +83,17 @@ Visit the forums at [https://frankverhoeven.me/forums/forum/fv-code-highlighter/
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+
+= 2.0 =
+
+* New: Entirely rewritten parsing engine
+* New: Bash code highlighter
+* New: General highlighter that is used when a code type is not explicitly supported
+* Improvement: Performance enhancements
+* Improvement: Updated CSS keywords
+* Change: PHP code must start with a PHP tag (<?php, <?=) for the highlighter to work correctly
+* Fix: Various highlighter fixes
 
 
 = 1.9.1 =
@@ -99,12 +113,3 @@ For more details on changes, please visit the [WordPress Trac](http://plugins.tr
 * Fix: Cacher tried to delete the entire hdd in certain circumstances
 * Fix: Updater check
 * Fix: Code toolbox selection
-
-
-= 1.8 =
-
-* Added: Code toolbox. (Can be enabled at the options page)
-* Added: Custom code background color selector.
-* Improvement: Various optimizations and bug fixes for the code parser.
-* Improvement: Better support for customizing the highlighting colors.
-* Improvement: Various other fixes and improvements.

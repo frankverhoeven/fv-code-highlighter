@@ -154,7 +154,7 @@ class Options
 	 */
 	public function deleteOptions()
 	{
-		foreach ($this->getDefaultOptions() as $key=>$value) {
+		foreach ($this->getDefaultOptions() as $key => $value) {
 			$this->deleteOption($key);
 		}
 
