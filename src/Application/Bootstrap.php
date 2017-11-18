@@ -4,6 +4,7 @@ namespace FvCodeHighlighter\Application;
 
 use FvCodeHighlighter\Admin\Admin;
 use FvCodeHighlighter\Cache;
+use FvCodeHighlighter\Container\Container;
 use FvCodeHighlighter\Installer;
 use FvCodeHighlighter\Options;
 use FvCodeHighlighter\Output;
@@ -19,23 +20,28 @@ class Bootstrap
      * @var Options
      */
     private $options;
-
     /**
      * @var Cache
      */
     private $cache;
+    /**
+     * @var Container
+     */
+    private $container;
 
     /**
      * __construct()
      *
      * @param Options $options
      * @param Cache $cache
-     * @version 20171107
+     * @param Container $container
+     * @version 20171118
      */
-    public function __construct(Options $options, Cache $cache)
+    public function __construct(Options $options, Cache $cache, Container $container)
     {
         $this->options = $options;
         $this->cache = $cache;
+        $this->container = $container;
     }
 
     /**
@@ -59,11 +65,11 @@ class Bootstrap
     /**
      * Plugin output
      *
-     * @version 20171103
+     * @version 20171118
      */
     public function initOutput()
     {
-        $output = new Output($this->options, $this->cache);
+        $output = new Output($this->options, $this->cache, $this->container);
 
         // WordPress
         add_filter('the_content',           [$output, 'highlightCode'], 3);

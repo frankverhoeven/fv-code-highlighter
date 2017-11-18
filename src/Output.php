@@ -2,9 +2,10 @@
 
 namespace FvCodeHighlighter;
 
+use FvCodeHighlighter\Container\Container;
 use FvCodeHighlighter\Filter\HtmlSpecialCharsDecode;
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
-use FvCodeHighlighter\Highlighter\General;
+use FvCodeHighlighter\Highlighter\General\General;
 
 /**
  * Output
@@ -17,23 +18,28 @@ class Output
      * @var Options
      */
     protected $options;
-
     /**
      * @var Cache
      */
     private $cache;
+    /**
+     * @var Container
+     */
+    private $container;
 
     /**
      * __construct()
      *
      * @param Options $options
      * @param Cache $cache
-     * @version 20171107
+     * @param Container $container
+     * @version 20171118
      */
-    public function __construct(Options $options, Cache $cache)
+    public function __construct(Options $options, Cache $cache, Container $container)
     {
         $this->options = $options;
         $this->cache = $cache;
+        $this->container = $container;
     }
 
     /**
@@ -41,6 +47,7 @@ class Output
      *
      * @param string $content
      * @return string
+     * @version 20171118
      */
     public function highlightCode($content)
     {
@@ -52,79 +59,88 @@ class Output
             'type' => ''
         ];
 
-        preg_match_all('/\[code(?<arguments>.*?)\](?<code>.*?)\[\/code\]/msi', $content, $codes);
-        $num = count($codes[0]);
+        $patterns = [
+            '/^(?!<code>)\{code(?<arguments>.*?)\}(?<code>.*?)\{\/code\}/msi',
+            '/^(?!<code>)\[code(?<arguments>.*?)\](?<code>.*?)\[\/code\]/msi',
+        ];
 
-        for ($i=0; $i<$num; $i++) {
-            $settings = wp_parse_args($codes['arguments'][ $i ], $defaultSettings);
-            $class = 'FvCodeHighlighter\\Highlighter\\' . ucfirst(strtolower($settings['type']));
-            $filter = new HtmlSpecialCharsDecode();
-            $code = $filter->filter(trim($codes['code'][ $i ]));
+        foreach ($patterns as $pattern) {
+            preg_match_all($pattern, $content, $codes);
+            $num = count($codes[0]);
 
-            $cacheFile = sha1($code . $settings['type']);
-            if ($this->cache->cacheFileExists($cacheFile)) {
-                $code = $this->cache->getCacheFile($cacheFile);
-            } else {
-                if (class_exists($class)) {
-                    /* @var $highlighter AbstractHighlighter */
-                    $highlighter = new $class($code);
-                    $code = $highlighter->highlight()
-                                        ->getCode();
+            for ($i = 0; $i < $num; $i++) {
+                $settings = wp_parse_args($codes['arguments'][$i], $defaultSettings);
 
-                    unset($highlighter);
-                    $this->cache->createCacheFile($cacheFile, $code);
+                $classname = ucfirst(strtolower($settings['type']));
+                if ('Php' == $classname) {
+                    $classname = 'Html'; // @todo: hack, fix
+                }
+                $class = 'FvCodeHighlighter\\Highlighter\\' . $classname . '\\' . $classname;
+
+                $filter = new HtmlSpecialCharsDecode();
+                $code = trim($filter->filter($codes['code'][$i]));
+
+                $cacheFile = sha1($code . $settings['type']);
+                if ($this->cache->cacheFileExists($cacheFile)) {
+                    $code = $this->cache->getCacheFile($cacheFile);
                 } else {
-                    $highlighter = new General($code);
-                    $code = $highlighter->highlight()
-                        ->getCode();
+                    if (class_exists($class)) {
+                        /* @var $highlighter AbstractHighlighter */
+                        $highlighter = $this->container->get($class);
+                        $code = $highlighter->highlight($code);
 
-                    unset($highlighter);
-                    $this->cache->createCacheFile($cacheFile, $code);
-                }
-            }
+                        $this->cache->createCacheFile($cacheFile, $code);
+                    } else {
+                        $highlighter = $this->container->get(General::class);
+                        $code = $highlighter->highlight($code);
 
-            $output = '<div class="fvch-codeblock">';
-
-            if ($this->options->getOption('fvch-toolbox')) {
-                $output .= '<div class="fvch-hide-if-no-js fvch-toolbox">';
-
-                $output .= '<img src="' . plugins_url('public/images/copy-icon.svg', dirname(__FILE__))
-                        . '" alt="' . __('Select Code', 'fvch') . '" title="' . __('Select Code', 'fvch')
-                        . '" class="fvch-toolbox-icon fvch-toolbox-icon-select" />';
-
-                $output .= '</div>';
-            }
-
-            $output .= '<table class="fvch-code ' . strtolower($settings['type']) . '">';
-
-            $lineNumber = 1;
-            $openTags = null;
-            $lines = explode("\n", $code);
-            foreach ($lines as $line) {
-                $output .= '<tr>';
-
-                if ($this->options->getOption('fvch-line-numbers')) {
-                    $output .= '<td class="fvch-line-number" data-line-number="' . $lineNumber . '"></td>';
-                }
-
-                if (null !== $openTags) {
-                    foreach ($openTags as $tag) {
-                        $line = '<span class="' . $tag . '">' . $line;
+                        $this->cache->createCacheFile($cacheFile, $code);
                     }
                 }
 
-                $closedLine = force_balance_tags($line);
-                $openTags = $this->getOpenTagClasses($line, $closedLine);
-                // wrap in pre tags to prevent wptexturize
-                $output .= '<td class="fvch-line-code"><pre>' . $closedLine . '</pre></td>';
+                $output = '<div class="fvch-codeblock">';
 
-                $output .= '</tr>';
-                $lineNumber++;
+                if ($this->options->getOption('fvch-toolbox')) {
+                    $output .= '<div class="fvch-hide-if-no-js fvch-toolbox">';
+
+                    $output .= '<img src="' . plugins_url('public/images/copy-icon.svg', dirname(__FILE__))
+                        . '" alt="' . __('Select Code', 'fvch') . '" title="' . __('Select Code', 'fvch')
+                        . '" class="fvch-toolbox-icon fvch-toolbox-icon-select" />';
+
+                    $output .= '</div>';
+                }
+
+                $output .= '<table class="fvch-code ' . strtolower($settings['type']) . '">';
+
+                $lineNumber = 1;
+                $openTags = null;
+                $lines = explode("\n", $code);
+                foreach ($lines as $line) {
+                    $output .= '<tr>';
+
+                    if ($this->options->getOption('fvch-line-numbers')) {
+                        $output .= '<td class="fvch-line-number" data-line-number="' . $lineNumber . '"></td>';
+                    }
+
+                    if (null !== $openTags) {
+                        foreach (array_reverse($openTags) as $tag) {
+                            $line = '<span class="' . $tag . '">' . $line;
+                        }
+                    }
+
+                    $closedLine = force_balance_tags($line);
+                    $openTags = $this->getOpenTagClasses($line, $closedLine);
+                    // wrap in pre tags to prevent wptexturize
+                    $output .= '<td class="fvch-line-code"><pre>' . $closedLine . '</pre></td>';
+
+                    $output .= '</tr>';
+                    $lineNumber++;
+                }
+
+                $output .= '</table></div><!--fvch-codeblock-->';
+
+                $content = str_replace($codes[0][$i], $output, $content);
             }
-
-            $output .= '</table></div><!--fvch-codeblock-->';
-
-            $content = str_replace($codes[0][$i], $output, $content);
         }
 
         return $content;
@@ -145,9 +161,9 @@ class Output
         if ($openTags > 0) {
             $tags = [];
             $offset = 0;
-            for (; $openTags > 0; $openTags--) {
-                $tags[] = $i = strrpos($openLine, '<span class="', $offset);
-                $offset = -1 * (strlen($openLine) - $i);
+            for ($i = 0; $i < $openTags; $i++) {
+                $tags[] = $i = strpos($openLine, '<span class="', $offset);
+                $offset = $i + 1;
             }
             foreach ($tags as $i => $tag) {
                 $startClass = $tags[$i] + 13;
@@ -163,20 +179,14 @@ class Output
     /**
      * Strip closed tags from $line
      *
-     * Assumes more open-tags than close-tags
-     *
      * @param string $line
      * @return string
      * @version 20171113
      */
     protected function stripClosedTags($line)
     {
-        $closeOffset = 0;
-        while (false !== ($closeTag = strrpos($line, '</span>', $closeOffset))) {
-            $closeOffset = -1 * (strlen($line) - $closeTag);
-            $openTag = strrpos($line, '<span class="', $closeOffset);
-            $line = str_replace(substr($line, $openTag, ($closeTag - $openTag) + 7), '', $line);
-            $closeOffset = 0;
+        while (false != preg_match('/\<span class\="(?<class>[a-z-]+)"\>(?<code>((?!\<span|\<\/span).)*)\<\/span\>/', $line, $matches)) {
+            $line = str_replace($matches[0], '', $line);
         }
 
         return $line;

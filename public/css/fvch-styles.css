@@ -87,6 +87,9 @@ td.fvch-line-number:before {
 }
 
 
+/**
+ * General
+ */
 .general {
     color: #000;
     font-weight: normal;
@@ -101,6 +104,32 @@ td.fvch-line-number:before {
     color: #009;
 }
 .general-string {
+    color: #c00;
+}
+
+
+/**
+ * Bash
+ */
+.bash {
+    color: #000;
+}
+.bash-comment {
+    color: #999;
+}
+.bash-number {
+    color: #f00;
+}
+.bash-operator {
+    color: #00f;
+}
+.bash-brackets {
+    color: #009;
+}
+.bash-command {
+    color: #060;
+}
+.bash-string {
     color: #c00;
 }
 
@@ -238,6 +267,7 @@ td.fvch-line-number:before {
  * XML
  */
 .xml {
+    color: #000;
 }
 .xml-string {
     color: #060;
