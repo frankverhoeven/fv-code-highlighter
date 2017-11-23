@@ -26,11 +26,13 @@
 }
 
 .fvch-codeblock table,
+.fvch-codeblock tbody,
 .fvch-codeblock tr,
 .fvch-codeblock td,
 .fvch-codeblock pre {
     padding: 0;
     margin: 0;
+    border: none;
 }
 
 .fvch-codeblock pre {

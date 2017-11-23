@@ -42,7 +42,7 @@ class Options
 			'fvch-cache-dir'        => __DIR__ . '/../cache',
 			'fvch-font-family'      => 'Monaco',
 			'fvch-font-size'        => '11',
-			'fvch-background'       => 'notepaper',
+			'fvch-background'       => '#ffffff',
             'fvch-background-custom'=> '#f6f6f6',
 			'fvch-line-numbers'     => '1',
             'fvch-toolbox'          => '0'
