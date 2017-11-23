@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         2.0
+Stable tag:         2.0.1
 
 Highlight your code, Dreamweaver style.
 
