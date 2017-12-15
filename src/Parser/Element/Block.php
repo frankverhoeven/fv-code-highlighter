@@ -60,6 +60,10 @@ class Block
     /**
      * @var string
      */
+    private $contains;
+    /**
+     * @var string
+     */
     private $cssClass;
     /**
      * @var Key[]|Block[]
@@ -192,6 +196,14 @@ class Block
     public function getEndSuffixLength()
     {
         return $this->endSuffixLength;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContains()
+    {
+        return $this->contains;
     }
 
     /**

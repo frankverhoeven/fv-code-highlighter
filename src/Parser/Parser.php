@@ -146,6 +146,7 @@ final class Parser
             }
 
             if ($element instanceof Block && $this->findBlockStart($element, substr($this->code, $this->pointer))) {
+                $blockStart = $this->pointer;
                 if ($element->isStartIncluded()) {
                     $parsed = '<span class="' . $element->getCssClass() . '">';
                     if (!$element->isHighlightWithChildren()) {
@@ -162,6 +163,13 @@ final class Parser
 
                 $endReached = false;
                 while (!$this->findBlockEnd($element, substr($this->code, $this->pointer))) {
+                    if (!$this->isValidContains($element, substr($this->code, $this->pointer, 1))) {
+                        $this->pointer = $blockStart;
+                        $parsed = null;
+                        $endReached = true;
+                        break;
+                    }
+
                     if (null !== ($children = $element->getChildren())) {
                         $childParsed = $this->findElement($children);
 
@@ -175,6 +183,7 @@ final class Parser
                         $parsed .= htmlspecialchars(substr($this->code, $this->pointer, 1));
                         $this->pointer++;
                     }
+
 
                     if ($this->pointer > $this->codeLength) {
                         $endReached = true;
@@ -273,6 +282,22 @@ final class Parser
         }
 
         return false;
+    }
+
+    /**
+     * Check if the provided char is valid for the current block
+     *
+     * @param Block $element
+     * @param string $char
+     * @return bool
+     */
+    public function isValidContains(Block $element, $char)
+    {
+        if (null === $element->getContains()) {
+            return true;
+        }
+
+        return preg_match('/' . $element->getContains() . '/', $char);
     }
 
     /**
