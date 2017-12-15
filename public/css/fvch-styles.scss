@@ -88,6 +88,14 @@ td.fvch-line-number:before {
     content: attr(data-line-number);
 }
 
+table.fvch-code tr:first-child td {
+    padding-top: 5px;
+}
+
+table.fvch-code tr:last-child td {
+    padding-bottom: 5px;
+}
+
 
 /**
  * General
@@ -227,42 +235,51 @@ td.fvch-line-number:before {
  * PHP
  */
 .php {
-    color: #000;
+    color: rgb(0, 0, 0);
     font-weight: normal;
 }
 .php-script-tag {
-    color: #d00;
+    color: darken(rgb(184, 51, 161), 15%);
     font-weight: bold;
 }
 .php-comment {
-    color: #f90;
+    color: rgb(0, 131, 18);
+}
+.php-comment-phpdoc {
+    color: darken(rgb(0, 131, 18), 10%);
 }
 .php-constant {
-    color: #520;
+    color: rgb(119, 73, 45);
 }
 .php-function {
-    color: #00f;
+    color: rgb(61, 35, 127);
+}
+.php-method {
+    color: rgb(51, 89, 93);
+}
+.php-class {
+    color: rgb(80, 129, 135);
 }
 .php-number {
-    color: #f00;
+    color: rgb(41, 52, 212);
 }
 .php-operator {
-    color: #00f;
+    color: rgb(0, 0, 0);
 }
 .php-brackets {
-    color: #009;
+    color: rgb(0, 0, 153);
 }
 .php-keyword {
-    color: #006600;
+    color: rgb(184, 51, 161);
 }
 .php-string {
-    color: #c00;
+    color: rgb(207, 49, 37);
 }
 .php-var-type {
-    color: #099;
+    color: rgb(111, 65, 167);
 }
 .php-var {
-    color: #06f;
+    color: rgb(80, 129, 135);
 }
 
 /**
