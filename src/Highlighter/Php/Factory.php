@@ -61,7 +61,7 @@ class Factory implements FactoryInterface
             Key::create(Php::$numbers, 'php-number', '^(?![a-zA-Z]).*$', '^(?![a-zA-Z]).*$'),
             Key::create(Php::$brackets, 'php-brackets'),
             Key::create(Php::$varTypes, 'php-var-type', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(Php::$constants, 'php-constant', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
+            Key::create(array_merge(Php::$constants, ['strict_types']), 'php-constant', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Key::create(Php::$keywords, 'php-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Key::create(get_defined_functions()['internal'], 'php-function', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Block::create([
