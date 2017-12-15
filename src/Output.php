@@ -48,6 +48,7 @@ class Output
      * @param string $content
      * @return string
      * @version 20171118
+     * @throws \Exception
      */
     public function highlightCode($content)
     {
@@ -200,8 +201,8 @@ class Output
     public function enqueueScripts()
     {
         $stylesheet = plugins_url('public/css/fvch-styles.min.css', dirname(__FILE__));
-        if (file_exists(get_stylesheet_directory() . '/fvch-styles.css')) {
-            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.css';
+        if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
+            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
         }
 
         wp_register_style('fvch-styles', $stylesheet, false, '1.2');
