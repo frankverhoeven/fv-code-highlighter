@@ -26,13 +26,15 @@ class Factory implements FactoryInterface
             Block::create([
                 'start'	=> ['/*'],
                 'end'	=> ['*/'],
-                'cssClass'	=> 'php-comment'
+                'cssClass'	=> 'php-comment',
+                'children' => [Key::create(Php::$phpDoc, 'php-comment-phpdoc', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$')],
             ]),
             Block::create([
                 'start'	=> ['//', '#'],
                 'end'	=> ["\n", "?>"],
                 'cssClass'	=> 'php-comment',
-                'includeEnd' => false
+                'includeEnd' => false,
+                'children' => [Key::create(Php::$phpDoc, 'php-comment-phpdoc', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$')],
             ]),
             Block::create([
                 'start'	=> ['"'],
@@ -45,7 +47,7 @@ class Factory implements FactoryInterface
                 'start'	=> ["'"],
                 'end'	=> ["'"],
                 'cssClass'	=> 'php-string',
-                'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
+                'endPrefix' => '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
             Key::create(['<?php', '<?=', '<?', '?>'], 'php-script-tag'),
@@ -53,7 +55,7 @@ class Factory implements FactoryInterface
                 'start'	=> ['$'],
                 'end'	=> array_merge(Php::$whitespace, Php::$operators, Php::$brackets, [',', ';']),
                 'cssClass'	=> 'php-var',
-                'endIncluded'	=> false
+                'endIncluded'	=> false,
             ]),
             Key::create(Php::$operators, 'php-operator'),
             Key::create(Php::$numbers, 'php-number', '^(?![a-zA-Z]).*$', '^(?![a-zA-Z]).*$'),
@@ -62,6 +64,67 @@ class Factory implements FactoryInterface
             Key::create(Php::$constants, 'php-constant', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Key::create(Php::$keywords, 'php-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Key::create(get_defined_functions()['internal'], 'php-function', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> array_merge(Php::$whitespace, Php::$operators, [',', ';', '{', '}', '[', ']', ')', '->']),
+                'contains' => '[a-zA-Z0-9_]+',
+                'cssClass'	=> 'php-var',
+                'endIncluded'	=> false,
+                'startPrefix' => '(->)$',
+                'startPrefixLength' => 2,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> ['('],
+                'contains' => '[a-zA-Z0-9_]+',
+                'cssClass'	=> 'php-method',
+                'endIncluded'	=> false,
+                'startPrefix' => '(->)$',
+                'startPrefixLength' => 2,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> array_merge(Php::$whitespace, ['{', ';', '(', ' as']),
+                'cssClass'	=> 'php-class',
+                'endIncluded'	=> false,
+                'startPrefix' => '(use|as|class|new|namespace)[\s]+$',
+                'startPrefixLength' => 10,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> ['::'],
+                'contains' => '[a-zA-Z0-9_]+',
+                'cssClass'	=> 'php-class',
+                'endIncluded'	=> false,
+                'startPrefix' => '(\(|[\s])+$',
+                'startPrefixLength' => 10,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> ['('],
+                'contains' => '[a-zA-Z0-9_]+',
+                'cssClass'	=> 'php-method',
+                'endIncluded'	=> false,
+                'startPrefix' => '::$',
+                'startPrefixLength' => 2,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> ['('],
+                'cssClass'	=> 'php-method',
+                'endIncluded'	=> false,
+                'startPrefix' => '(function)[\s]+$',
+                'startPrefixLength' => 9,
+            ]),
+            Block::create([
+                'start'	=> Php::$methodChars,
+                'end'	=> ['('],
+                'contains' => '[a-zA-Z0-9_]+',
+                'cssClass'	=> 'php-method',
+                'endIncluded'	=> false,
+                'startPrefix' => '(\(|[\s])+$',
+                'startPrefixLength' => 1,
+            ]),
         ];
 
         return new Php($elements);

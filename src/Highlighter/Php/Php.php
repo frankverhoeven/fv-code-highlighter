@@ -7,7 +7,7 @@ use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 /**
  * Php
  *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
+ * '@author Frank Verhoeven <hi'@frankverhoeven.me>
  */
 class Php extends AbstractHighlighter
 {
@@ -343,6 +343,43 @@ class Php extends AbstractHighlighter
         '__METHOD__',
         '__NAMESPACE__',
         '__DIR__'
+    ];
+
+    public static $phpDoc = [
+        '@api',
+        '@author',
+        '@category',
+        '@copyright',
+        '@deprecated',
+        '@example',
+        '@filesource',
+        '@global',
+        '@ignore',
+        '@internal',
+        '@license',
+        '@link',
+        '@method',
+        '@package',
+        '@param',
+        '@property',
+        '@property-read',
+        '@property-write',
+        '@return',
+        '@see',
+        '@since',
+        '@source',
+        '@subpackage',
+        '@throws',
+        '@todo',
+        '@uses',
+        '@used-by',
+        '@var',
+        '@version',
+        '@example',
+        '@internal',
+        '@inheritdoc',
+        '@link',
+        '@see',
     ];
 
     public function __construct(array $elements)
