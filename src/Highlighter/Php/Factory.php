@@ -122,7 +122,7 @@ class Factory implements FactoryInterface
                 'contains' => '[a-zA-Z0-9_]+',
                 'cssClass'	=> 'php-method',
                 'endIncluded'	=> false,
-                'startPrefix' => '(\(|[\s])+$',
+                'startPrefix' => '[\!\(\+\-\=\*\/\&\%\^\.\<\>\?\s]+$',
                 'startPrefixLength' => 1,
             ]),
         ];

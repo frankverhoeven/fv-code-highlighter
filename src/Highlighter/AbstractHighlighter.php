@@ -31,7 +31,7 @@ abstract class AbstractHighlighter implements HighlighterInterface
      * @var array List of operators
      */
     public static $operators = [
-        '=', '+', '/', '*', '&', '^', '%', ':', '?', '!', '-', '<', '>', '|', '~', '`', '~', '.', ' and ', ' or ', ' xor '
+        '=', '+', '/', '*', '&', '^', '%', ':', '?', '!', '-', '<', '>', '|', '~', '.', ' and ', ' or ', ' xor '
     ];
 
     /**
