@@ -22,7 +22,6 @@
     border-radius: 3px;
     overflow-x: auto;
     position: relative;
-    font-size:  10px;
 }
 
 .fvch-codeblock table,
@@ -105,16 +104,16 @@ table.fvch-code tr:last-child td {
     font-weight: normal;
 }
 .general-number {
-    color: #f00;
+    color: rgb(41, 52, 212);
 }
 .general-operator {
-    color: #00f;
+    color: rgb(0, 0, 0);
 }
 .general-brackets {
-    color: #009;
+    color: rgb(0, 0, 153);
 }
 .general-string {
-    color: #c00;
+    color: rgb(207, 49, 37);
 }
 
 
@@ -125,22 +124,22 @@ table.fvch-code tr:last-child td {
     color: #000;
 }
 .bash-comment {
-    color: #999;
+    color: rgb(0, 131, 18);
 }
 .bash-number {
-    color: #f00;
+    color: rgb(41, 52, 212);
 }
 .bash-operator {
-    color: #00f;
+    color: rgb(0, 0, 0);
 }
 .bash-brackets {
-    color: #009;
+    color: rgb(0, 0, 153);
 }
 .bash-command {
-    color: #060;
+    color: rgb(184, 51, 161);
 }
 .bash-string {
-    color: #c00;
+    color: rgb(207, 49, 37);
 }
 
 
