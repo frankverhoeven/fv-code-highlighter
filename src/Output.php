@@ -200,14 +200,6 @@ class Output
      */
     public function enqueueScripts()
     {
-        $stylesheet = plugins_url('public/css/fvch-styles.min.css', dirname(__FILE__));
-        if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
-            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
-        }
-
-        wp_register_style('fvch-styles', $stylesheet, false, '1.2');
-        wp_enqueue_style('fvch-styles');
-
         if ($this->options->getOption('fvch-toolbox')) {
             wp_enqueue_script('fvch-toolbox', plugins_url('public/js/toolbox.min.js', dirname(__FILE__)), ['jquery'], '1.1', true);
         }
@@ -240,17 +232,43 @@ class Output
         ?>
         <style type="text/css">
             .fvch-codeblock {
-                background: <?php echo $background; ?>;
-                background-position-y: 4px;
+                background: <?php echo $background; ?> !important;
+                background-position-y: 4px !important;
             }
 
             .fvch-codeblock pre, .fvch-line-number {
-                line-height: <?php echo 'notepaper' == $this->options->getOption('fvch-background') ? '17px' : '1.4em'; ?>;
-                font-family: <?php echo $font; ?>;
-                font-size: <?php echo $fontSize; ?>;
+                line-height: <?php echo 'notepaper' == $this->options->getOption('fvch-background') ? '17px' : '1.4em'; ?> !important;
+                font-family: <?php echo $font; ?> !important;
+                font-size: <?php echo $fontSize; ?> !important;
             }
         </style>
         <meta name="generator" content="FV Code Highlighter">
+        <?php
+    }
+
+    /**
+     * Include the colors stylesheet in the footer to make it non-blocking.
+     *
+     * @return void
+     */
+    public function displayFooter()
+    {
+        $stylesheet = plugins_url('public/css/fvch-styles.min.css', dirname(__FILE__));
+        if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
+            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
+        }
+
+        ?>
+        <script type="text/javascript">
+            (function(){
+                var stylesheet = document.createElement('link');
+                stylesheet.rel = 'stylesheet';
+                stylesheet.href = '<?= $stylesheet; ?>';
+                stylesheet.type = 'text/css';
+                stylesheet.media = 'screen';
+                document.getElementsByTagName('head')[0].appendChild(stylesheet);
+            })();
+        </script>
         <?php
     }
 }

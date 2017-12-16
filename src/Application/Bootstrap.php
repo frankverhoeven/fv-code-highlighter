@@ -81,6 +81,7 @@ class Bootstrap
         add_action('wp_enqueue_scripts',    [$output, 'enqueueScripts']);
 
         add_action('wp_head',               [$output, 'displayHead']);
+        add_action('wp_footer',             [$output, 'displayFooter']);
     }
 
     /**
