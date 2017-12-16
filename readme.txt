@@ -5,9 +5,9 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         2.0.1
+Stable tag:         2.0.2
 
-Highlight your code, Dreamweaver style.
+Highlight your code with beautiful highlighters.
 
 
 
@@ -42,7 +42,7 @@ This section describes how to install the plugin and get it up & running.
 
 In order to successfully use this plugin, you will need the following:
 
-* PHP 5 or higher
+* PHP 5.6 or higher
 * WordPress 3.2 or higher
 
 
@@ -83,6 +83,15 @@ Visit the forums at [https://frankverhoeven.me/forums/forum/fv-code-highlighter/
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+
+= 2.0.2 =
+
+* New: New Xcode inspired color scheme for PHP.
+* New: PHP highlighter now also highlights classes, methods and phpdoc.
+* Improvement: Stylesheet is minified.
+* Improvement: Colorscheme stylesheet is dynamically loaded.
+* Change: Font-size unit is changed from px to em.
 
 
 = 2.0 =
