@@ -2,10 +2,10 @@
 
 namespace FvCodeHighlighter;
 
-use Exception;
+use InvalidArgumentException;
 
 /**
- * FvCodeHighlighter_Cache
+ * Cache
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
@@ -14,126 +14,94 @@ class Cache
 	/**
 	 * @var string
 	 */
-	protected $cacheDir;
-
+	protected $cacheDirectory;
     /**
      * @var bool
      */
-	protected $enabled = true;
+	protected $enabled;
 
     /**
-     * __construct()
+     * Create a new cache handler with the provided cache directory.
+     *  Caching is automatically disabled if the given directory is not
+     *  writable or WP_DEBUG is set to true.
      *
-     * @param string $cacheDir
-     * @version 20171103
+     * @param string $cacheDirectory
+     * @version 20171216
      */
-	public function __construct($cacheDir)
+	public function __construct($cacheDirectory)
     {
-		$this->cacheDir = realpath($cacheDir) . '/';
+		$this->cacheDirectory = realpath($cacheDirectory) . '/';
 
-		// Disable cache if $cacheDir is not writable, or if we're debugging
-		if (!wp_is_writable($cacheDir) || true === WP_DEBUG) {
+		if (!wp_is_writable($cacheDirectory) || true === WP_DEBUG) {
 		    $this->enabled = false;
         }
 	}
 
 	/**
-	 * setCacheDir()
+	 * Check if the cache file exists.
+     *  Returns false if cache is disabled.
 	 *
-	 * @param string $dir
-	 * @return $this
-     * @version 20171103
-	 */
-	public function setCacheDir($dir)
-    {
-		$this->cacheDir = $dir;
-		return $this;
-	}
-
-	/**
-	 * getCacheDir()
-	 *
-	 * @return string
-     * @version 20171103
-	 */
-	public function getCacheDir()
-    {
-		return $this->cacheDir;
-	}
-
-	/**
-	 * cacheFileExists()
-	 *
-	 * @param string $name
+	 * @param string $filename
 	 * @return bool
-     * @version 20171103
+     * @version 20171216
 	 */
-	public function cacheFileExists($name)
+	public function cacheFileExists($filename)
     {
-        if (!$this->enabled)
-            return false;
-
-		return file_exists($this->getCacheDir() . $name);
+		return $this->enabled && file_exists($this->cacheDirectory . $filename);
 	}
 
 	/**
-	 * createCacheFile()
+	 * Create a new cache file if cache is enabled.
 	 *
-	 * @param string $name
+	 * @param string $filename
 	 * @param string $content
-	 * @return $this
-     * @version 20171103
+     * @version 20171216
 	 */
-	public function createCacheFile($name, $content)
+	public function createCacheFile($filename, $content)
     {
-        if (!$this->enabled)
-            return $this;
-
-        file_put_contents($this->getCacheDir() . $name, $content);
-		return $this;
+        if ($this->enabled) {
+            file_put_contents($this->cacheDirectory . $filename, $content);
+        }
 	}
 
     /**
-     * getCacheFile()
+     * Get the content of a cache file.
+     *  Returns null if cache is disabled.
+     *  An InvalidArgumentException is thrown if the cache file does not exist.
      *
-     * @param string $name
-     * @return string
-     * @throws Exception
-     * @version 20171103
+     * @param string $filename
+     * @return string|null
+     * @throws InvalidArgumentException
+     * @version 20171216
      */
-	public function getCacheFile($name)
+	public function getCacheFile($filename)
     {
-        if (!$this->enabled)
-            return $this;
-
-        if (!$this->cacheFileExists($name)) {
-			throw new Exception('The requested cache file does not exist');
+        if (!$this->enabled) {
+            return null;
+        }
+        if (!$this->cacheFileExists($filename)) {
+			throw new InvalidArgumentException('The requested cache file does not exist');
 		}
 
-		return file_get_contents($this->getCacheDir() . $name);
+		return file_get_contents($this->cacheDirectory . $filename);
 	}
 
 	/**
-	 * clear()
+	 * Clear the entire cache by removing all files in the cache directory.
 	 *
-	 * @return $this
-     * @version 20171103
+	 * @return void
+     * @version 20171216
 	 */
 	public function clear()
     {
-        if (!$this->enabled)
-            return $this;
+        if ($this->enabled && $handle = opendir($this->cacheDirectory)) {
+            while (false !== ($file = readdir($handle))) {
+                if ('.' != $file && '..' != $file) {
+                    unlink($this->cacheDirectory . $file);
+                }
+            }
 
-        if ($dr = opendir($this->getCacheDir())) {
-			while (false !== ($file = readdir($dr))) {
-				if ('.' != $file && '..' != $file) {
-					unlink($this->getCacheDir() . $file);
-				}
-			}
-
-			closedir($dr);
-		}
-
-		return $this;
+            closedir($handle);
+        }
 	}
 }
