@@ -56,6 +56,11 @@ class Installer
 			->addOptions()
 			->updateOption('fvch_version', $this->options->getDefaultOption('fvch_version'));
 
+		// Migrate font-size from px to em
+		if ((float) $this->options->getOption('fvch-font-size') > 2) {
+		    $this->options->updateOption('fvch-font-size', $this->options->getDefaultOption('fvch-font-size'));
+        }
+
 		$this->cache->clear();
 
 		return $this;

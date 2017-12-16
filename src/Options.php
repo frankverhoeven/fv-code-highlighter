@@ -41,7 +41,7 @@ class Options
 			'fvch_version'          => Version::getCurrentVersion(),
 			'fvch-cache-dir'        => __DIR__ . '/../cache',
 			'fvch-font-family'      => 'Monaco',
-			'fvch-font-size'        => '11',
+			'fvch-font-size'        => '1',
 			'fvch-background'       => '#ffffff',
             'fvch-background-custom'=> '#f6f6f6',
 			'fvch-line-numbers'     => '1',

@@ -71,7 +71,7 @@ class Options
 
     <div class="fvch-support">
         <a href="https://www.paypal.me/FrankVerhoeven" class="button button-primary">
-            <?php _e('Donate me a beer :)', 'fvch'); ?>
+            <?php _e('Support this plugin', 'fvch'); ?>
         </a>
     </div>
 
@@ -106,11 +106,12 @@ class Options
 				<th scope="row"><label for="fvch-font-size"><?php _e('Font Size', 'fvch'); ?></label></th>
 				<td>
 					<select name="fvch-font-size" id="fvch-font-size">
-					<?php for ($i=9; $i<=13; $i++) : ?>
+					<?php for ($i = .5; $i < 2.1; $i += .1) : ?>
 						<option <?php selected($this->options->getOption('fvch-font-size'), $i); ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
 					<?php endfor; ?>
 					</select>
-					px
+					<code>em</code>
+                    <p class="description"><?php _e('Using a font-size greater than 17px in combination with the notepaper background might cause display issues.', 'fvch'); ?></p>
 				</td>
 			</tr>
 			<tr valign="top">

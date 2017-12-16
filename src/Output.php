@@ -228,7 +228,7 @@ class Output
         ];
         $font = $font[$this->options->getOption('fvch-font-family')];
 
-        $fontSize = esc_attr($this->options->getOption('fvch-font-size')) . 'px';
+        $fontSize = esc_attr($this->options->getOption('fvch-font-size')) . 'em';
         ?>
         <style type="text/css">
             .fvch-codeblock {
