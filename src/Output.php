@@ -241,6 +241,7 @@ class Output
         <style type="text/css">
             .fvch-codeblock {
                 background: <?php echo $background; ?>;
+                background-position-y: 4px;
             }
 
             .fvch-codeblock pre, .fvch-line-number {
