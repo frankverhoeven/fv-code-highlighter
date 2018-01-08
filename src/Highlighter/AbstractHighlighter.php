@@ -72,7 +72,7 @@ abstract class AbstractHighlighter implements HighlighterInterface
     }
 
     /**
-     * Highlight provided code
+     * Highlighter provided code
      *
      * @param string $code
      * @return string

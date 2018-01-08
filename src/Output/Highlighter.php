@@ -1,18 +1,20 @@
 <?php
 
-namespace FvCodeHighlighter;
+namespace FvCodeHighlighter\Output;
 
+use FvCodeHighlighter\Cache;
 use FvCodeHighlighter\Container\Container;
 use FvCodeHighlighter\Filter\HtmlSpecialCharsDecode;
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 use FvCodeHighlighter\Highlighter\General\General;
+use FvCodeHighlighter\Options;
 
 /**
- * Output
+ * Highlighter
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Output
+class Highlighter implements OutputInterface
 {
     /**
      * @var Options
@@ -43,16 +45,25 @@ class Output
     }
 
     /**
+     * @param array $arguments
+     * @return string
+     */
+    public function __invoke(...$arguments)
+    {
+        $content = array_shift($arguments);
+        return $this->highlightCode($content);
+    }
+
+    /**
      * Find code blocks and highlight them.
      *
      * @param string $content
      * @return string
      * @version 20171118
-     * @throws \Exception
      */
     public function highlightCode($content)
     {
-        if (!strstr($content, '{code') && !strstr($content, '[code')) {
+        if (!strstr($content, '{code') && !strstr($content, '[code') && !strstr($content, '<pre')) {
             return $content;
         }
 
@@ -61,8 +72,9 @@ class Output
         ];
 
         $patterns = [
-            '/^(?!<code>)\{code(?<arguments>.*?)\}(?<code>.*?)\{\/code\}/msi',
-            '/^(?!<code>)\[code(?<arguments>.*?)\](?<code>.*?)\[\/code\]/msi',
+            '/\<pre(?<arguments>.*?)\>(?<code>.*?)\<\/pre\>/msi',
+            '/\{code(?<arguments>.*?)\}(?<code>.*?)\{\/code\}/msi',
+            '/\[code(?<arguments>.*?)\](?<code>.*?)\[\/code\]/msi',
         ];
 
         foreach ($patterns as $pattern) {
@@ -71,6 +83,11 @@ class Output
 
             for ($i = 0; $i < $num; $i++) {
                 $settings = wp_parse_args($codes['arguments'][$i], $defaultSettings);
+
+                if ((!isset($settings['type']) || '' == $settings['type']) && isset($settings['lang'])) {
+                    $settings['type'] = $settings['lang'];
+                }
+                $settings['type'] = trim($settings['type'], '"\'');
 
                 $classname = ucfirst(strtolower($settings['type']));
                 if ('Php' == $classname) {
@@ -191,84 +208,5 @@ class Output
         }
 
         return $line;
-    }
-
-    /**
-     * Enqueue scripts and stylesheets.
-     *
-     * @return void
-     */
-    public function enqueueScripts()
-    {
-        if ($this->options->getOption('fvch-toolbox')) {
-            wp_enqueue_script('fvch-toolbox', plugins_url('public/js/toolbox.min.js', dirname(__FILE__)), ['jquery'], '1.1', true);
-        }
-    }
-
-    /**
-     * Display stuff in the head section.
-     *
-     * @return void
-     */
-    public function displayHead()
-    {
-        $background = [
-            'notepaper' => 'url(' . plugins_url('public/images/notepaper.png', dirname(__FILE__)) . ') top left repeat',
-            'white' => '#fff',
-            'custom' => esc_attr($this->options->getOption('fvch-background-custom'))
-        ];
-        $background = $background[$this->options->getOption('fvch-background')];
-
-        $font = [
-            'Andale Mono' => "'Andale Mono', 'Courier New', Courier, monospace",
-            'Courier' => "Courier, 'Courier New', Courier, monospace",
-            'Courier New' => "'Courier New', Courier, monospace",
-            'Menlo' => "'Menlo', 'Courier New', Courier, monospace",
-            'Monaco' => "'Monaco', 'Courier New', Courier, monospace"
-        ];
-        $font = $font[$this->options->getOption('fvch-font-family')];
-
-        $fontSize = esc_attr($this->options->getOption('fvch-font-size')) . 'em';
-        ?>
-        <style type="text/css">
-            .fvch-codeblock {
-                background: <?php echo $background; ?> !important;
-                background-position-y: 4px !important;
-            }
-
-            .fvch-codeblock pre, .fvch-line-number {
-                line-height: <?php echo 'notepaper' == $this->options->getOption('fvch-background') ? '17px' : '1.4em'; ?> !important;
-                font-family: <?php echo $font; ?> !important;
-                font-size: <?php echo $fontSize; ?> !important;
-            }
-        </style>
-        <meta name="generator" content="FV Code Highlighter">
-        <?php
-    }
-
-    /**
-     * Include the colors stylesheet in the footer to make it non-blocking.
-     *
-     * @return void
-     */
-    public function displayFooter()
-    {
-        $stylesheet = plugins_url('public/css/fvch-styles.min.css', dirname(__FILE__));
-        if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
-            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
-        }
-
-        ?>
-        <script type="text/javascript">
-            (function(){
-                var stylesheet = document.createElement('link');
-                stylesheet.rel = 'stylesheet';
-                stylesheet.href = '<?= $stylesheet; ?>';
-                stylesheet.type = 'text/css';
-                stylesheet.media = 'screen';
-                document.getElementsByTagName('head')[0].appendChild(stylesheet);
-            })();
-        </script>
-        <?php
     }
 }

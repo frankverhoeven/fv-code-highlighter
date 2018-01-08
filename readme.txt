@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         2.0.2
+Stable tag:         2.0.3
 
 Highlight your code with beautiful highlighters.
 
@@ -52,7 +52,7 @@ In order to successfully use this plugin, you will need the following:
 1. Make sure the cache dir `/wp-content/plugins/fv-code-highlighter/cache` is writable by your webserver.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Choose your preferred settings on the options page: WP Admin > Appearance > Code Highlighter.
-1. Place your code between [code type=codetype] .. code .. [/code] tags to use the highlighter. Replace `codetype` with the type of code you like to highlight (e.g. php).
+1. Place your code between <pre lang=codetype> .. code .. </pre> tags to use the highlighter. Replace `codetype` with the type of code you like to highlight (e.g. php).
 
 
 = Custom Color Scheme =
@@ -83,6 +83,11 @@ Visit the forums at [https://frankverhoeven.me/forums/forum/fv-code-highlighter/
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+= 2.0.3 =
+
+* Change: Code should now be placed between <pre lang=...> </pre> (old tags still work for now)
+* Impovement: General code improvements
 
 
 = 2.0.2 =

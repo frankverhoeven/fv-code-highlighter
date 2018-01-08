@@ -69,19 +69,17 @@ class Bootstrap
      */
     public function initOutput()
     {
-        $output = new Output($this->options, $this->cache, $this->container);
+        $highlighter = new Output\Highlighter($this->options, $this->cache, $this->container);
 
         // WordPress
-        add_filter('the_content',           [$output, 'highlightCode'], 3);
-        add_filter('comment_text',          [$output, 'highlightCode'], 3);
+        add_filter('the_content',           $highlighter, 3);
+        add_filter('comment_text',          $highlighter, 3);
         // bbPress
-        add_filter('bbp_get_topic_content', [$output, 'highlightCode'], 3);
-        add_filter('bbp_get_reply_content', [$output, 'highlightCode'], 3);
+        add_filter('bbp_get_topic_content', $highlighter, 3);
+        add_filter('bbp_get_reply_content', $highlighter, 3);
 
-        add_action('wp_enqueue_scripts',    [$output, 'enqueueScripts']);
-
-        add_action('wp_head',               [$output, 'displayHead']);
-        add_action('wp_footer',             [$output, 'displayFooter']);
+        add_action('wp_enqueue_scripts',    new Output\Scripts($this->options));
+        add_action('wp_head',               new Output\Header($this->options));
     }
 
     /**

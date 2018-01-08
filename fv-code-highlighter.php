@@ -2,16 +2,17 @@
 
 /**
  * Plugin Name: FV Code Highlighter
- * Description: Highlight your code, Dreamweaver style.
+ * Description: Highlighter your code, Dreamweaver style.
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
  * Author URI:  https://frankverhoeven.me/
- * Version:     2.0.2
+ * Version:     2.0.3
  */
 
 final class FvCodeHighlighter
 {
-    const VERSION = '2.0.2';
+    const VERSION  = '2.0.3';
+    const __FILE__ = __FILE__;
 
     /**
      * Setup the autoloader
