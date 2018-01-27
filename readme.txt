@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         2.0.3
+Stable tag:         2.0.4
 
 Highlight your code with beautiful highlighters.
 
@@ -83,6 +83,11 @@ Visit the forums at [https://frankverhoeven.me/forums/forum/fv-code-highlighter/
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+= 2.0.4 =
+
+* Fix: The copy-icon is now loaded correct.
+
 
 = 2.0.3 =
 
