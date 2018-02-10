@@ -1,7 +1,6 @@
 /**
  * Toolbox functions.
  *
- * @version 1.1
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
 (function($) {

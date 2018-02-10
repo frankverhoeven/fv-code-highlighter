@@ -26,7 +26,6 @@ class Cache
      *  writable or WP_DEBUG is set to true.
      *
      * @param string $cacheDirectory
-     * @version 20171216
      */
 	public function __construct($cacheDirectory)
     {
@@ -43,7 +42,6 @@ class Cache
 	 *
 	 * @param string $filename
 	 * @return bool
-     * @version 20171216
 	 */
 	public function cacheFileExists($filename)
     {
@@ -55,7 +53,6 @@ class Cache
 	 *
 	 * @param string $filename
 	 * @param string $content
-     * @version 20171216
 	 */
 	public function createCacheFile($filename, $content)
     {
@@ -72,7 +69,6 @@ class Cache
      * @param string $filename
      * @return string|null
      * @throws InvalidArgumentException
-     * @version 20171216
      */
 	public function getCacheFile($filename)
     {
@@ -90,7 +86,6 @@ class Cache
 	 * Clear the entire cache by removing all files in the cache directory.
 	 *
 	 * @return void
-     * @version 20171216
 	 */
 	public function clear()
     {

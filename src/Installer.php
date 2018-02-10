@@ -24,7 +24,6 @@ class Installer
      *
      * @param Options $options
      * @param Cache $cache
-     * @version 20171107
      */
 	public function __construct(Options $options, Cache $cache)
 	{
@@ -33,44 +32,9 @@ class Installer
     }
 
 	/**
-	 * Install.
-	 *
-     * @return $this
-     * @version 20171107
-	 */
-	public function install()
-	{
-		$this->options->addOptions();
-		return $this;
-	}
-
-    /**
-     * Update.
-     *
-     * @return $this
-     * @version 20171107
-     */
-	public function update()
-	{
-		$this->options
-			->addOptions()
-			->updateOption('fvch_version', $this->options->getDefaultOption('fvch_version'));
-
-		// Migrate font-size from px to em
-		if ((float) $this->options->getOption('fvch-font-size') > 2) {
-		    $this->options->updateOption('fvch-font-size', $this->options->getDefaultOption('fvch-font-size'));
-        }
-
-		$this->cache->clear();
-
-		return $this;
-	}
-
-	/**
 	 * Checks if an install is needed.
 	 *
 	 * @return bool
-     * @version 20171103
 	 */
 	public function isInstall()
 	{
@@ -81,7 +45,6 @@ class Installer
 	 * Check if an update is needed.
 	 *
 	 * @return bool
-     * @version 20171103
 	 */
 	public function isUpdate()
 	{
@@ -89,15 +52,46 @@ class Installer
 	}
 
     /**
+     * Install.
+     *
+     * @return $this
+     */
+    public function install()
+    {
+        $this->options->addOptions();
+        return $this;
+    }
+
+    /**
+     * Update.
+     *
+     * @return $this
+     */
+    public function update()
+    {
+        $this->options
+            ->addOptions()
+            ->updateOption('fvch_version', $this->options->getDefaultOption('fvch_version'));
+
+        // Migrate font-size from px to em
+        if ((float) $this->options->getOption('fvch-font-size') > 2) {
+            $this->options->updateOption('fvch-font-size', $this->options->getDefaultOption('fvch-font-size'));
+        }
+
+        $this->cache->clear();
+
+        return $this;
+    }
+
+    /**
      * Check if an update is available.
      *
      * @return bool
-     * @version 20171107
      */
     public function hasUpdate()
     {
         $lastCheck = $this->options->getOption('fvch-previous-has-update', false);
-        if (!$lastCheck || (time() - $lastCheck) > 432000) { // Only check once every five days
+        if (!$lastCheck || (time() - $lastCheck) > 86400) { // Only check once every 24 hours
             $latest = Version::getLatestVersion();
             $this->options->updateOption('fvch-previous-has-update', time());
 

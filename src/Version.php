@@ -28,7 +28,6 @@ final class Version
      * Get the current plugin version.
      *
      * @return string
-     * @version 20171103
      */
     public static function getCurrentVersion()
     {
@@ -39,7 +38,6 @@ final class Version
      * Fetch the latest version from the api
      *
      * @return string
-     * @version 20171107
      */
     public static function getLatestVersion()
     {

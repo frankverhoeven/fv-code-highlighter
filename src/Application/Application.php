@@ -44,7 +44,6 @@ class Application
      * Application constructor.
      *
      * @param Options|null $options
-     * @version 20171118
      */
     public function __construct(Options $options = null)
     {
@@ -72,7 +71,6 @@ class Application
     /**
      * Bootstrap the app
      *
-     * @version 20171118
      */
     protected function bootstrap()
     {
@@ -89,7 +87,6 @@ class Application
     /**
      * Run the application
      *
-     * @version 20171106
      */
     public function run()
     {

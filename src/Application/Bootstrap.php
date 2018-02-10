@@ -35,7 +35,6 @@ class Bootstrap
      * @param Options $options
      * @param Cache $cache
      * @param Container $container
-     * @version 20171118
      */
     public function __construct(Options $options, Cache $cache, Container $container)
     {
@@ -47,7 +46,6 @@ class Bootstrap
     /**
      * Run the installer if necessary.
      *
-     * @version 20171107
      */
     public function initInstaller()
     {
@@ -65,7 +63,6 @@ class Bootstrap
     /**
      * Plugin output
      *
-     * @version 20171118
      */
     public function initOutput()
     {
@@ -85,7 +82,6 @@ class Bootstrap
     /**
      * Admin area
      *
-     * @version 20171103
      */
     public function initAdmin()
     {

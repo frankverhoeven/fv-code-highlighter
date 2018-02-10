@@ -24,7 +24,6 @@ class Admin
      * __construct()
      *
      * @param PluginOptions $options
-     * @version 20171107
      */
 	public function __construct(PluginOptions $options)
 	{
@@ -66,7 +65,6 @@ class Admin
     /**
      * Display the admin page.
      *
-     * @version 20171107
      */
     public function optionsPage()
     {

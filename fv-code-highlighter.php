@@ -17,7 +17,6 @@ final class FvCodeHighlighter
     /**
      * Setup the autoloader
      *
-     * @version 20171113
      */
     private function setupAutoloader()
     {
@@ -30,7 +29,6 @@ final class FvCodeHighlighter
     /**
      * Start the application
      *
-     * @version 20171113
      */
     public function start()
     {

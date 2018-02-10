@@ -24,7 +24,6 @@ class Container
      * __construct()
      *
      * @param array $factories
-     * @version 20171118
      */
     public function __construct(array $factories)
     {
@@ -37,7 +36,6 @@ class Container
      *
      * @param string $id Identifier of the entry to look for.
      * @return mixed Entry.
-     * @version 20171118
      */
     public function get($id)
     {
@@ -68,7 +66,6 @@ class Container
      *
      * @param string $id Identifier of the entry to look for.
      * @return bool
-     * @version 20171118
      */
     public function has($id)
     {

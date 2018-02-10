@@ -36,7 +36,6 @@ class Highlighter implements OutputInterface
      * @param Options $options
      * @param Cache $cache
      * @param Container $container
-     * @version 20171118
      */
     public function __construct(Options $options, Cache $cache, Container $container)
     {
@@ -60,7 +59,6 @@ class Highlighter implements OutputInterface
      *
      * @param string $content
      * @return string
-     * @version 20171118
      */
     public function highlightCode($content)
     {
@@ -200,7 +198,6 @@ class Highlighter implements OutputInterface
      *
      * @param string $line
      * @return string
-     * @version 20171113
      */
     protected function stripClosedTags($line)
     {

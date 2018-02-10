@@ -22,7 +22,6 @@ class Options
     /**
      * __construct()
      *
-     * @version 20171103
      */
 	public function __construct()
 	{
@@ -33,7 +32,6 @@ class Options
 	 * setDefaultOptions()
 	 *
      * @return $this
-     * @version 20171103
 	 */
 	protected function setDefaultOptions()
 	{
@@ -55,7 +53,6 @@ class Options
 	 * getDefaultOptions()
 	 *
 	 * @return array
-     * @version 20171103
 	 */
 	public function getDefaultOptions()
 	{
@@ -67,7 +64,6 @@ class Options
 	 *
 	 * @param string $key
 	 * @return mixed
-     * @version 20171103
 	 */
 	public function getDefaultOption($key)
 	{
@@ -82,7 +78,6 @@ class Options
 	 * addOptions()
 	 *
      * @return $this
-     * @version 20171103
 	 */
 	public function addOptions()
 	{
@@ -99,7 +94,6 @@ class Options
      * @param string $key
      * @param mixed $value
      * @return $this
-     * @version 20171103
      */
 	public function addOption($key, $value)
 	{
@@ -115,7 +109,6 @@ class Options
      * @param string $key
      * @param mixed $value
      * @return $this
-     * @version 20171103
      */
 	public function updateOption($key, $value)
 	{
@@ -131,7 +124,6 @@ class Options
 	 * @param string $key
 	 * @param mixed $default
 	 * @return mixed
-     * @version 20171103
 	 */
 	public function getOption($key, $default=null)
 	{
@@ -150,7 +142,6 @@ class Options
 	 * deleteOptions()
 	 *
      * @return $this
-     * @version 20171103
 	 */
 	public function deleteOptions()
 	{
@@ -166,7 +157,6 @@ class Options
      *
      * @param string $key
      * @return $this
-     * @version 20171103
      */
 	public function deleteOption($key)
 	{
