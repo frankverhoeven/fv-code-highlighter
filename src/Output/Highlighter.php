@@ -120,7 +120,10 @@ class Highlighter implements OutputInterface
                 if ($this->options->getOption('fvch-toolbox')) {
                     $output .= '<div class="fvch-hide-if-no-js fvch-toolbox">';
 
-                    $output .= '<img src="' . plugins_url('public/images/copy-icon.svg', FvCodeHighlighter::__FILE__)
+                    $reflection = new \ReflectionClass(FvCodeHighlighter::class);
+                    $file = $reflection->getFileName();
+
+                    $output .= '<img src="' . plugins_url('public/images/copy-icon.svg', $file)
                         . '" alt="' . __('Select Code', 'fvch') . '" title="' . __('Select Code', 'fvch')
                         . '" class="fvch-toolbox-icon fvch-toolbox-icon-select" />';
 

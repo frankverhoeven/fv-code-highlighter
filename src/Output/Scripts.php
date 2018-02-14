@@ -31,17 +31,20 @@ class Scripts implements OutputInterface
      */
     public function __invoke(...$arguments)
     {
+        $reflection = new \ReflectionClass(FvCodeHighlighter::class);
+        $file = $reflection->getFileName();
+
         if ($this->options->getOption('fvch-toolbox')) {
             wp_enqueue_script(
                 'fvch-toolbox',
-                plugins_url('public/js/toolbox.min.js', FvCodeHighlighter::__FILE__),
+                plugins_url('public/js/toolbox.min.js', $file),
                 ['jquery'],
                 '1.1',
                 true
             );
         }
 
-        $stylesheet = plugins_url('public/css/fvch-styles.min.css', FvCodeHighlighter::__FILE__);
+        $stylesheet = plugins_url('public/css/fvch-styles.min.css', $file);
         if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
             $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
         }

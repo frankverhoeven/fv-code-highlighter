@@ -14,10 +14,6 @@ final class Version
     /**
      * @var string
      */
-    const CURRENT_VERSION = FvCodeHighlighter::VERSION;
-    /**
-     * @var string
-     */
     const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/current';
     /**
      * @var string
@@ -31,7 +27,10 @@ final class Version
      */
     public static function getCurrentVersion()
     {
-        return self::CURRENT_VERSION;
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        $reflection = new \ReflectionClass(FvCodeHighlighter::class);
+        $data = \get_plugin_data($reflection->getFileName());
+        return $data['Version'];
     }
 
     /**

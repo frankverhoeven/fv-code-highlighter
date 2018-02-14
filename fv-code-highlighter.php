@@ -11,9 +11,6 @@
 
 final class FvCodeHighlighter
 {
-    const VERSION  = '2.0.4';
-    const __FILE__ = __FILE__;
-
     /**
      * Setup the autoloader
      *
