@@ -2,12 +2,16 @@
 
 namespace FvCodeHighlighter\Config;
 
+use ArrayAccess;
+use Countable;
+use Iterator;
+
 /**
  * Config
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Config
+class Config implements ArrayAccess, Countable, Iterator
 {
     /**
      * @var array
@@ -21,7 +25,7 @@ class Config
     {
         if (null !== $config) {
             foreach ($config as $key => $value) {
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     $this->config[$key] = new static($value);
                 } else {
                     $this->config[$key] = $value;
@@ -39,11 +43,11 @@ class Config
      */
     public function get(string $key, $default = null)
     {
-        if (array_key_exists($key, $this->config)) {
+        if (\array_key_exists($key, $this->config)) {
             $default = $this->config[$key];
         }
 
-        return get_option($key, $default);
+        return \get_option($key, $default);
     }
 
     /**
@@ -54,14 +58,14 @@ class Config
      */
     public function add(string $key, $value)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $value = new static($value);
         }
 
-        if (!array_key_exists($key, $this->config)) {
+        if (!\array_key_exists($key, $this->config)) {
             $this->config[$key] = $value;
         }
-        add_option($key, $value);
+        \add_option($key, $value);
     }
 
     /**
@@ -72,12 +76,12 @@ class Config
      */
     public function set(string $key, $value)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $value = new static($value);
         }
 
         $this->config[$key] = $value;
-        update_option($key, $value);
+        \update_option($key, $value);
     }
 
     /**
@@ -100,7 +104,7 @@ class Config
     {
         if (isset($this->config[$key])) {
             unset($this->config[$key]);
-            delete_option($key);
+            \delete_option($key);
         }
     }
 
@@ -154,7 +158,7 @@ class Config
      */
     public function current()
     {
-        return current($this->config);
+        return \current($this->config);
     }
 
     /**
@@ -164,7 +168,7 @@ class Config
      */
     public function next()
     {
-        next($this->config);
+        \next($this->config);
     }
 
     /**
@@ -174,7 +178,7 @@ class Config
      */
     public function key()
     {
-        return key($this->config);
+        return \key($this->config);
     }
 
     /**
@@ -194,7 +198,7 @@ class Config
      */
     public function rewind()
     {
-        reset($this->config);
+        \reset($this->config);
     }
 
     /**
@@ -204,6 +208,6 @@ class Config
      */
     public function count()
     {
-        return count($this->config);
+        return \count($this->config);
     }
 }
