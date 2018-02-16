@@ -52,7 +52,7 @@ final class FvCodeHighlighter
      */
     public static function activation(): void
     {
-        \do_action('fvcn_activation');
+        \do_action('fvch_activation');
         \register_uninstall_hook(__FILE__, [static::class, 'uninstall']);
     }
 
@@ -63,7 +63,7 @@ final class FvCodeHighlighter
      */
     public static function deactivation(): void
     {
-        \do_action('fvcn_deactivation');
+        \do_action('fvch_deactivation');
     }
 
     /**
@@ -73,7 +73,7 @@ final class FvCodeHighlighter
      */
     public static function uninstall(): void
     {
-        \do_action('fvcn_uninstall');
+        \do_action('fvch_uninstall');
     }
 }
 
