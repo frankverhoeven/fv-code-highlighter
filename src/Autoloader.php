@@ -43,7 +43,7 @@ class AutoLoader
      */
     public function register($prepend = false)
     {
-        spl_autoload_register([$this, 'autoload'], true, $prepend);
+        \spl_autoload_register([$this, 'autoload'], true, $prepend);
     }
 
     /**
@@ -51,7 +51,7 @@ class AutoLoader
      */
     public function unregister()
     {
-        spl_autoload_unregister([$this, 'autoload']);
+        \spl_autoload_unregister([$this, 'autoload']);
     }
 
     /**
@@ -62,11 +62,11 @@ class AutoLoader
     public function autoload($class)
     {
         foreach ($this->prefixes as $prefix => $path) {
-            $len = strlen($prefix);
+            $len = \strlen($prefix);
 
-            if (0 === strncmp($prefix, $class, $len)) {
-                $relativeClass = substr($class, $len);
-                $file = $path . str_replace('\\', '/', $relativeClass) . '.php';
+            if (0 === \strncmp($prefix, $class, $len)) {
+                $relativeClass = \substr($class, $len);
+                $file = $path . \str_replace('\\', '/', $relativeClass) . '.php';
 
                 $this->loadFile($file);
             }
@@ -82,7 +82,7 @@ class AutoLoader
     {
         // Prevent access to $this/self
         (function() use ($file) {
-            if (file_exists($file)) {
+            if (\file_exists($file)) {
                 require $file;
             }
         })();

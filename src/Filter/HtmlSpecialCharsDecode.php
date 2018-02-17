@@ -26,13 +26,13 @@ class HtmlSpecialCharsDecode implements FilterInterface
         ];
 
         foreach ($checks as $check) {
-            if (strstr($value, $check)) {
+            if (\strstr($value, $check)) {
                 $converted = true;
             }
         }
 
         if ($converted) {
-            return htmlspecialchars_decode($value);
+            return \htmlspecialchars_decode($value);
         } else {
             return $value;
         }

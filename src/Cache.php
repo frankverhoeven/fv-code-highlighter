@@ -29,9 +29,9 @@ class Cache
      */
 	public function __construct($cacheDirectory)
     {
-		$this->cacheDirectory = realpath($cacheDirectory) . '/';
+		$this->cacheDirectory = \realpath($cacheDirectory) . '/';
 
-		if (!wp_is_writable($cacheDirectory) || true === WP_DEBUG) {
+		if (!\wp_is_writable($cacheDirectory) || true === WP_DEBUG) {
 		    $this->enabled = false;
         }
 	}
@@ -45,7 +45,7 @@ class Cache
 	 */
 	public function cacheFileExists($filename)
     {
-		return $this->enabled && file_exists($this->cacheDirectory . $filename);
+		return $this->enabled && \file_exists($this->cacheDirectory . $filename);
 	}
 
 	/**
@@ -57,7 +57,7 @@ class Cache
 	public function createCacheFile($filename, $content)
     {
         if ($this->enabled) {
-            file_put_contents($this->cacheDirectory . $filename, $content);
+            \file_put_contents($this->cacheDirectory . $filename, $content);
         }
 	}
 
@@ -79,7 +79,7 @@ class Cache
 			throw new InvalidArgumentException('The requested cache file does not exist');
 		}
 
-		return file_get_contents($this->cacheDirectory . $filename);
+		return \file_get_contents($this->cacheDirectory . $filename);
 	}
 
 	/**
@@ -89,14 +89,14 @@ class Cache
 	 */
 	public function clear()
     {
-        if ($this->enabled && $handle = opendir($this->cacheDirectory)) {
-            while (false !== ($file = readdir($handle))) {
+        if ($this->enabled && $handle = \opendir($this->cacheDirectory)) {
+            while (false !== ($file = \readdir($handle))) {
                 if ('.' != $file && '..' != $file) {
-                    unlink($this->cacheDirectory . $file);
+                    \unlink($this->cacheDirectory . $file);
                 }
             }
 
-            closedir($handle);
+            \closedir($handle);
         }
 	}
 }

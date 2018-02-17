@@ -96,8 +96,8 @@ class Css extends AbstractHighlighter
     public function postProcess($code)
     {
         // Fixes
-        $code = str_replace(':<span class="css-value">', '<span class="css-selector">:</span><span class="css-value">', $code);
-        $code = preg_replace('/\}(\s*?)\}/', '}\\1<span class="css-media">}</span>', $code);
+        $code = \str_replace(':<span class="css-value">', '<span class="css-selector">:</span><span class="css-value">', $code);
+        $code = \preg_replace('/\}(\s*?)\}/', '}\\1<span class="css-media">}</span>', $code);
 
         return $code;
     }

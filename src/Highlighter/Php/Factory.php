@@ -54,7 +54,7 @@ class Factory implements FactoryInterface
             Key::create(['<?php', '<?=', '<?', '?>'], 'php-script-tag'),
             Block::create([
                 'start'	=> ['$'],
-                'end'	=> array_merge(Php::$whitespace, Php::$operators, Php::$brackets, [',', ';']),
+                'end'	=> \array_merge(Php::$whitespace, Php::$operators, Php::$brackets, [',', ';']),
                 'cssClass'	=> 'php-var',
                 'endIncluded'	=> false,
             ]),
@@ -62,12 +62,12 @@ class Factory implements FactoryInterface
             Key::create(Php::$numbers, 'php-number', '^(?![a-zA-Z]).*$', '^(?![a-zA-Z]).*$'),
             Key::create(Php::$brackets, 'php-brackets'),
             Key::create(Php::$varTypes, 'php-var-type', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(array_merge(Php::$constants, ['strict_types']), 'php-constant', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
+            Key::create(\array_merge(Php::$constants, ['strict_types']), 'php-constant', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Key::create(Php::$keywords, 'php-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(get_defined_functions()['internal'], 'php-function', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
+            Key::create(\get_defined_functions()['internal'], 'php-function', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
             Block::create([
                 'start'	=> Php::$methodChars,
-                'end'	=> array_merge(Php::$whitespace, Php::$operators, [',', ';', '{', '}', '[', ']', ')', '->']),
+                'end'	=> \array_merge(Php::$whitespace, Php::$operators, [',', ';', '{', '}', '[', ']', ')', '->']),
                 'contains' => '[a-zA-Z0-9_]+',
                 'cssClass'	=> 'php-var',
                 'endIncluded'	=> false,
@@ -85,7 +85,7 @@ class Factory implements FactoryInterface
             ]),
             Block::create([
                 'start'	=> Php::$methodChars,
-                'end'	=> array_merge(Php::$whitespace, ['{', ';', '(', ' as']),
+                'end'	=> \array_merge(Php::$whitespace, ['{', ';', '(', ' as']),
                 'cssClass'	=> 'php-class',
                 'endIncluded'	=> false,
                 'startPrefix' => '(use|as|class|new|namespace)[\s]+$',

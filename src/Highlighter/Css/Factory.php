@@ -58,7 +58,7 @@ class Factory implements FactoryInterface
             'cssClass'	=> 'css-value',
             'startIncluded'	=> false,
             'endIncluded'	=> false,
-            'children'	=> array_merge($string, [$important, $php]),
+            'children'	=> \array_merge($string, [$important, $php]),
         ]);
 
         $elements = [

@@ -81,11 +81,11 @@ class Block
      */
     private function __construct(array $options)
     {
-        $methods = get_class_methods($this);
-        $keys = array_keys($options);
+        $methods = \get_class_methods($this);
+        $keys = \array_keys($options);
 
         foreach ($keys as $name) {
-            if (in_array('get' . ucfirst($name), $methods) || in_array('is' . ucfirst($name), $methods)) {
+            if (\in_array('get' . \ucfirst($name), $methods) || \in_array('is' . \ucfirst($name), $methods)) {
                 $this->{$name} = $options[$name];
             }
         }

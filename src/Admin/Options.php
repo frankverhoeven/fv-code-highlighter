@@ -184,6 +184,7 @@ class Options
             <input type="checkbox" name="fvch-dark-mode" id="fvch-dark-mode" <?php \checked('1', $this->config['fvch-dark-mode']); ?> value="1">
             <?php \_e('Check to use dark mode.', 'fvch'); ?>
         </label>
+        <p class="description"><?php \_e('Note: Dark Mode will override the background options.', 'fvch'); ?></p>
         <?php
     }
 }
