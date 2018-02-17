@@ -3,7 +3,7 @@
 namespace FvCodeHighlighter\Output;
 
 use FvCodeHighlighter;
-use FvCodeHighlighter\Options;
+use FvCodeHighlighter\Config;
 
 /**
  * Scripts
@@ -13,16 +13,16 @@ use FvCodeHighlighter\Options;
 class Scripts implements OutputInterface
 {
     /**
-     * @var Options
+     * @var Config
      */
-    private $options;
+    private $config;
 
     /**
-     * @param Options $options
+     * @param Config $config
      */
-    public function __construct(Options $options)
+    public function __construct(Config $config)
     {
-        $this->options = $options;
+        $this->config = $config;
     }
 
     /**
@@ -34,22 +34,22 @@ class Scripts implements OutputInterface
         $reflection = new \ReflectionClass(FvCodeHighlighter::class);
         $file = $reflection->getFileName();
 
-        if ($this->options->getOption('fvch-toolbox')) {
-            wp_enqueue_script(
+        if ($this->config['fvch-toolbox']) {
+            \wp_enqueue_script(
                 'fvch-toolbox',
-                plugins_url('public/js/toolbox.min.js', $file),
+                \plugins_url('public/js/toolbox.min.js', $file),
                 ['jquery'],
                 '1.1',
                 true
             );
         }
 
-        $stylesheet = plugins_url('public/css/fvch-styles.min.css', $file);
-        if (file_exists(get_stylesheet_directory() . '/fvch-styles.min.css')) {
-            $stylesheet = get_stylesheet_directory_uri() . '/fvch-styles.min.css';
+        $stylesheet = \plugins_url('public/css/fvch-styles.min.css', $file);
+        if (\file_exists(\get_stylesheet_directory() . '/fvch-styles.min.css')) {
+            $stylesheet = \get_stylesheet_directory_uri() . '/fvch-styles.min.css';
         }
 
-        wp_register_style('fvch-styles', $stylesheet, false, '1.2');
-        wp_enqueue_style('fvch-styles');
+        \wp_register_style('fvch-styles', $stylesheet, false, '1.2');
+        \wp_enqueue_style('fvch-styles');
     }
 }
