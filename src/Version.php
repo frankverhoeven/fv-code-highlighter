@@ -43,20 +43,20 @@ final class Version
         global $wp_version;
 
         if (null === self::$latestVersion) {
-            $response = wp_remote_get(self::API_VERSION_CURRENT, [
+            $response = \wp_remote_get(self::API_VERSION_CURRENT, [
                 'body' => [
-                    'blog_name'         => get_bloginfo('name'),
-                    'blog_description'  => get_bloginfo('description'),
-                    'blog_url'          => get_bloginfo('url'),
-                    'wordpress_url'     => get_bloginfo('wpurl'),
+                    'blog_name'         => \get_bloginfo('name'),
+                    'blog_description'  => \get_bloginfo('description'),
+                    'blog_url'          => \get_bloginfo('url'),
+                    'wordpress_url'     => \get_bloginfo('wpurl'),
                     'wordpress_version' => $wp_version,
                     'plugin_version'    => self::getCurrentVersion(),
-                    'php_version'       => phpversion(),
+                    'php_version'       => \phpversion(),
                 ],
             ]);
 
-            if (is_array($response) && 200 == $response['response']['code']) {
-                $data = json_decode($response['body'], true);
+            if (\is_array($response) && 200 == $response['response']['code']) {
+                $data = \json_decode($response['body'], true);
                 self::$latestVersion = $data['version'];
             }
         }
