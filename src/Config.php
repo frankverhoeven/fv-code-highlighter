@@ -1,6 +1,6 @@
 <?php
 
-namespace FvCodeHighlighter\Config;
+namespace FvCodeHighlighter;
 
 use ArrayAccess;
 use Countable;
@@ -51,12 +51,28 @@ class Config implements ArrayAccess, Countable, Iterator
     }
 
     /**
+     * Retreive the default value for $key, null if no default.
+     *
+     * @param string $key
+     * @return mixed|null
+     */
+    public function getDefault(string $key)
+    {
+        $default = null;
+        if (\array_key_exists($key, $this->config)) {
+            $default = $this->config[$key];
+        }
+
+        return $default;
+    }
+
+    /**
      * Add a value to the config, skips if key exists.
      *
      * @param  string $key
      * @param  mixed  $value
      */
-    public function add(string $key, $value)
+    public function add(string $key, $value): void
     {
         if (\is_array($value)) {
             $value = new static($value);
@@ -74,7 +90,7 @@ class Config implements ArrayAccess, Countable, Iterator
      * @param string $key
      * @param mixed $value
      */
-    public function set(string $key, $value)
+    public function set(string $key, $value): void
     {
         if (\is_array($value)) {
             $value = new static($value);
@@ -114,7 +130,7 @@ class Config implements ArrayAccess, Countable, Iterator
      * @param mixed $offset An offset to check for.
      * @return boolean true on success or false on failure.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
@@ -166,7 +182,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return void Any returned value is ignored.
      */
-    public function next()
+    public function next(): void
     {
         \next($this->config);
     }
@@ -186,7 +202,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return boolean Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return ($this->key() !== null);
     }
@@ -196,7 +212,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return void Any returned value is ignored.
      */
-    public function rewind()
+    public function rewind(): void
     {
         \reset($this->config);
     }
@@ -206,7 +222,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return int The custom count as an integer.
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->config);
     }
