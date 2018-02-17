@@ -24,8 +24,8 @@ completely customize the output of the plugin.
 
 == Screenshots ==
 
-1. The configuration page.
-2. PHP Code with dark mode enabled
+1. PHP Code with dark mode enabled
+2. The configuration page.
 3. PHP Code with notepaper background and toolbox
 4. General Code
 5. CSS Code
