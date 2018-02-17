@@ -25,12 +25,13 @@ completely customize the output of the plugin.
 == Screenshots ==
 
 1. The configuration page.
-2. PHP Code with notepaper background and toolbox
-3. General Code
-4. CSS Code
-5. HTML Code with embedded CSS and Javascript
-6. JavaScript Code
-7. PHP Code
+2. PHP Code with dark mode enabled
+3. PHP Code with notepaper background and toolbox
+4. General Code
+5. CSS Code
+6. HTML Code with embedded CSS and Javascript
+7. JavaScript Code
+8. PHP Code
 
 
 
@@ -86,7 +87,7 @@ For more details on changes, please visit the [WordPress Trac](http://plugins.tr
 
 = 2.1 =
 
-* New: Dark Mode.
+* New: All new Dark Mode that displays code with a dark background.
 * Improvement: Use the settings API for the admin page.
 * Improvement: Prepend global scope with '\' to improve performance.
 * Fix: Installer fixes.
