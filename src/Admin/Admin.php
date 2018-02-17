@@ -2,7 +2,7 @@
 
 namespace FvCodeHighlighter\Admin;
 
-use FvCodeHighlighter\Options as PluginOptions;
+use FvCodeHighlighter\Config;
 
 /**
  * FvCodeHighlighter_Admin
@@ -16,18 +16,18 @@ class Admin
      */
     protected $optionsPageHook;
     /**
-     * @var PluginOptions
+     * @var Config
      */
-    private $options;
+    private $config;
 
     /**
      * __construct()
      *
-     * @param PluginOptions $options
+     * @param Config $config
      */
-	public function __construct(PluginOptions $options)
+	public function __construct(Config $config)
 	{
-        $this->options = $options;
+        $this->config = $config;
     }
 
     /**
@@ -54,11 +54,11 @@ class Admin
 	public function adminMenu()
 	{
 		$this->optionsPageHook = \add_theme_page(
-			__('FV Code Highlighter Options', 'fvch'),
-			__('Code Highlighter', 'fvch'),
+			\__('FV Code Highlighter Options', 'fvch'),
+			\__('Code Highlighter', 'fvch'),
 			'edit_themes',
 			'fvch-options',
-			[new Options($this->options), 'page']
+			[new Options($this->config), 'page']
 		);
 	}
 }
