@@ -84,6 +84,14 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
 
+= 2.1 =
+
+* New: Dark Mode.
+* Improvement: Use the settings API for the admin page.
+* Improvement: Prepend global scope with '\' to improve performance.
+* Fix: Installer fixes.
+
+
 = 2.0.5 =
 
 * Change: Require PHP >= 7.

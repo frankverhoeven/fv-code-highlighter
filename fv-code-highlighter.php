@@ -9,6 +9,11 @@
  * Version:     2.1
  */
 
+use FvCodeHighlighter\AutoLoader;
+use FvCodeHighlighter\Bootstrap;
+use FvCodeHighlighter\Config;
+use FvCodeHighlighter\Container\Container;
+
 final class FvCodeHighlighter
 {
     /**
@@ -29,7 +34,7 @@ final class FvCodeHighlighter
     {
         require_once __DIR__ . '/src/Autoloader.php';
 
-        $autoloader = new \FvCodeHighlighter\AutoLoader(['FvCodeHighlighter' => __DIR__ . '/src/']);
+        $autoloader = new AutoLoader(['FvCodeHighlighter' => __DIR__ . '/src/']);
         $autoloader->register();
     }
 
@@ -41,8 +46,11 @@ final class FvCodeHighlighter
     {
         $this->setupAutoloader();
 
-        $app = new \FvCodeHighlighter\Application\Application();
-        $app->run();
+        $services = include __DIR__ . '/config/service.config.php';
+        $services[Config::class] = new Config(include __DIR__ . '/config/default.config.php');
+
+        $bootstrap = new Bootstrap(new Container($services));
+        $bootstrap->bootstrap();
     }
 
     /**

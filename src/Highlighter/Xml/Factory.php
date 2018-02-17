@@ -19,9 +19,10 @@ class Factory implements FactoryInterface
      * Create new container object
      *
      * @param Container $container
+     * @param string $requestedName
      * @return mixed
      */
-    public function create(Container $container)
+    public function create(Container $container, string $requestedName)
     {
         $php = Block::create([
             'start'	=> ['<?php', '<?=', '<?'],

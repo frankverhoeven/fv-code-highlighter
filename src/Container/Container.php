@@ -43,15 +43,15 @@ class Container
             throw new InvalidArgumentException('Entry "' . $id . '" not found.');
         }
 
-        if (!array_key_exists($id, $this->container)) {
+        if (!\array_key_exists($id, $this->container)) {
             $entry = $this->factories[$id];
 
-            if (is_string($entry) && class_exists($entry)) {
+            if (\is_string($entry) && \class_exists($entry)) {
                 $entry = new $entry();
             }
 
             if ($entry instanceof FactoryInterface) {
-                $this->container[$id] = $entry->create($this);
+                $this->container[$id] = $entry->create($this, $id);
             } else {
                 $this->container[$id] = $entry;
             }
@@ -67,8 +67,24 @@ class Container
      * @param string $id Identifier of the entry to look for.
      * @return bool
      */
-    public function has($id)
+    public function has(string $id): bool
     {
-        return (array_key_exists($id, $this->factories) || array_key_exists($id, $this->container));
+        return (\array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container));
+    }
+
+    /**
+     * Add an entry to the container
+     *
+     * @param string $id Identifier of the entry.
+     * @param FactoryInterface|mixed $entry
+     * @return void
+     */
+    public function add(string $id, $entry): void
+    {
+        if ($this->has($id)) {
+            throw new InvalidArgumentException('An entry for "' . $id . '" already exists.');
+        }
+
+        $this->factories[$id] = $entry;
     }
 }

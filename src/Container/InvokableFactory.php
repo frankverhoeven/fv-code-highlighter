@@ -3,11 +3,11 @@
 namespace FvCodeHighlighter\Container;
 
 /**
- * FactoryInterface
+ * InvokableFactory
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-interface FactoryInterface
+class InvokableFactory implements FactoryInterface
 {
     /**
      * Create new container object
@@ -16,5 +16,8 @@ interface FactoryInterface
      * @param string $requestedName Name of the requested entry.
      * @return mixed
      */
-    public function create(Container $container, string $requestedName);
+    public function create(Container $container, string $requestedName)
+    {
+        return new $requestedName();
+    }
 }
