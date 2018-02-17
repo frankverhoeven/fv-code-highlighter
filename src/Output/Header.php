@@ -37,6 +37,10 @@ class Header implements OutputInterface
         ];
         $background = $background[$this->config['fvch-background']];
 
+        if ($this->config['fvch-dark-mode']) {
+            $background = '#2e2e2d';
+        }
+
         $font = [
             'Andale Mono' => "'Andale Mono', 'Courier New', Courier, monospace",
             'Courier' => "Courier, 'Courier New', Courier, monospace",
@@ -54,7 +58,7 @@ class Header implements OutputInterface
                 background-position-y: 4px !important;
             }
             .fvch-codeblock pre, .fvch-line-number {
-                line-height: <?= 'notepaper' == $this->config['fvch-background'] ? '17px' : '1.4em'; ?> !important;
+                line-height: <?= 'notepaper' == $this->config['fvch-background'] ? '17px' : '1.5em'; ?> !important;
                 font-family: <?= $font; ?> !important;
                 font-size: <?= $fontSize; ?> !important;
             }

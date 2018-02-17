@@ -1,21 +1,12 @@
 @charset "utf-8";
 
-/**
- * Dreamweaver look a like highlighting colors.
- *
- * If you want to customize this file, copy it to your current theme directory
- *  first. Then start editing the copied file.
- *.2
- * @author  Frank Verhoeven <hi@frankverhoeven.me>
- */
-
 .fvch-hide-if-no-js {
     display: none !important;
 }
 
 .fvch-codeblock {
-    background:  url(../images/notepaper.png) top left repeat;
-    border:  1px solid #d2d2d2;
+    background: #2e2e2d;
+    border:  1px solid #1e1e1d;
     padding: 0 !important;
     margin: 0 0 1em;
     border-radius: 3px;
@@ -39,7 +30,7 @@
     font-family:  "Monaco", "Courier New", Courier, monospace;
     border: none !important;
     background: none !important;
-    color: inherit !important;
+    color: #f8f8f2 !important;
 }
 
 .fvch-toolbox {
@@ -47,11 +38,11 @@
     top: 0;
     right: 0;
     display: none;
-    border-left: 1px solid #d2d2d2;
-    border-bottom: 1px solid #d2d2d2;
+    border-left: 1px solid #3e3e3d;
+    border-bottom: 1px solid #3e3e3d;
     border-bottom-left-radius: 3px;
     border-top-right-radius: 3px;
-    background: #fff;
+    background: #2e2e2d;
     padding: 3px 6px 0;
 }
 
@@ -74,12 +65,12 @@
 
 td.fvch-line-number {
     text-align: right;
-    color: #666;
+    color: #5e5e5d;
     width: 1%;
     min-width: 30px;
     padding: 0 .7em;
-    background: #e2e2e2;
-    border-right: 1px solid #d2d2d2;
+    background: #2e2e2d;
+    border-right: 1px solid #3e3e3d;
     user-select: none;
 }
 td.fvch-line-number:before {
@@ -95,24 +86,25 @@ table.fvch-code tr:last-child td {
 }
 
 
+
 /**
  * General
  */
 .general {
-    color: #000;
+    color: #f8f8f2;
     font-weight: normal;
 }
 .general-number {
-    color: rgb(41, 52, 212);
+    color: #ae81ff;
 }
 .general-operator {
-    color: rgb(0, 0, 0);
+    color: #f8f8f2;
 }
 .general-brackets {
-    color: rgb(0, 0, 153);
+    color: #f8f8f2;
 }
 .general-string {
-    color: rgb(207, 49, 37);
+    color: #a6e22e;
 }
 
 
@@ -146,41 +138,38 @@ table.fvch-code tr:last-child td {
  * CSS
  */
 .css {
-    color: #f0f;
-}
-.css-background {
-    background-color: #fff;
+    color: #f8f8f2;
 }
 .css-import {
-    color: #099;
+    color: #f8f8f2;
     font-weight: bold;
 }
 .css-media {
-    color: #900;
+    color: #f8f8f2;
     font-weight: bold;
 }
 .css-comment {
-    color: #999;
+    color: #708090;
 }
 .css-important {
-    color: #f00;
+    color: #f92672;
     font-weight: bold;
 }
 .css-property {
-    color: #009;
+    color: #e6db74;
 }
 .css-selector {
-    color: #f0f;
+    color: #f8f8f2;
 }
 .css-string {
-    color: #060;
+    color: #a6e22e;
     font-weight: normal;
 }
 .css-value {
-    color: #00f;
+    color: #a6e22e;
 }
 .css-rest {
-    color: #f0f;
+    color: #f8f8f2;
     font-weight: bold;
 }
 
@@ -189,159 +178,153 @@ table.fvch-code tr:last-child td {
  */
 .html {
     font-weight: normal;
-    color: #000;
+    color: #f8f8f2;
 }
 .html-anchor-element {
-    color: #060;
+    color: #e6db74;
 }
 .html-attribute {
-    color: #00f;
+    color: #a6e22e;
 }
 .html-comment {
-    color: #999;
+    color: #708090;
 }
 .html-form-element {
-    color: #f90;
+    color: #e6db74;
 }
 .html-image-element {
-    color: #909;
+    color: #e6db74;
 }
 .html-object-element {
-    color: #900;
+    color: #e6db74;
 }
 .html-other-element {
-    color: #009;
+    color: #e6db74;
 }
 .html-script-element {
-    color: #900;
+    color: #e6db74;
 }
 .html-special-char {
-    color: #000;
+    color: #f8f8f2;
     font-weight: bold;
 }
 .html-style-element {
-    color: #909;
+    color: #e6db74;
 }
 .html-table-element {
-    color: #099;
+    color: #e6db74;
 }
 .html-text {
-    color: #000;
+    color: #f8f8f2;
 }
 
 /**
  * PHP
  */
 .php {
-    color: #000;
+    color: #f8f8f2;
     font-weight: normal;
 }
 .php-script-tag {
-    color: #d00;
+    color: #66d9ef;
     font-weight: bold;
 }
 .php-comment {
-    color: #f90;
+    color: #708090;
 }
 .php-comment-phpdoc {
-    color: darken(#f90, 5%);
+    color: #708090;
+    font-weight: bold;
 }
 .php-constant {
-    color: #520;
+    color: #f92672;
 }
 .php-function {
-    color: #000;
+    color: #e6db74;
 }
 .php-method {
-    color: #000;
+    color: #e6db74;
 }
 .php-class {
-    color: #000;
+    color: #f8f8f2;
 }
 .php-number {
-    color: #f00;
+    color: #ae81ff;
 }
 .php-operator {
-    color: #00f;
+    color: #f8f8f2;
 }
 .php-brackets {
-    color: #009;
+    color: #f8f8f2;
 }
 .php-keyword {
-    color: #006600;
+    color: #66d9ef;
 }
 .php-string {
-    color: #c00;
+    color: #a6e22e;
 }
 .php-var-type {
-    color: #099;
+    color: #ae81ff;
 }
 .php-var {
-    color: #06f;
+    color: #f8f8f2;
 }
-
 
 /**
  * XML
  */
 .xml {
-    color: #000;
+    color: #f8f8f2;
 }
 .xml-string {
-    color: #060;
+    color: #a6e22e;
 }
 .xml-comment, .xml-comment span {
-    color: #999;
+    color: #708090;
 }
 .xml-number {
-    color: #f00;
+    color: #ae81ff;
 }
 .xml-element {
-    color: #009;
+    color: #e6db74;
 }
 .xml-text {
-    color: #000;
+    color: #f8f8f2;
 }
 
 /**
  * JavaScript
  */
 .javascript {
-    color: #000;
+    color: #f8f8f2;
 }
 .js-string {
-    color: #00f;
+    color: #a6e22e;
 }
 .js-bracket {
-    color: #009;
-    font-weight: bold;
+    color: #f8f8f2;
 }
 .js-client-keyword {
-    color: #909;
+    color: #e6db74;
 }
 .js-comment {
-    color: #999;
+    color: #708090;
 }
 .js-function-keyword {
-    color: #000;
-    font-weight: bold;
+    color: #66d9ef;
 }
 .js-native-keyword {
-    color: #099;
+    color: #e6db74;
 }
 .js-number {
-    color: #f00;
+    color: #ae81ff;
 }
 .js-operator {
-    color: #00f;
+    color: #f8f8f2;
 }
 .js-regexp {
-    color: #060;
+    color: #a6e22e;
 }
 .js-reserved-keyword {
-    color: #009;
-    font-weight: bold;
-}
-.js-string {
-    color: #00f;
+    color: #66d9ef;
 }

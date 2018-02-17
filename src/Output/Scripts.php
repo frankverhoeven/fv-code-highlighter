@@ -44,7 +44,12 @@ class Scripts implements OutputInterface
             );
         }
 
-        $stylesheet = \plugins_url('public/css/fvch-styles.min.css', $file);
+        if ($this->config['fvch-dark-mode']) {
+            $stylesheet = \plugins_url('public/css/fvch-styles-dark.min.css', $file);
+        } else {
+            $stylesheet = \plugins_url('public/css/fvch-styles.min.css', $file);
+        }
+
         if (\file_exists(\get_stylesheet_directory() . '/fvch-styles.min.css')) {
             $stylesheet = \get_stylesheet_directory_uri() . '/fvch-styles.min.css';
         }
