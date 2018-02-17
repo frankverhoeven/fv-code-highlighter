@@ -10,9 +10,9 @@ namespace FvCodeHighlighter;
 class Installer
 {
 	/**
-	 * @var Options
+	 * @var Config
 	 */
-	protected $options;
+	protected $config;
 
     /**
      * @var Cache
@@ -22,12 +22,12 @@ class Installer
     /**
      * __construct()
      *
-     * @param Options $options
+     * @param Config $config
      * @param Cache $cache
      */
-	public function __construct(Options $options, Cache $cache)
+	public function __construct(Config $config, Cache $cache)
 	{
-		$this->options = $options;
+		$this->config = $config;
         $this->cache = $cache;
     }
 
@@ -36,9 +36,9 @@ class Installer
 	 *
 	 * @return bool
 	 */
-	public function isInstall()
+	public function isInstall(): bool
 	{
-		return ! (bool) $this->options->getOption('fvch_version', false);
+		return null === $this->config['fvch_version'];
 	}
 
 	/**
@@ -46,9 +46,9 @@ class Installer
 	 *
 	 * @return bool
 	 */
-	public function isUpdate()
+	public function isUpdate(): bool
 	{
-		return (1 == version_compare($this->options->getDefaultOption('fvch_version'), $this->options->getOption('fvch_version')));
+		return (1 == \version_compare(Version::getCurrentVersion(), $this->config['fvch_version']));
 	}
 
     /**
@@ -56,9 +56,8 @@ class Installer
      *
      * @return $this
      */
-    public function install()
+    public function install(): Installer
     {
-        $this->options->addOptions();
         return $this;
     }
 
@@ -67,15 +66,13 @@ class Installer
      *
      * @return $this
      */
-    public function update()
+    public function update(): Installer
     {
-        $this->options
-            ->addOptions()
-            ->updateOption('fvch_version', $this->options->getDefaultOption('fvch_version'));
+        $this->config->set('fvch_version', Version::getCurrentVersion());
 
         // Migrate font-size from px to em
-        if ((float) $this->options->getOption('fvch-font-size') > 2) {
-            $this->options->updateOption('fvch-font-size', $this->options->getDefaultOption('fvch-font-size'));
+        if ((float) $this->config['fvch-font-size'] > 2) {
+            $this->config->set('fvch-font-size', $this->config->getDefault('fvch-font-size'));
         }
 
         $this->cache->clear();
@@ -88,15 +85,15 @@ class Installer
      *
      * @return bool
      */
-    public function hasUpdate()
+    public function hasUpdate(): bool
     {
-        $lastCheck = $this->options->getOption('fvch-previous-has-update', false);
-        if (!$lastCheck || (time() - $lastCheck) > 86400) { // Only check once every 24 hours
+        $lastCheck = $this->config['fvch-previous-has-update'];
+        if (null === $lastCheck || (\time() - $lastCheck) > 86400) { // Only check once every 24 hours
             $latest = Version::getLatestVersion();
-            $this->options->updateOption('fvch-previous-has-update', time());
+            $this->config->set('fvch-previous-has-update', \time());
 
             if (null !== $latest) {
-                return (1 == version_compare($latest, $this->options->getOption('fvch_version')));
+                return (1 == \version_compare($latest, $this->config['fvch_version']));
             }
         }
 
