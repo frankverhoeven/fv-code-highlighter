@@ -88,6 +88,7 @@ For more details on changes, please visit the [WordPress Trac](http://plugins.tr
 = 2.1 =
 
 * New: All new Dark Mode that displays code with a dark background.
+* Improvement: New text select icon.
 * Improvement: Use the settings API for the admin page.
 * Improvement: Prepend global scope with '\' to improve performance.
 * Fix: Installer fixes.

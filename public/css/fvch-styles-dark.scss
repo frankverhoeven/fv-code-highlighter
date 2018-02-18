@@ -54,13 +54,17 @@
     border: none !important;
     background: none !important;
     cursor: pointer !important;
-    margin: 0 4px 4px 0 !important;
+    margin: 0 !important;
     padding: 2px !important;
     height: 20px;
 }
 
-.fvch-toolbox .fvch-toolbox-icon:last-child {
-    margin-right:  0 !important;
+.fvch-toolbox .fvch-toolbox-icon path {
+    fill: #6e6e6d;
+}
+
+.fvch-toolbox .fvch-toolbox-icon:active path {
+    fill: #4e4e4d;
 }
 
 td.fvch-line-number {
