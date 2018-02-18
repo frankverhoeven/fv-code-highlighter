@@ -95,6 +95,10 @@ class Highlighter implements OutputInterface
                 $filter = new HtmlSpecialCharsDecode();
                 $code = \trim($filter->filter($codes['code'][$i]));
 
+                if ($this->config['fvch-diagnostics']) {
+                    FvCodeHighlighter\Diagnostics::submitCodeSnippet($settings['type'], $code);
+                }
+
                 $cacheFile = \sha1($code . $settings['type']);
                 if ($this->cache->cacheFileExists($cacheFile)) {
                     $code = $this->cache->getCacheFile($cacheFile);

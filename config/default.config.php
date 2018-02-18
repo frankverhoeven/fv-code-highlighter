@@ -47,4 +47,9 @@ return [
      * @var bool Whether to use dark mode.
      */
     'fvch-dark-mode' => true,
+
+    /**
+     * @var bool Whether to enable diagnostics.
+     */
+    'fvch-diagnostics' => true,
 ];
