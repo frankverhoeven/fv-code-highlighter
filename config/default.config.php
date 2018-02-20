@@ -21,7 +21,7 @@ return [
     /**
      * @var string CSS font-size (em)
      */
-    'fvch-font-size' => '1',
+    'fvch-font-size' => '0.8',
 
     /**
      * @var string Background (notepaper, white, custom)
