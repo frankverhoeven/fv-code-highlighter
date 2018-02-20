@@ -79,7 +79,7 @@ class Container
      * @param FactoryInterface|mixed $entry
      * @return void
      */
-    public function add(string $id, $entry): void
+    public function add(string $id, $entry)
     {
         if ($this->has($id)) {
             throw new InvalidArgumentException('An entry for "' . $id . '" already exists.');

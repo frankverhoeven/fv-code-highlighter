@@ -32,7 +32,7 @@ class Bootstrap
      *
      * @return void
      */
-    public function bootstrap(): void
+    public function bootstrap()
     {
         $this->setupCache();
         $this->initInstaller();
@@ -45,7 +45,7 @@ class Bootstrap
      *
      * @return void
      */
-    protected function setupCache(): void
+    protected function setupCache()
     {
         $cacheDir = $this->container->get(Config::class)['fvch-cache-dir'];
         if ('' == $cacheDir || !is_dir($cacheDir)) {
@@ -60,7 +60,7 @@ class Bootstrap
      *
      * @return void
      */
-    public function initInstaller(): void
+    public function initInstaller()
     {
         $installer = new Installer(
             $this->container->get(Config::class),
@@ -81,7 +81,7 @@ class Bootstrap
      *
      * @return void
      */
-    public function initOutput(): void
+    public function initOutput()
     {
         $highlighter = new Output\Highlighter(
             $this->container->get(Config::class),
@@ -105,7 +105,7 @@ class Bootstrap
      *
      * @return void
      */
-    public function initAdmin(): void
+    public function initAdmin()
     {
         if (!is_admin()) return;
 

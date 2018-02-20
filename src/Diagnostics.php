@@ -21,7 +21,7 @@ final class Diagnostics
      * @param string $code
      * @return void
      */
-    public static function submitCodeSnippet(string $language, string $code): void
+    public static function submitCodeSnippet(string $language, string $code)
     {
         $hash = \sha1($code);
         $submitted = \get_option('fvch-diagnostics-snippets', []);

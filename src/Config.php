@@ -72,7 +72,7 @@ class Config implements ArrayAccess, Countable, Iterator
      * @param  string $key
      * @param  mixed  $value
      */
-    public function add(string $key, $value): void
+    public function add(string $key, $value)
     {
         if (\is_array($value)) {
             $value = new static($value);
@@ -90,7 +90,7 @@ class Config implements ArrayAccess, Countable, Iterator
      * @param string $key
      * @param mixed $value
      */
-    public function set(string $key, $value): void
+    public function set(string $key, $value)
     {
         if (\is_array($value)) {
             $value = new static($value);
@@ -116,7 +116,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @param string $key
      */
-    public function delete(string $key): void
+    public function delete(string $key)
     {
         if (isset($this->config[$key])) {
             unset($this->config[$key]);
@@ -182,7 +182,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return void Any returned value is ignored.
      */
-    public function next(): void
+    public function next()
     {
         \next($this->config);
     }
@@ -212,7 +212,7 @@ class Config implements ArrayAccess, Countable, Iterator
      *
      * @return void Any returned value is ignored.
      */
-    public function rewind(): void
+    public function rewind()
     {
         \reset($this->config);
     }

@@ -25,7 +25,7 @@ class Options
         $this->init();
     }
 
-    public function init(): void
+    public function init()
     {
         if (!\current_user_can('edit_themes')) {
             \wp_die(__('You do not have sufficient permissions to manage options for this site.'));
@@ -60,7 +60,7 @@ class Options
         \register_setting('fvch-options', 'fvch-dark-mode', ['type' => 'boolean', 'sanitize_callback' => 'boolval']);
     }
 
-    public function page(): void
+    public function page()
     {
         ?>
         <div class="wrap">
@@ -83,10 +83,10 @@ class Options
         <?php
     }
 
-    public function fontSection(): void
+    public function fontSection()
     {}
 
-    public function fontFamily(): void
+    public function fontFamily()
     {
         ?>
         <label>
@@ -112,7 +112,7 @@ class Options
         <?php
     }
 
-    public function fontSize(): void
+    public function fontSize()
     {
         ?>
         <select name="fvch-font-size" id="fvch-font-size">
@@ -125,10 +125,10 @@ class Options
         <?php
     }
 
-    public function backgroundSection(): void
+    public function backgroundSection()
     {}
 
-    public function background(): void
+    public function background()
     {
         ?>
         <label class="fvch-background-option description notepaper">
@@ -154,10 +154,10 @@ class Options
         <?php
     }
 
-    public function utilitySection(): void
+    public function utilitySection()
     {}
 
-    public function lineNumbers(): void
+    public function lineNumbers()
     {
         ?>
         <label>
@@ -167,7 +167,7 @@ class Options
         <?php
     }
 
-    public function toolbox(): void
+    public function toolbox()
     {
         ?>
         <label>
@@ -177,7 +177,7 @@ class Options
         <?php
     }
 
-    public function darkMode(): void
+    public function darkMode()
     {
         ?>
         <label>

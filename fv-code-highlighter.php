@@ -58,7 +58,7 @@ final class FvCodeHighlighter
      *
      * @return void
      */
-    public static function activation(): void
+    public static function activation()
     {
         \do_action('fvch_activation');
         \register_uninstall_hook(__FILE__, [static::class, 'uninstall']);
@@ -69,7 +69,7 @@ final class FvCodeHighlighter
      *
      * @return void
      */
-    public static function deactivation(): void
+    public static function deactivation()
     {
         \do_action('fvch_deactivation');
     }
@@ -79,7 +79,7 @@ final class FvCodeHighlighter
      *
      * @return void
      */
-    public static function uninstall(): void
+    public static function uninstall()
     {
         \do_action('fvch_uninstall');
     }
