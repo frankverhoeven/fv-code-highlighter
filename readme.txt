@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  3.2
 Tested up to:       4.9
-Stable tag:         2.1
+Stable tag:         2.1.1
 
 Highlight your code with beautiful highlighters.
 
@@ -84,6 +84,11 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+= 2.1.1 =
+
+* Fix: PHP 7.0 Compatibility
+
 
 = 2.1 =
 
