@@ -77,15 +77,27 @@ abstract class AbstractHighlighter implements HighlighterInterface
      * @param string $code
      * @return string
      */
-    public function highlight($code)
+    public function highlight(string $code): string
     {
         if (null === $this->parser) {
             $this->setup();
         }
 
+        $code = $this->preProcess($code);
         $code = $this->parser->parse($code);
         $code = $this->postProcess($code);
 
+        return $code;
+    }
+
+    /**
+     * Code pre processing
+     *
+     * @param string $code
+     * @return string
+     */
+    public function preProcess(string $code): string
+    {
         return $code;
     }
 
@@ -95,7 +107,7 @@ abstract class AbstractHighlighter implements HighlighterInterface
      * @param string $code
      * @return string
      */
-    public function postProcess($code)
+    public function postProcess(string $code): string
     {
         return $code;
     }

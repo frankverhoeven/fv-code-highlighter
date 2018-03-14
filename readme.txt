@@ -85,6 +85,12 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
 
+
+= 2.1.2 =
+
+* Improvement: PHP Code is no longer required to start with PHP tags to be highlighted.
+
+
 = 2.1.1 =
 
 * Fix: PHP 7.0 Compatibility

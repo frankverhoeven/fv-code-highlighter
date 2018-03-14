@@ -88,7 +88,7 @@ class Highlighter implements OutputInterface
 
                 $classname = \ucfirst(\strtolower($settings['type']));
                 if ('Php' == $classname) {
-                    $classname = 'Html'; // @todo: hack, fix
+                    //$classname = 'Html'; // @todo: hack, fix
                 }
                 $class = 'FvCodeHighlighter\\Highlighter\\' . $classname . '\\' . $classname;
 

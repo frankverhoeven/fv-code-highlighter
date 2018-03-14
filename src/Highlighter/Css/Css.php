@@ -93,7 +93,7 @@ class Css extends AbstractHighlighter
         '-ms-',
     ];
 
-    public function postProcess($code)
+    public function postProcess(string $code): string
     {
         // Fixes
         $code = \str_replace(':<span class="css-value">', '<span class="css-selector">:</span><span class="css-value">', $code);

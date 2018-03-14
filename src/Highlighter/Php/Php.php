@@ -382,8 +382,46 @@ class Php extends AbstractHighlighter
         '@see',
     ];
 
+    /**
+     * @var bool
+     */
+    private $prefixed = false;
+
     public function __construct(array $elements)
     {
         $this->elements = $elements;
+    }
+
+    /**
+     * Prefix code with php tag if needed
+     *
+     * @param string $code
+     * @return string
+     */
+    public function preProcess(string $code): string
+    {
+        if (!\strstr($code, '<?')) {
+            $code = '<?php' . \PHP_EOL . $code;
+            $this->prefixed = true;
+        } else {
+            $this->prefixed = false;
+        }
+
+        return $code;
+    }
+
+    /**
+     * Strip prefixed php tag if needed
+     *
+     * @param string $code
+     * @return string
+     */
+    public function postProcess(string $code): string
+    {
+        if ($this->prefixed) {
+            $code = \explode(\PHP_EOL, $code, 2)[1];
+        }
+
+        return $code;
     }
 }

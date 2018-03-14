@@ -26,7 +26,7 @@ class Html extends AbstractHighlighter
      * @param string $code
      * @return string
      */
-    public function postProcess($code)
+    public function postProcess(string $code): string
     {
         \preg_match_all('/&lt;style(.*?)&gt;<\/span>(?<code>.*?)<span class="html-style-element">&lt;\/style&gt;/msi', $code, $cssCode);
         for ($i=0; $i<\count($cssCode[0]); $i++) {

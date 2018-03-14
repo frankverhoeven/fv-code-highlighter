@@ -16,12 +16,20 @@ interface HighlighterInterface
     public function setup();
 
     /**
+     * Code pre processing
+     *
+     * @param string $code
+     * @return string
+     */
+    public function preProcess(string $code): string;
+
+    /**
      * Code post processing
      *
      * @param string $code
      * @return string
      */
-    public function postProcess($code);
+    public function postProcess(string $code): string;
 
     /**
      * Highliht the provided code
@@ -29,5 +37,5 @@ interface HighlighterInterface
      * @param string $code
      * @return string
      */
-    public function highlight($code);
+    public function highlight(string $code): string;
 }
