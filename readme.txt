@@ -3,9 +3,9 @@
 Contributors:       frankverhoeven
 Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
-Requires at least:  3.2
+Requires at least:  4.0
 Tested up to:       4.9
-Stable tag:         2.1.2
+Stable tag:         2.1.3
 
 Highlight your code with beautiful highlighters.
 
@@ -44,7 +44,7 @@ This section describes how to install the plugin and get it up & running.
 In order to successfully use this plugin, you will need the following:
 
 * PHP 7.0 or higher
-* WordPress 3.2 or higher
+* WordPress 4.0 or higher
 
 
 = Installation Steps =
@@ -84,6 +84,11 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 == Changelog ==
 
 For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+
+
+= 2.1.3 =
+
+* Improvement: Various small fixes and code improvements.
 
 
 = 2.1.2 =
@@ -140,22 +145,3 @@ For more details on changes, please visit the [WordPress Trac](http://plugins.tr
 * Improvement: Updated CSS keywords
 * Change: PHP code must start with a PHP tag (<?php, <?=) for the highlighter to work correctly
 * Fix: Various highlighter fixes
-
-
-= 1.9.1 =
-
-* New: A general highlighter for unsupported code types
-* Improvement: Changed the html that displays code
-* Improvement: Performance improvements
-* Improvement: Updated PHP keywords & functions
-* Change: Cache is now disabled if WP_DEBUG = true, make sure it is set to false on production!
-* Fix: Fixed various styling issues
-
-
-= 1.9 =
-
-* Improvement: Code cleanup
-* Fix: Switch to new author domain
-* Fix: Cacher tried to delete the entire hdd in certain circumstances
-* Fix: Updater check
-* Fix: Code toolbox selection
