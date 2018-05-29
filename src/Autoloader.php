@@ -7,7 +7,7 @@ namespace FvCodeHighlighter;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class AutoLoader
+final class AutoLoader
 {
     private $prefixes = [];
 

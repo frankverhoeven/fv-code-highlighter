@@ -9,16 +9,17 @@ use InvalidArgumentException;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Cache
+final class Cache
 {
 	/**
 	 * @var string
 	 */
-	protected $cacheDirectory;
+	private $cacheDirectory;
+
     /**
      * @var bool
      */
-	protected $enabled;
+	private $enabled;
 
     /**
      * Create a new cache handler with the provided cache directory.

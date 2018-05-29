@@ -11,7 +11,7 @@ use FvCodeHighlighter\Output;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Bootstrap
+final class Bootstrap
 {
     /**
      * @var Container

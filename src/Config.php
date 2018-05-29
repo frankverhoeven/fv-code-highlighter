@@ -11,12 +11,12 @@ use Iterator;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Config implements ArrayAccess, Countable, Iterator
+final class Config implements ArrayAccess, Countable, Iterator
 {
     /**
      * @var array
      */
-    protected $config;
+    private $config;
 
     /**
      * @param array $config
