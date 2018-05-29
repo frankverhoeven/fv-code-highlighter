@@ -14,7 +14,7 @@ final class Version
     /**
      * @var string
      */
-    const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/current';
+    const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/latest';
     /**
      * @var string
      */
