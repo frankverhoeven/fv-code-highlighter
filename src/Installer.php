@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter;
 
 /**
@@ -7,12 +9,12 @@ namespace FvCodeHighlighter;
  *
  * @author Frank Verhoeven <hi@frankverhoeven.me>
  */
-class Installer
+final class Installer
 {
 	/**
 	 * @var Config
 	 */
-	protected $config;
+	private $config;
 
     /**
      * @var Cache
@@ -54,9 +56,9 @@ class Installer
     /**
      * Install.
      *
-     * @return $this
+     * @return Installer
      */
-    public function install(): Installer
+    public function install(): self
     {
         return $this;
     }
@@ -64,10 +66,14 @@ class Installer
     /**
      * Update.
      *
-     * @return $this
+     * @return Installer
      */
-    public function update(): Installer
+    public function update(): self
     {
+        if ('2.1.2' === $this->config['fvch_version']) {
+            $this->config->delete('fvch-diagnostics-snippets');
+        }
+
         $this->config->set('fvch_version', Version::getCurrentVersion());
 
         // Migrate font-size from px to em
