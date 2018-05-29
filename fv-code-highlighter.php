@@ -6,14 +6,20 @@
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
  * Author URI:  https://frankverhoeven.me/
- * Version:     2.1.2
+ * Version:     2.1.3
  */
 
 use FvCodeHighlighter\AutoLoader;
 use FvCodeHighlighter\Bootstrap;
 use FvCodeHighlighter\Config;
+use FvCodeHighlighter\ConfigProvider;
 use FvCodeHighlighter\Container\Container;
 
+/**
+ * FvCodeHighlighter
+ *
+ * @author Frank Verhoeven <hi@frankverhoeven.me>
+ */
 final class FvCodeHighlighter
 {
     /**
@@ -46,8 +52,10 @@ final class FvCodeHighlighter
     {
         $this->setupAutoloader();
 
-        $services = include __DIR__ . '/config/service.config.php';
-        $services[Config::class] = new Config(include __DIR__ . '/config/default.config.php');
+        $configProvider = new ConfigProvider();
+
+        $services = $configProvider()['services'];
+        $services[Config::class] = new Config($configProvider()['defaults']);
 
         $bootstrap = new Bootstrap(new Container($services));
         $bootstrap->bootstrap();
