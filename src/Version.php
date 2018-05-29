@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter;
 
 use FvCodeHighlighter;
@@ -15,22 +17,32 @@ final class Version
      * @var string
      */
     const API_VERSION_CURRENT = 'https://api.frankverhoeven.me/fvch/1.0/versions/latest';
+
     /**
      * @var string
      */
-    private static $latestVersion = null;
+    private static $currentVersion;
+
+    /**
+     * @var string
+     */
+    private static $latestVersion;
 
     /**
      * Get the current plugin version.
      *
      * @return string
      */
-    public static function getCurrentVersion()
+    public static function getCurrentVersion(): string
     {
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        $reflection = new \ReflectionClass(FvCodeHighlighter::class);
-        $data = \get_plugin_data($reflection->getFileName());
-        return $data['Version'];
+        if (null === self::$currentVersion) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            $reflection = new \ReflectionClass(FvCodeHighlighter::class);
+            $data = \get_plugin_data($reflection->getFileName());
+            self::$currentVersion = $data['Version'];
+        }
+
+        return self::$currentVersion;
     }
 
     /**
@@ -38,7 +50,7 @@ final class Version
      *
      * @return string
      */
-    public static function getLatestVersion()
+    public static function getLatestVersion(): string
     {
         global $wp_version;
 
