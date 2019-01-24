@@ -1,68 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Html;
 
 use FvCodeHighlighter\Container\Container;
-use FvCodeHighlighter\Container\FactoryInterface;
+use FvCodeHighlighter\Container\Factory as FactoryInterface;
 use FvCodeHighlighter\Highlighter\Css\Css;
 use FvCodeHighlighter\Highlighter\Javascript\Javascript;
 use FvCodeHighlighter\Highlighter\Php\Php;
 use FvCodeHighlighter\Parser\Element\Block;
 
-/**
- * Factory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
-    /**
-     * Create new container object
-     *
-     * @param Container $container
-     * @param string $requestedName
-     * @return mixed
-     */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName) : Html
     {
-        $php = Block::create([
-            'start'	=> ['<?php', '<?=', '<?'],
-            'end'	=> ['?>'],
-            'cssClass'	=> 'php',
+        $php           = Block::create([
+            'start' => ['<?php', '<?=', '<?'],
+            'end'   => ['?>'],
+            'cssClass'  => 'php',
             'children' => $container->get(Php::class)->getElements(),
             'highlightWithChildren' => true,
         ]);
         $htmlAttribute = [
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'html-attribute',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'html-attribute',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
-                'children'	=> [$php],
+                'children'  => [$php],
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'html-attribute',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'html-attribute',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
-                'children'	=> [$php],
+                'children'  => [$php],
             ]),
             $php,
         ];
-        $cssAttribute = [
+        $cssAttribute  = [
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'css-string',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'css-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'css-string',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'css-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
@@ -71,66 +61,66 @@ class Factory implements FactoryInterface
         $elements = [
             $php,
             Block::create([
-                'start'	=> ['<!--'],
-                'end'	=> ['-->'],
-                'cssClass'	=> 'html-comment',
-                'children'	=> [$php],
+                'start' => ['<!--'],
+                'end'   => ['-->'],
+                'cssClass'  => 'html-comment',
+                'children'  => [$php],
             ]),
             Block::create([
-                'start'	=> ['<form', '</form', '<input', '<select', '</select', '<option', '</option', '<textarea', '</textarea', '<button', '</button'],
-                'end'	=> ['>'],
+                'start' => ['<form', '</form', '<input', '<select', '</select', '<option', '</option', '<textarea', '</textarea', '<button', '</button'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-form-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-form-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['<a', '</a'],
+                'start' => ['<a', '</a'],
                 'startSuffix'  => '[^a-zA-Z]',
-                'end'	=> ['>'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-anchor-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-anchor-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['<img'],
-                'end'	=> ['>'],
+                'start' => ['<img'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-image-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-image-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['<script', '</script'],
-                'end'	=> ['>'],
+                'start' => ['<script', '</script'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-script-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-script-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['<style', '</style'],
-                'end'	=> ['>'],
+                'start' => ['<style', '</style'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-style-element',
-                'children'	=> $cssAttribute,
+                'cssClass'  => 'html-style-element',
+                'children'  => $cssAttribute,
             ]),
             Block::create([
-                'start'	=> ['<table', '</table', '<tbody', '</tbody', '<thead', '</thead', '<tfoot', '</tfoot', '<th', '</th', '<tr', '</tr', '<td', '</td'],
-                'end'	=> ['>'],
+                'start' => ['<table', '</table', '<tbody', '</tbody', '<thead', '</thead', '<tfoot', '</tfoot', '<th', '</th', '<tr', '</tr', '<td', '</td'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-table-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-table-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['<'],
+                'start' => ['<'],
                 'startSuf' => '^(?!\?).*$',
-                'end'	=> ['>'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'html-other-element',
-                'children'	=> $htmlAttribute,
+                'cssClass'  => 'html-other-element',
+                'children'  => $htmlAttribute,
             ]),
             Block::create([
-                'start'	=> ['&'],
-                'end'	=> [';', "\n", ' ', "\t"],
-                'cssClass'	=> 'html-special-char',
+                'start' => ['&'],
+                'end'   => [';', "\n", ' ', "\t"],
+                'cssClass'  => 'html-special-char',
             ]),
         ];
 

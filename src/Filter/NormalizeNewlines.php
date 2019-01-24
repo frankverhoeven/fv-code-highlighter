@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter\Filter;
 
-final class Trim implements Filter
+final class NormalizeNewlines implements Filter
 {
     public function filter(string $value) : string
     {
-        return \trim($value);
+        return \str_replace(["\r\n", "\r"], "\n", $value);
     }
 }

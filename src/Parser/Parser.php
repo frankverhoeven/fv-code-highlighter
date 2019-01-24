@@ -1,61 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Parser;
 
 use FvCodeHighlighter\Parser\Element\Block;
 use FvCodeHighlighter\Parser\Element\Key;
 
-/**
- * Parser
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 final class Parser
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $code;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $pointer = 0;
-    /**
-     * @var Block[]|Key[]
-     */
+
+    /** @var Block[]|Key[] */
     private $elements;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $currentKey;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $currentKeyLength;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $currentBlockStart;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $currentBlockStartLength;
+
+    /** @var int */
     private $codeLength;
+
+    /** @var string */
     private $currentBlockEnd;
+
+    /** @var int */
     private $currentBlockEndLength;
 
     private function __construct()
-    {}
+    {
+    }
 
     /**
      * Create new parser with provided elements
      *
      * @param Block[]|Key[] $elements
-     * @return Parser
      */
-    public static function createWithElements(array $elements)
+    public static function createWithElements(array $elements) : Parser
     {
-        $parser = new static();
+        $parser           = new static();
         $parser->elements = $elements;
 
         return $parser;
@@ -64,40 +59,29 @@ final class Parser
     /**
      * @return Block[]|Key[]
      */
-    public function getElements()
+    public function getElements() : array
     {
         return $this->elements;
     }
 
-    /**
-     * Cleaup code
-     *  Converts line endings to unix style
-     *
-     * @param string $code
-     * @return string
-     */
-    public function cleanCode($code)
+    public function cleanCode(string $code) : string
     {
         return \str_replace(["\r\n", "\r"], "\n", $code);
     }
 
     /**
      * Convert tabs to spaces
-     *
-     * @param string $code
-     * @param int $tabsize
-     * @return string
      */
-    public function convertTabsToSpaces($code, $tabsize = 4)
+    public function convertTabsToSpaces(string $code, int $tabsize = 4) : string
     {
         $lines = \explode("\n", $code);
 
         foreach ($lines as $n => $line) {
-            while (false !== ($tabPos = \strpos($line, "\t"))) {
+            while (($tabPos = \strpos($line, "\t")) !== false) {
                 $start = \substr($line, 0, $tabPos);
-                $tab = \str_repeat(' ', $tabsize - $tabPos % $tabsize);
-                $end = \substr($line, $tabPos + 1);
-                $line = $start . $tab . $end;
+                $tab   = \str_repeat(' ', $tabsize - $tabPos % $tabsize);
+                $end   = \substr($line, $tabPos + 1);
+                $line  = $start . $tab . $end;
             }
 
             $lines[$n] = $line;
@@ -106,18 +90,19 @@ final class Parser
         return \implode("\n", $lines);
     }
 
-    public function parse($code)
+    public function parse(string $code) : string
     {
-        $this->code = $this->convertTabsToSpaces($this->cleanCode($code));;
+        $this->code = $this->convertTabsToSpaces($this->cleanCode($code));
+
         $this->codeLength = \strlen($this->code);
-        $this->pointer = 0;
-        $parsedCode = '';
-        $elements = $this->getElements();
+        $this->pointer    = 0;
+        $parsedCode       = '';
+        $elements         = $this->getElements();
 
         while ($this->pointer < $this->codeLength) {
             $parsed = $this->findElement($elements);
 
-            if (null !== $parsed) {
+            if ($parsed !== null) {
                 $parsedCode .= $parsed;
             } else {
                 $parsedCode .= \htmlspecialchars(\substr($this->code, $this->pointer, 1));
@@ -129,8 +114,7 @@ final class Parser
     }
 
     /**
-     * @param array $elements
-     * @return null|string
+     * @param Key[]|Block[] $elements
      */
     public function findElement(array $elements)
     {
@@ -138,7 +122,7 @@ final class Parser
 
         foreach ($elements as $id => $element) {
             if ($element instanceof Key && $this->findKey($element, \substr($this->code, $this->pointer))) {
-                $parsed = '<span class="' . $element->getCssClass() . '">';
+                $parsed  = '<span class="' . $element->cssClass() . '">';
                 $parsed .= \htmlspecialchars($this->currentKey);
                 $parsed .= '</span>';
 
@@ -148,32 +132,34 @@ final class Parser
             if ($element instanceof Block && $this->findBlockStart($element, \substr($this->code, $this->pointer))) {
                 $blockStart = $this->pointer;
                 if ($element->isStartIncluded()) {
-                    $parsed = '<span class="' . $element->getCssClass() . '">';
-                    if (!$element->isHighlightWithChildren()) {
+                    $parsed = '<span class="' . $element->cssClass() . '">';
+                    if (! $element->isHighlightWithChildren()) {
                         $parsed .= \htmlspecialchars($this->currentBlockStart);
                     }
                 } else {
-                    $parsed = \htmlspecialchars($this->currentBlockStart);
-                    $parsed .= '<span class="' . $element->getCssClass() . '">';
+                    $parsed  = \htmlspecialchars($this->currentBlockStart);
+                    $parsed .= '<span class="' . $element->cssClass() . '">';
                 }
 
-                if (!$element->isHighlightWithChildren()) {
+                if (! $element->isHighlightWithChildren()) {
                     $this->pointer += $this->currentBlockStartLength;
                 }
 
                 $endReached = false;
-                while (!$this->findBlockEnd($element, \substr($this->code, $this->pointer))) {
-                    if (!$this->isValidContains($element, \substr($this->code, $this->pointer, 1))) {
+                while (! $this->findBlockEnd($element, \substr($this->code, $this->pointer))) {
+                    if (! $this->isValidContains($element, \substr($this->code, $this->pointer, 1))) {
                         $this->pointer = $blockStart;
-                        $parsed = null;
-                        $endReached = true;
+                        $parsed        = null;
+                        $endReached    = true;
                         break;
                     }
 
-                    if (null !== ($children = $element->getChildren())) {
+                    $children = $element->children();
+
+                    if ($children !== null) {
                         $childParsed = $this->findElement($children);
 
-                        if (null !== $childParsed) {
+                        if ($childParsed !== null) {
                             $parsed .= $childParsed;
                         } else {
                             $parsed .= \htmlspecialchars(\substr($this->code, $this->pointer, 1));
@@ -184,19 +170,20 @@ final class Parser
                         $this->pointer++;
                     }
 
-
                     if ($this->pointer > $this->codeLength) {
                         $endReached = true;
                         break;
                     }
                 }
 
-                if (!$endReached) {
+                if (! $endReached) {
                     if ($element->isEndIncluded()) {
-                        if (null !== ($children = $element->getChildren()) && $element->isHighlightWithChildren()) {
+                        $children = $element->children();
+
+                        if ($children !== null && $element->isHighlightWithChildren()) {
                             $parsed .= $this->findElement($children);
                         } else {
-                            $parsed .= \htmlspecialchars($this->currentBlockEnd);
+                            $parsed        .= \htmlspecialchars($this->currentBlockEnd);
                             $this->pointer += $this->currentBlockEndLength;
                         }
                     }
@@ -204,7 +191,7 @@ final class Parser
                 }
             }
 
-            if (null !== $parsed) {
+            if ($parsed !== null) {
                 break;
             }
         }
@@ -212,24 +199,19 @@ final class Parser
         return $parsed;
     }
 
-    /**
-     * @todo: merge the three methods below
-     *
-     * @param Key $element
-     * @param $code
-     * @return bool
-     */
-    public function findKey(Key $element, $code)
+    public function findKey(Key $element, string $code) : bool
     {
-        if (null === $element->getPrefix() || $this->isValidPrefix($element->getPrefix(), $element->getPrefixLength())) {
-            foreach ($element->getKeys() as $key) {
+        if ($element->prefix() === null || $this->isValidPrefix($element->prefix(), $element->prefixLength())) {
+            foreach ($element->keys() as $key) {
                 $keyLength = \strlen($key);
-                if ($key == \substr($code, 0, $keyLength)) {
-                    if (null === $element->getSuffix() || $this->isValidSuffix($keyLength, $element->getSuffix(), $element->getSuffixLength())) {
-                        $this->currentKey = $key;
-                        $this->currentKeyLength = $keyLength;
-                        return true;
-                    }
+                if (\strncmp($code, $key, $keyLength) === 0) {
+                    continue;
+                }
+
+                if ($element->suffix() === null || $this->isValidSuffix($keyLength, $element->suffix(), $element->suffixLength())) {
+                    $this->currentKey       = $key;
+                    $this->currentKeyLength = $keyLength;
+                    return true;
                 }
             }
         }
@@ -237,22 +219,19 @@ final class Parser
         return false;
     }
 
-    /**
-     * @param Block $element
-     * @param $code
-     * @return bool
-     */
-    public function findBlockStart(Block $element, $code)
+    public function findBlockStart(Block $element, string $code) : bool
     {
-        if (null === $element->getStartPrefix() || $this->isValidPrefix($element->getStartPrefix(), $element->getStartPrefixLength())) {
-            foreach ($element->getStart() as $key) {
+        if ($element->startPrefix() === null || $this->isValidPrefix($element->startPrefix(), $element->startPrefixLength())) {
+            foreach ($element->start() as $key) {
                 $keyLength = \strlen($key);
-                if ($key == \substr($code, 0, $keyLength)) {
-                    if (null === $element->getStartSuffix() || $this->isValidSuffix($keyLength, $element->getStartSuffix(), $element->getStartSuffixLength())) {
-                        $this->currentBlockStart = $key;
-                        $this->currentBlockStartLength = $keyLength;
-                        return true;
-                    }
+                if (\strncmp($code, $key, $keyLength) === 0) {
+                    continue;
+                }
+
+                if ($element->startSuffix() === null || $this->isValidSuffix($keyLength, $element->startSuffix(), $element->startSuffixLength())) {
+                    $this->currentBlockStart       = $key;
+                    $this->currentBlockStartLength = $keyLength;
+                    return true;
                 }
             }
         }
@@ -260,23 +239,20 @@ final class Parser
         return false;
     }
 
-    /**
-     * @param Block $element
-     * @param $code
-     * @return bool
-     */
-    public function findBlockEnd(Block $element, $code)
+    public function findBlockEnd(Block $element, string $code) : bool
     {
-        if (null === $element->getEndPrefix() || $this->isValidPrefix($element->getEndPrefix(), $element->getEndPrefixLength())) {
-            foreach ($element->getEnd() as $key) {
+        if ($element->endPrefix() === null || $this->isValidPrefix($element->endPrefix(), $element->endPrefixLength())) {
+            foreach ($element->end() as $key) {
                 $keyLength = \strlen($key);
 
-                if ($key == \substr($code, 0, $keyLength)) {
-                    if (null === $element->getEndSuffix() || $this->isValidSuffix($keyLength, $element->getEndSuffix(), $element->getEndSuffixLength())) {
-                        $this->currentBlockEnd = $key;
-                        $this->currentBlockEndLength = $keyLength;
-                        return true;
-                    }
+                if (\strncmp($code, $key, $keyLength) === 0) {
+                    continue;
+                }
+
+                if ($element->endSuffix() === null || $this->isValidSuffix($keyLength, $element->endSuffix(), $element->endSuffixLength())) {
+                    $this->currentBlockEnd       = $key;
+                    $this->currentBlockEndLength = $keyLength;
+                    return true;
                 }
             }
         }
@@ -286,31 +262,29 @@ final class Parser
 
     /**
      * Check if the provided char is valid for the current block
-     *
-     * @param Block $element
-     * @param string $char
-     * @return bool
      */
-    public function isValidContains(Block $element, $char)
+    public function isValidContains(Block $element, string $char) : bool
     {
-        if (null === $element->getContains()) {
+        if (! $element->hasContains()) {
             return true;
         }
 
-        return \preg_match('/' . $element->getContains() . '/', $char);
+        return (bool) \preg_match('/' . $element->contains() . '/', $char);
     }
 
     /**
      * Validate given prefix
      *
-     * @param string $prefix Prefix to validate against
-     * @param int $prefixLength Length of the prefix
+     * @param string $prefix       Prefix to validate against
+     * @param int    $prefixLength Length of the prefix
+     *
      * @return bool Whether given prefix is valid
      */
-    protected function isValidPrefix($prefix, $prefixLength)
+    protected function isValidPrefix(string $prefix, int $prefixLength) : bool
     {
-        $code = null;
-        if (0 != $this->pointer) {
+        $code = '';
+
+        if ($this->pointer !== 0) {
             $code = \substr($this->code, $this->pointer - $prefixLength, $prefixLength);
         }
 
@@ -320,12 +294,13 @@ final class Parser
     /**
      * Validate a give suffix
      *
-     * @param int $offset Pointer offset (usualy length of the key/start)
-     * @param string $suffix Suffix to validate against
-     * @param int $suffixLength Length of the suffix
+     * @param int    $offset       Pointer offset (usualy length of the key/start)
+     * @param string $suffix       Suffix to validate against
+     * @param int    $suffixLength Length of the suffix
+     *
      * @return bool Whether given suffix is valid
      */
-    protected function isValidSuffix($offset, $suffix, $suffixLength)
+    protected function isValidSuffix(int $offset, string $suffix, int $suffixLength) : bool
     {
         $code = \substr($this->code, $this->pointer + $offset, $suffixLength);
         return (bool) \preg_match('/' . $suffix . '/', $code);

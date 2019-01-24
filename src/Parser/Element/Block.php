@@ -1,231 +1,194 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Parser\Element;
 
-/**
- * Block
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Block
+final class Block
 {
-    /**
-     * @var array
-     */
+    /** @var string[] */
     private $start;
-    /**
-     * @var bool
-     */
+
+    /** @var bool */
     private $startIncluded = true;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $startPrefix;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $startPrefixLength = 1;
-    /**
-     * @var string
-     */
+
+    /** @var string|null */
     private $startSuffix;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $startSuffixLength = 1;
-    /**
-     * @var array
-     */
+
+    /** @var string[] */
     private $end;
-    /**
-     * @var bool
-     */
+
+    /** @var bool */
     private $endIncluded = true;
-    /**
-     * @var string
-     */
+
+    /** @var string|null */
     private $endPrefix;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $endPrefixLength = 1;
-    /**
-     * @var string
-     */
+
+    /** @var string|null */
     private $endSuffix;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $endSuffixLength = 1;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $contains;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $cssClass;
-    /**
-     * @var Key[]|Block[]
-     */
+
+    /** @var Key[]|Block[]|null */
     private $children;
-    /**
-     * @var bool
-     */
+
+    /** @var bool */
     private $highlightWithChildren = false;
 
     /**
-     * __construct()
-     *
-     * @param array $options
+     * @param mixed[] $options
      */
     private function __construct(array $options)
     {
-        $methods = \get_class_methods($this);
         $keys = \array_keys($options);
 
         foreach ($keys as $name) {
-            if (\in_array('get' . \ucfirst($name), $methods) || \in_array('is' . \ucfirst($name), $methods)) {
-                $this->{$name} = $options[$name];
-            }
+            $this->{$name} = $options[$name];
         }
     }
 
     /**
-     * Create a new block element
-     *
-     * @param array $options
-     * @return Block
+     * @param mixed[] $options
      */
-    public static function create(array $options)
+    public static function create(array $options) : Block
     {
         return new static($options);
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getStart()
+    public function start() : array
     {
         return $this->start;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStartIncluded()
+    public function isStartIncluded() : bool
     {
         return $this->startIncluded;
     }
 
-    /**
-     * @return string
-     */
-    public function getStartPrefix()
+    public function startPrefix()
     {
         return $this->startPrefix;
     }
 
-    /**
-     * @return int
-     */
-    public function getStartPrefixLength()
+    public function hasStartPrefix() : bool
+    {
+        return $this->startPrefix !== null;
+    }
+
+    public function startPrefixLength() : int
     {
         return $this->startPrefixLength;
     }
 
-    /**
-     * @return string
-     */
-    public function getStartSuffix()
+    public function startSuffix()
     {
         return $this->startSuffix;
     }
 
-    /**
-     * @return int
-     */
-    public function getStartSuffixLength()
+    public function hasStartSuffix() : bool
+    {
+        return $this->startSuffix !== null;
+    }
+
+    public function startSuffixLength() : int
     {
         return $this->startSuffixLength;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getEnd()
+    public function end() : array
     {
         return $this->end;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEndIncluded()
+    public function isEndIncluded() : bool
     {
         return $this->endIncluded;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndPrefix()
+    public function endPrefix()
     {
         return $this->endPrefix;
     }
 
-    /**
-     * @return int
-     */
-    public function getEndPrefixLength()
+    public function hasEndPrefix() : bool
+    {
+        return $this->endPrefix !== null;
+    }
+
+    public function endPrefixLength() : int
     {
         return $this->endPrefixLength;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndSuffix()
+    public function endSuffix()
     {
         return $this->endSuffix;
     }
 
-    /**
-     * @return int
-     */
-    public function getEndSuffixLength()
+    public function hasEndSuffix() : bool
+    {
+        return $this->endSuffix !== null;
+    }
+
+    public function endSuffixLength() : int
     {
         return $this->endSuffixLength;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getContains()
+    public function contains()
     {
         return $this->contains;
     }
 
-    /**
-     * @return string
-     */
-    public function getCssClass()
+    public function hasContains() : bool
+    {
+        return $this->contains !== null;
+    }
+
+    public function cssClass() : string
     {
         return $this->cssClass;
     }
 
     /**
-     * @return Block[]|Key[]
+     * @return Block[]|Key[]|null
      */
-    public function getChildren()
+    public function children()
     {
         return $this->children;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHighlightWithChildren()
+    public function hasChildren() : bool
+    {
+        return $this->children !== null;
+    }
+
+    public function isHighlightWithChildren() : bool
     {
         return $this->highlightWithChildren;
     }

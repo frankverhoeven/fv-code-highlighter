@@ -16,7 +16,7 @@ class InvokableFactory implements FactoryInterface
      * @param string $requestedName Name of the requested entry.
      * @return mixed
      */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName)
     {
         return new $requestedName();
     }

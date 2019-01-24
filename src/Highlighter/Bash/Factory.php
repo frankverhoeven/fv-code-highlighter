@@ -1,46 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Bash;
 
 use FvCodeHighlighter\Container\Container;
-use FvCodeHighlighter\Container\FactoryInterface;
+use FvCodeHighlighter\Container\Factory as FactoryInterface;
 use FvCodeHighlighter\Parser\Element\Block;
 use FvCodeHighlighter\Parser\Element\Key;
 
-/**
- * Factory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
-    /**
-     * Create new container object
-     *
-     * @param Container $container
-     * @param string $requestedName
-     * @return mixed
-     */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName) : Bash
     {
         $elements = [
             Block::create([
-                'start'	=> ['#'],
-                'end'	=> ["\n"],
-                'cssClass'	=> 'php-comment',
-                'includeEnd' => false
+                'start' => ['#'],
+                'end'   => ["\n"],
+                'cssClass'  => 'php-comment',
+                'includeEnd' => false,
             ]),
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'bash-string',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'bash-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'bash-string',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'bash-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),

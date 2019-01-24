@@ -1,57 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Javascript;
 
 use FvCodeHighlighter\Container\Container;
-use FvCodeHighlighter\Container\FactoryInterface;
+use FvCodeHighlighter\Container\Factory as FactoryInterface;
 use FvCodeHighlighter\Parser\Element\Block;
 use FvCodeHighlighter\Parser\Element\Key;
 
-/**
- * Factory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
-    /**
-     * Create new container object
-     *
-     * @param Container $container
-     * @param string $requestedName
-     * @return mixed
-     */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName) : Javascript
     {
         $elements = [
             Block::create([
-                'start'	=> ['/*'],
-                'end'	=> ['*/'],
-                'cssClass'	=> 'js-comment'
+                'start' => ['/*'],
+                'end'   => ['*/'],
+                'cssClass'  => 'js-comment',
             ]),
             Block::create([
-                'start'	=> ['//', '#'],
-                'end'	=> ["\n"],
-                'cssClass'	=> 'js-comment',
-                'includeEnd' => false
+                'start' => ['//', '#'],
+                'end'   => ["\n"],
+                'cssClass'  => 'js-comment',
+                'includeEnd' => false,
             ]),
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'js-string',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'js-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'js-string',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'js-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),/* @todo: fix
             Block::create([
-            'start'	=> ['/'],
-            'end'	=> ['/'],
+            'start' => ['/'],
+            'end'   => ['/'],
             'cssClass' => 'js-regexp',
             'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}', // gimuy
             'endPrefixLength' => 2,
