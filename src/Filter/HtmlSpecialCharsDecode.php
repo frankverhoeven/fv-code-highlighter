@@ -1,40 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Filter;
 
-/**
- * HtmlSpecialCharsDecode
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 class HtmlSpecialCharsDecode implements FilterInterface
 {
-    /**
-     * Safe htmlspecialchars_decode().
-     *
-     * @param string $value
-     * @return string
-     */
-    public function filter($value)
+    public function filter(string $value): string
     {
         $converted = false;
 
         $checks = [
             '&amp;amp;',
             '&lt;?php',
-            '&lt;/'
+            '&lt;/',
         ];
 
         foreach ($checks as $check) {
-            if (\strstr($value, $check)) {
-                $converted = true;
+            if (\strpos($value, $check) === false) {
+                continue;
             }
+
+            $converted = true;
         }
 
         if ($converted) {
             return \htmlspecialchars_decode($value);
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 }

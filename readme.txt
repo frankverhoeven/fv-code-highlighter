@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  4.0
 Tested up to:       4.9
-Stable tag:         2.1.3
+Stable tag:         2.2
 
 Highlight your code with beautiful highlighters.
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Output;
 
 use FvCodeHighlighter;
@@ -7,72 +9,57 @@ use FvCodeHighlighter\Cache;
 use FvCodeHighlighter\Config;
 use FvCodeHighlighter\Container\Container;
 use FvCodeHighlighter\Filter\HtmlSpecialCharsDecode;
-use FvCodeHighlighter\Highlighter\AbstractHighlighter;
-use FvCodeHighlighter\Highlighter\General\General;
+use FvCodeHighlighter\Geshi\GeSHi;
 
-/**
- * Highlighter
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Highlighter implements OutputInterface
+final class Highlighter implements OutputInterface
 {
-    /**
-     * @var Config
-     */
-    protected $config;
-    /**
-     * @var Cache
-     */
+    /** @var Config */
+    private $config;
+
+    /** @var Cache */
     private $cache;
-    /**
-     * @var Container
-     */
+
+    /** @var Container */
     private $container;
 
-    /**
-     * @param Config $config
-     * @param Cache $cache
-     * @param Container $container
-     */
     public function __construct(Config $config, Cache $cache, Container $container)
     {
-        $this->config = $config;
-        $this->cache = $cache;
+        $this->config    = $config;
+        $this->cache     = $cache;
         $this->container = $container;
     }
 
     /**
-     * @param array $arguments
-     * @return string
+     * @param mixed[] $arguments
      */
-    public function __invoke(...$arguments)
+    public function __invoke(...$arguments): string
     {
-        $content = \array_shift($arguments);
-        return $this->highlightCode($content);
+        return $this->highlightCode(\array_shift($arguments));
     }
 
     /**
      * Find code blocks and highlight them.
-     *
-     * @param string $content
-     * @return string
      */
     public function highlightCode(string $content): string
     {
-        if (!\strstr($content, '{code') && !\strstr($content, '[code') && !\strstr($content, '<pre')) {
+        if (\strpos($content, '{code') === false &&
+            \strpos($content, '[code') === false &&
+            \strpos($content, '<pre') === false
+        ) {
             return $content;
         }
 
-        $defaultSettings = [
-            'type' => ''
-        ];
+        $defaultSettings = ['type' => 'text'];
 
         $patterns = [
             '/\<pre(?<arguments>.*?)\>(?<code>.*?)\<\/pre\>/msi',
             '/\{code(?<arguments>.*?)\}(?<code>.*?)\{\/code\}/msi',
             '/\[code(?<arguments>.*?)\](?<code>.*?)\[\/code\]/msi',
         ];
+
+        /** @var GeSHi $geshi */
+        $geshi  = $this->container->get(GeSHi::class);
+        $filter = new HtmlSpecialCharsDecode();
 
         foreach ($patterns as $pattern) {
             \preg_match_all($pattern, $content, $codes);
@@ -81,39 +68,59 @@ class Highlighter implements OutputInterface
             for ($i = 0; $i < $num; $i++) {
                 $settings = \wp_parse_args($codes['arguments'][$i], $defaultSettings);
 
-                if ((!isset($settings['type']) || '' == $settings['type']) && isset($settings['lang'])) {
+                $geshi->set_source($filter->filter($codes['code'][$i]));
+                $geshi->set_language($settings['lang'] ?? $settings['type']);
+
+                $content = \str_replace(
+                    $codes[0][$i],
+                    '<div class="fvch-codeblock">'.$geshi->parse_code().'</div>',
+                    $content
+                );
+            }
+        }
+
+        return $content;
+
+        foreach ($patterns as $pattern) {
+            \preg_match_all($pattern, $content, $codes);
+            $num = \count($codes[0]);
+
+            for ($i = 0; $i < $num; $i++) {
+                $settings = \wp_parse_args($codes['arguments'][$i], $defaultSettings);
+
+                if ((!isset($settings['type']) || $settings['type'] === '') && isset($settings['lang'])) {
                     $settings['type'] = $settings['lang'];
                 }
                 $settings['type'] = \trim($settings['type'], '"\'');
 
                 $classname = \ucfirst(\strtolower($settings['type']));
-                if ('Php' == $classname) {
+                if ($classname === 'Php') {
                     //$classname = 'Html'; // @todo: hack, fix
                 }
                 $class = 'FvCodeHighlighter\\Highlighter\\' . $classname . '\\' . $classname;
 
                 $filter = new HtmlSpecialCharsDecode();
-                $code = \trim($filter->filter($codes['code'][$i]));
+                $code   = \trim($filter->filter($codes['code'][$i]));
 
                 if ($this->config['fvch-diagnostics']) {
                     FvCodeHighlighter\Diagnostics::submitCodeSnippet($settings['type'], $code);
                 }
 
                 $cacheFile = \sha1($code . $settings['type']);
-                if ($this->cache->cacheFileExists($cacheFile)) {
-                    $code = $this->cache->getCacheFile($cacheFile);
+                if ($this->cache->has($cacheFile)) {
+                    $code = $this->cache->get($cacheFile);
                 } else {
                     if (\class_exists($class)) {
-                        /* @var $highlighter AbstractHighlighter */
+                        /** @var AbstractHighlighter $highlighter */
                         $highlighter = $this->container->get($class);
-                        $code = $highlighter->highlight($code);
+                        $code        = $highlighter->highlight($code);
 
-                        $this->cache->createCacheFile($cacheFile, $code);
+                        $this->cache->set($cacheFile, $code);
                     } else {
                         $highlighter = $this->container->get(General::class);
-                        $code = $highlighter->highlight($code);
+                        $code        = $highlighter->highlight($code);
 
-                        $this->cache->createCacheFile($cacheFile, $code);
+                        $this->cache->set($cacheFile, $code);
                     }
                 }
 
@@ -128,8 +135,8 @@ class Highlighter implements OutputInterface
                 $output .= '<table class="fvch-code ' . \strtolower($settings['type']) . '">';
 
                 $lineNumber = 1;
-                $openTags = null;
-                $lines = \explode("\n", $code);
+                $openTags   = null;
+                $lines      = \explode("\n", $code);
                 foreach ($lines as $line) {
                     $output .= '<tr>';
 
@@ -137,14 +144,14 @@ class Highlighter implements OutputInterface
                         $output .= '<td class="fvch-line-number" data-line-number="' . $lineNumber . '"></td>';
                     }
 
-                    if (null !== $openTags) {
+                    if ($openTags !== null) {
                         foreach (\array_reverse($openTags) as $tag) {
                             $line = '<span class="' . $tag . '">' . $line;
                         }
                     }
 
                     $closedLine = \force_balance_tags($line);
-                    $openTags = $this->getOpenTagClasses($line, $closedLine);
+                    $openTags   = $this->getOpenTagClasses($line, $closedLine);
                     // wrap in pre tags to prevent wptexturize
                     $output .= '<td class="fvch-line-code"><pre>' . $closedLine . '</pre></td>';
 
@@ -164,9 +171,7 @@ class Highlighter implements OutputInterface
     /**
      * Get unclosed tags from $openLine
      *
-     * @param string $openLine
-     * @param string $closedLine
-     * @return array|null
+     * @return string[]|null
      */
     protected function getOpenTagClasses(string $openLine, string $closedLine)
     {
@@ -174,7 +179,7 @@ class Highlighter implements OutputInterface
         $openLine = $this->stripClosedTags($openLine);
 
         if ($openTags > 0) {
-            $tags = [];
+            $tags   = [];
             $offset = 0;
             for ($i = 0; $i < $openTags; $i++) {
                 $tags[] = $i = \strpos($openLine, '<span class="', $offset);
@@ -182,7 +187,7 @@ class Highlighter implements OutputInterface
             }
             foreach ($tags as $i => $tag) {
                 $startClass = $tags[$i] + 13;
-                $tags[$i] = \substr($openLine, $startClass, \strpos($openLine, '"', $startClass) - $startClass);
+                $tags[$i]   = \substr($openLine, $startClass, \strpos($openLine, '"', $startClass) - $startClass);
             }
 
             return $tags;
@@ -193,13 +198,10 @@ class Highlighter implements OutputInterface
 
     /**
      * Strip closed tags from $line
-     *
-     * @param string $line
-     * @return string
      */
     protected function stripClosedTags(string $line): string
     {
-        while (false != \preg_match('/\<span class\="(?<class>[a-z-]+)"\>(?<code>((?!\<span|\<\/span).)*)\<\/span\>/', $line, $matches)) {
+        while (\preg_match('/\<span class\="(?<class>[a-z-]+)"\>(?<code>((?!\<span|\<\/span).)*)\<\/span\>/', $line, $matches) !== false) {
             $line = \str_replace($matches[0], '', $line);
         }
 

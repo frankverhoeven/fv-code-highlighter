@@ -1,24 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Admin;
 
 use FvCodeHighlighter\Config;
 
-/**
- * Options
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 class Options
 {
-    /**
-     * @var Config
-     */
+    /** @var Config */
     protected $config;
 
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -28,7 +20,7 @@ class Options
     public function init()
     {
         if (!\current_user_can('edit_themes')) {
-            \wp_die(__('You do not have sufficient permissions to manage options for this site.'));
+            \wp_die(\__('You do not have sufficient permissions to manage options for this site.'));
         }
 
         // Font
@@ -84,7 +76,8 @@ class Options
     }
 
     public function fontSection()
-    {}
+    {
+    }
 
     public function fontFamily()
     {
@@ -126,7 +119,8 @@ class Options
     }
 
     public function backgroundSection()
-    {}
+    {
+    }
 
     public function background()
     {
@@ -155,7 +149,8 @@ class Options
     }
 
     public function utilitySection()
-    {}
+    {
+    }
 
     public function lineNumbers()
     {

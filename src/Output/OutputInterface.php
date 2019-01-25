@@ -1,16 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Output;
 
-/**
- * OutputInterface
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 interface OutputInterface
 {
     /**
-     * @param array $arguments
+     * @param mixed[] $arguments
+     *
      * @return string|void
      */
     public function __invoke(...$arguments);

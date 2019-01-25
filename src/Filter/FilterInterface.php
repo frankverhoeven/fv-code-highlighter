@@ -1,19 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Filter;
 
-/**
- * FilterInterface
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 interface FilterInterface
 {
-    /**
-     * Filter the given value.
-     *
-     * @param string $value
-     * @return string
-     */
-    public function filter($value);
+    public function filter(string $value): string;
 }

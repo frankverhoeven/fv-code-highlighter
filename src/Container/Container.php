@@ -1,29 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Container;
 
-use InvalidArgumentException;
-
-/**
- * Container
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Container
+final class Container
 {
-    /**
-     * @var array
-     */
+    /** @var mixed[] */
     private $container;
-    /**
-     * @var array
-     */
+
+    /** @var Factory[]|string[] */
     private $factories;
 
     /**
-     * __construct()
-     *
-     * @param array $factories
+     * @param Factory[]|string[] $factories
      */
     public function __construct(array $factories)
     {
@@ -35,12 +25,13 @@ class Container
      * Finds an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return mixed Entry.
      */
-    public function get($id)
+    public function get(string $id)
     {
         if (!$this->has($id)) {
-            throw new InvalidArgumentException('Entry "' . $id . '" not found.');
+            throw new \InvalidArgumentException('Entry "' . $id . '" not found.');
         }
 
         if (!\array_key_exists($id, $this->container)) {
@@ -50,8 +41,8 @@ class Container
                 $entry = new $entry();
             }
 
-            if ($entry instanceof FactoryInterface) {
-                $this->container[$id] = $entry->create($this, $id);
+            if ($entry instanceof Factory) {
+                $this->container[$id] = $entry($this, $id);
             } else {
                 $this->container[$id] = $entry;
             }
@@ -60,29 +51,20 @@ class Container
         return $this->container[$id];
     }
 
-    /**
-     * Returns true if the container can return an entry for the given identifier.
-     * Returns false otherwise.
-     *
-     * @param string $id Identifier of the entry to look for.
-     * @return bool
-     */
     public function has(string $id): bool
     {
-        return (\array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container));
+        return \array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container);
     }
 
     /**
-     * Add an entry to the container
+     * @param Factory|mixed $entry
      *
-     * @param string $id Identifier of the entry.
-     * @param FactoryInterface|mixed $entry
      * @return void
      */
     public function add(string $id, $entry)
     {
         if ($this->has($id)) {
-            throw new InvalidArgumentException('An entry for "' . $id . '" already exists.');
+            throw new \InvalidArgumentException('An entry for "' . $id . '" already exists.');
         }
 
         $this->factories[$id] = $entry;

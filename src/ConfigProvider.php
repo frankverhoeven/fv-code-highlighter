@@ -4,59 +4,36 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter;
 
-use FvCodeHighlighter\Highlighter\Bash\Bash as BashHighlighter;
-use FvCodeHighlighter\Highlighter\Bash\Factory as BashHighlighterFactory;
-use FvCodeHighlighter\Highlighter\Css\Css as CssHighlighter;
-use FvCodeHighlighter\Highlighter\Css\Factory as CssHighlighterFactory;
-use FvCodeHighlighter\Highlighter\General\Factory as GeneralHighlighterFactory;
-use FvCodeHighlighter\Highlighter\General\General as GeneralHighlighter;
-use FvCodeHighlighter\Highlighter\Html\Factory as HtmlHighlighterFactory;
-use FvCodeHighlighter\Highlighter\Html\Html as HtmlHighlighter;
-use FvCodeHighlighter\Highlighter\Javascript\Factory as JavascriptHighlighterFactory;
-use FvCodeHighlighter\Highlighter\Javascript\Javascript as JavascriptHighlighter;
-use FvCodeHighlighter\Highlighter\Php\Factory as PhpHighlighterFactory;
-use FvCodeHighlighter\Highlighter\Php\Php as PhpHighlighter;
-use FvCodeHighlighter\Highlighter\Xml\Factory as XmlHighlighterFactory;
-use FvCodeHighlighter\Highlighter\Xml\Xml as XmlHighlighter;
+use FvCodeHighlighter\Container\Geshi\GeshiFactory;
+use FvCodeHighlighter\Geshi\GeSHi;
 
-/**
- * ConfigProvider
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 final class ConfigProvider
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     public function __invoke(): array
     {
         return [
-            'services' => $this->getServices(),
-            'defaults' => $this->getDefaults(),
+            'services' => $this->services(),
+            'defaults' => $this->defaults(),
         ];
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    private function getServices(): array
+    private function services(): array
     {
         return [
-            BashHighlighter::class => BashHighlighterFactory::class,
-            CssHighlighter::class => CssHighlighterFactory::class,
-            GeneralHighlighter::class => GeneralHighlighterFactory::class,
-            HtmlHighlighter::class => HtmlHighlighterFactory::class,
-            JavascriptHighlighter::class => JavascriptHighlighterFactory::class,
-            PhpHighlighter::class => PhpHighlighterFactory::class,
-            XmlHighlighter::class => XmlHighlighterFactory::class,
+            GeSHi::class => GeshiFactory::class,
         ];
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    private function getDefaults(): array
+    private function defaults(): array
     {
         return [
             /**

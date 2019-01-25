@@ -1,37 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Output;
 
 use FvCodeHighlighter;
 use FvCodeHighlighter\Config;
 
-/**
- * Scripts
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Scripts implements OutputInterface
+final class Scripts implements OutputInterface
 {
-    /**
-     * @var Config
-     */
+    /** @var Config */
     private $config;
 
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
     /**
-     * @param array $arguments
-     * @return string|void
+     * @param mixed[] $arguments
+     *
+     * @return void
      */
     public function __invoke(...$arguments)
     {
         $reflection = new \ReflectionClass(FvCodeHighlighter::class);
+
         $file = $reflection->getFileName();
 
         if ($this->config['fvch-toolbox']) {
