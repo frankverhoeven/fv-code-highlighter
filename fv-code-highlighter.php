@@ -1,109 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Plugin Name: FV Code Highlighter
  * Description: Highlighter your code to look beautiful.
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
  * Author URI:  https://frankverhoeven.me/
- * Version:     2.1.3
+ * Version:     2.2
  */
 
-use FvCodeHighlighter\AutoLoader;
+if (version_compare(phpversion(), '7.0', '<')) {
+    die('Your PHP version is too low, please update to 7.1 or higher.');
+}
+
+use FvCodeHighlighter\Autoloader;
 use FvCodeHighlighter\Bootstrap;
 use FvCodeHighlighter\Config;
 use FvCodeHighlighter\ConfigProvider;
 use FvCodeHighlighter\Container\Container;
 
-/**
- * FvCodeHighlighter
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 final class FvCodeHighlighter
 {
-    /**
-     * Register activation/deactivation hooks.
-     *
-     */
     public function __construct()
     {
-        \register_activation_hook(__FILE__, [static::class, 'activation']);
-        \register_deactivation_hook(__FILE__, [static::class, 'deactivation']);
+        register_activation_hook(__FILE__, [static::class, 'activation']);
+        register_deactivation_hook(__FILE__, [static::class, 'deactivation']);
     }
 
-    /**
-     * Setup the autoloader
-     *
-     */
     private function setupAutoloader()
     {
         require_once __DIR__ . '/src/Autoloader.php';
 
-        $autoloader = new AutoLoader(['FvCodeHighlighter' => __DIR__ . '/src/']);
+        $autoloader = new Autoloader(['FvCodeHighlighter' => __DIR__ . '/src/']);
         $autoloader->register();
     }
 
-    /**
-     * Start the application
-     *
-     */
     public function start()
     {
         $this->setupAutoloader();
 
-        $configProvider = new ConfigProvider();
+        $config = (new ConfigProvider())();
 
-        $services = $configProvider()['services'];
-        $services[Config::class] = new Config($configProvider()['defaults']);
+        $services                = $config['services'];
+        $services[Config::class] = new Config($config['defaults']);
 
         $bootstrap = new Bootstrap(new Container($services));
         $bootstrap->bootstrap();
     }
 
-    /**
-     * Activation Hook
-     *
-     * @return void
-     */
     public static function activation()
     {
-        \do_action('fvch_activation');
-        \register_uninstall_hook(__FILE__, [static::class, 'uninstall']);
+        do_action('fvch_activation');
+        register_uninstall_hook(__FILE__, [static::class, 'uninstall']);
     }
 
-    /**
-     * Deactivation Hook
-     *
-     * @return void
-     */
     public static function deactivation()
     {
-        \do_action('fvch_deactivation');
+        do_action('fvch_deactivation');
     }
 
-    /**
-     * Uninstall Hook
-     *
-     * @return void
-     */
     public static function uninstall()
     {
-        \do_action('fvch_uninstall');
+        do_action('fvch_uninstall');
     }
 }
 
 
-try {
-    $fvch = new \FvCodeHighlighter();
-    $fvch->start();
-} catch (\Exception $e) {
-    if (\defined('WP_DEBUG') && true === WP_DEBUG) {
-        \printf('<h3>%s</h3><pre>%s</pre>', $e->getMessage(), $e->getTraceAsString());
-    }
-
-    \error_log($e->getMessage() . PHP_EOL . $e->getTraceAsString());
-}
+$fvch = new \FvCodeHighlighter();
+$fvch->start();
 
 
 /**

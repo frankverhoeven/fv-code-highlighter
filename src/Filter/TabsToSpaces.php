@@ -9,7 +9,7 @@ final class TabsToSpaces implements Filter
     /** @var int */
     private $tabSize = 4;
 
-    public function filter(string $value) : string
+    public function filter(string $value): string
     {
         $lines = \explode("\n", $value);
 

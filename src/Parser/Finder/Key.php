@@ -17,7 +17,7 @@ final class Key extends Finder
         $this->keys = $keys;
     }
 
-    public function find(string $code, int $pointer) : bool
+    public function find(string $code, int $pointer): bool
     {
         foreach ($this->keys as $key) {
             if (\strncmp($code, $key, \strlen($key)) === 0) {

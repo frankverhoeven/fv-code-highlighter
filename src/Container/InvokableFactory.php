@@ -1,19 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Container;
 
-/**
- * InvokableFactory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class InvokableFactory implements FactoryInterface
+final class InvokableFactory implements Factory
 {
     /**
-     * Create new container object
-     *
-     * @param Container $container Container object.
-     * @param string $requestedName Name of the requested entry.
      * @return mixed
      */
     public function __invoke(Container $container, string $requestedName)

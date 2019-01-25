@@ -13,7 +13,7 @@ use FvCodeHighlighter\Parser\Element\Block;
 
 final class Factory implements FactoryInterface
 {
-    public function __invoke(Container $container, string $requestedName) : Html
+    public function __invoke(Container $container, string $requestedName): Html
     {
         $php           = Block::create([
             'start' => ['<?php', '<?=', '<?'],

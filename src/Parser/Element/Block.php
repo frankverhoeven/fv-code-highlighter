@@ -69,7 +69,7 @@ final class Block
     /**
      * @param mixed[] $options
      */
-    public static function create(array $options) : Block
+    public static function create(array $options): Block
     {
         return new static($options);
     }
@@ -77,12 +77,12 @@ final class Block
     /**
      * @return string[]
      */
-    public function start() : array
+    public function start(): array
     {
         return $this->start;
     }
 
-    public function isStartIncluded() : bool
+    public function isStartIncluded(): bool
     {
         return $this->startIncluded;
     }
@@ -92,12 +92,12 @@ final class Block
         return $this->startPrefix;
     }
 
-    public function hasStartPrefix() : bool
+    public function hasStartPrefix(): bool
     {
         return $this->startPrefix !== null;
     }
 
-    public function startPrefixLength() : int
+    public function startPrefixLength(): int
     {
         return $this->startPrefixLength;
     }
@@ -107,12 +107,12 @@ final class Block
         return $this->startSuffix;
     }
 
-    public function hasStartSuffix() : bool
+    public function hasStartSuffix(): bool
     {
         return $this->startSuffix !== null;
     }
 
-    public function startSuffixLength() : int
+    public function startSuffixLength(): int
     {
         return $this->startSuffixLength;
     }
@@ -120,12 +120,12 @@ final class Block
     /**
      * @return string[]
      */
-    public function end() : array
+    public function end(): array
     {
         return $this->end;
     }
 
-    public function isEndIncluded() : bool
+    public function isEndIncluded(): bool
     {
         return $this->endIncluded;
     }
@@ -135,12 +135,12 @@ final class Block
         return $this->endPrefix;
     }
 
-    public function hasEndPrefix() : bool
+    public function hasEndPrefix(): bool
     {
         return $this->endPrefix !== null;
     }
 
-    public function endPrefixLength() : int
+    public function endPrefixLength(): int
     {
         return $this->endPrefixLength;
     }
@@ -150,12 +150,12 @@ final class Block
         return $this->endSuffix;
     }
 
-    public function hasEndSuffix() : bool
+    public function hasEndSuffix(): bool
     {
         return $this->endSuffix !== null;
     }
 
-    public function endSuffixLength() : int
+    public function endSuffixLength(): int
     {
         return $this->endSuffixLength;
     }
@@ -165,12 +165,12 @@ final class Block
         return $this->contains;
     }
 
-    public function hasContains() : bool
+    public function hasContains(): bool
     {
         return $this->contains !== null;
     }
 
-    public function cssClass() : string
+    public function cssClass(): string
     {
         return $this->cssClass;
     }
@@ -183,12 +183,12 @@ final class Block
         return $this->children;
     }
 
-    public function hasChildren() : bool
+    public function hasChildren(): bool
     {
         return $this->children !== null;
     }
 
-    public function isHighlightWithChildren() : bool
+    public function isHighlightWithChildren(): bool
     {
         return $this->highlightWithChildren;
     }

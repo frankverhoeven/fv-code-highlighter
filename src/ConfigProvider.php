@@ -19,15 +19,10 @@ use FvCodeHighlighter\Highlighter\Php\Php as PhpHighlighter;
 use FvCodeHighlighter\Highlighter\Xml\Factory as XmlHighlighterFactory;
 use FvCodeHighlighter\Highlighter\Xml\Xml as XmlHighlighter;
 
-/**
- * ConfigProvider
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
 final class ConfigProvider
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     public function __invoke(): array
     {
@@ -38,7 +33,7 @@ final class ConfigProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function getServices(): array
     {
@@ -54,7 +49,7 @@ final class ConfigProvider
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getDefaults(): array
     {

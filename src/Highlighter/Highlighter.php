@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter\Highlighter;
 
-/**
- * HighlighterInterface
- */
-interface HighlighterInterface
+interface Highlighter
 {
     /**
      * Setup highlighter elements

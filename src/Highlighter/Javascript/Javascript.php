@@ -1,16 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Javascript;
 
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 
-/**
- * Javascript
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Javascript extends AbstractHighlighter
+final class Javascript extends AbstractHighlighter
 {
+    /** @var string[] */
     public static $reservedKeywords = [
         'abstract',
         'as',
@@ -73,9 +71,10 @@ class Javascript extends AbstractHighlighter
         'void',
         'volatile',
         'while',
-        'with'
+        'with',
     ];
 
+    /** @var string[] */
     public static $clientKeywords = [
         'alert',
         'all',
@@ -140,9 +139,10 @@ class Javascript extends AbstractHighlighter
         'sup',
         'taintEnabled',
         'unit',
-        'window'
+        'window',
     ];
 
+    /** @var string[] */
     public static $nativeKeyword = [
         'abs',
         'acos',
@@ -259,11 +259,6 @@ class Javascript extends AbstractHighlighter
         'valueOf',
         'watch',
         'write',
-        'writeln'
+        'writeln',
     ];
-
-    public function __construct(array $elements)
-    {
-        $this->elements = $elements;
-    }
 }

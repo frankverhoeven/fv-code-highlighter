@@ -9,14 +9,14 @@ abstract class Finder
     /** @var string */
     protected $result;
 
-    abstract public function find(string $code, int $pointer) : bool;
+    abstract public function find(string $code, int $pointer): bool;
 
-    public function result() : string
+    public function result(): string
     {
         return $this->result;
     }
 
-    public function isValidContains(string $contains, string $char) : bool
+    public function isValidContains(string $contains, string $char): bool
     {
         return (bool) \preg_match('/' . $contains . '/', $char);
     }
@@ -26,7 +26,7 @@ abstract class Finder
         int $pointer,
         string $prefix,
         int $prefixLength
-    ) : bool {
+    ): bool {
         return (
             $pointer === 0 ?
                 '' :
@@ -39,7 +39,7 @@ abstract class Finder
         int $pointer,
         string $prefixRegex,
         int $prefixLength
-    ) : bool {
+    ): bool {
         return (bool) \preg_match(
             '/' . $prefixRegex . '/',
             $pointer === 0 ? '' : \substr($code, $pointer - $prefixLength, $prefixLength)
@@ -52,7 +52,7 @@ abstract class Finder
         int $offset,
         string $suffix,
         int $suffixLength
-    ) : bool {
+    ): bool {
         return \substr($code, $pointer + $offset, $suffixLength) === $suffix;
     }
 
@@ -62,7 +62,7 @@ abstract class Finder
         int $offset,
         string $suffixRegex,
         int $suffixLength
-    ) : bool {
+    ): bool {
         return (bool) \preg_match(
             '/' . $suffixRegex . '/',
             \substr($code, $pointer + $offset, $suffixLength)

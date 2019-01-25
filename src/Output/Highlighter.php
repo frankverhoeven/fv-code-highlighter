@@ -8,7 +8,6 @@ use FvCodeHighlighter\Cache;
 use FvCodeHighlighter\Config;
 use FvCodeHighlighter\Container\Container;
 use FvCodeHighlighter\Diagnostics\Code;
-use FvCodeHighlighter\Diagnostics\Error;
 use FvCodeHighlighter\Filter\Chain;
 use FvCodeHighlighter\Filter\HtmlSpecialCharsDecode;
 use FvCodeHighlighter\Filter\Trim;
@@ -33,7 +32,7 @@ final class Highlighter implements Output
         $this->container = $container;
     }
 
-    public function __invoke() : string
+    public function __invoke(): string
     {
 //        try {
             return $this->highlightCode(\func_get_arg(0));
@@ -47,9 +46,12 @@ final class Highlighter implements Output
     /**
      * Find code blocks and highlight them.
      */
-    public function highlightCode(string $content) : string
+    public function highlightCode(string $content): string
     {
-        if (! \strstr($content, '{code') && ! \strstr($content, '[code') && ! \strstr($content, '<pre')) {
+        if (\strpos($content, '{code') === false &&
+            \strpos($content, '[code') === false &&
+            \strpos($content, '<pre') === false
+        ) {
             return $content;
         }
 
@@ -87,8 +89,8 @@ final class Highlighter implements Output
                 }
 
                 $cacheFile = $this->cache->generateHash($code, $settings['type']);
-                if ($this->cache->cacheFileExists($cacheFile)) {
-                    $code = $this->cache->getCacheFile($cacheFile);
+                if ($this->cache->has($cacheFile)) {
+                    $code = $this->cache->get($cacheFile);
                 } else {
                     if (\class_exists($class)) {
                         /** @var AbstractHighlighter $highlighter */
@@ -179,7 +181,7 @@ final class Highlighter implements Output
     /**
      * Strip closed tags from $line
      */
-    protected function stripClosedTags(string $line) : string
+    protected function stripClosedTags(string $line): string
     {
         while (\preg_match('/\<span class\="(?<class>[a-z-]+)"\>(?<code>((?!\<span|\<\/span).)*)\<\/span\>/', $line, $matches) === 1) {
             $line = \str_replace($matches[0], '', $line);

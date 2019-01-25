@@ -1,24 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Admin;
 
 use FvCodeHighlighter\Config;
 
-/**
- * Options
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Options
+final class Options
 {
-    /**
-     * @var Config
-     */
+    /** @var Config */
     protected $config;
 
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -27,36 +19,129 @@ class Options
 
     public function init()
     {
-        if (!\current_user_can('edit_themes')) {
-            \wp_die(__('You do not have sufficient permissions to manage options for this site.'));
+        if (! \current_user_can('edit_themes')) {
+            \wp_die(\__('You do not have sufficient permissions to manage options for this site.'));
         }
 
         // Font
-        \add_settings_section('fvch_setting_font_section', \__('Font', 'fvch'), [$this, 'fontSection'], 'fvch-options');
+        \add_settings_section(
+            'fvch_setting_font_section',
+            \__('Font', 'fvch'),
+            [$this, 'fontSection'],
+            'fvch-options'
+        );
 
-        \add_settings_field('fvch-font-family', \__('Font Family', 'fvch'), [$this, 'fontFamily'], 'fvch-options', 'fvch_setting_font_section');
-        \register_setting('fvch-options', 'fvch-font-family', ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field']);
+        \add_settings_field(
+            'fvch-font-family',
+            \__('Font Family', 'fvch'),
+            [$this, 'fontFamily'],
+            'fvch-options',
+            'fvch_setting_font_section'
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-font-family',
+            [
+                'type'              => 'string',
+                'sanitize_callback' => 'sanitize_text_field',
+            ]
+        );
 
-        \add_settings_field('fvch-font-size', \__('Font Size', 'fvch'), [$this, 'fontSize'], 'fvch-options', 'fvch_setting_font_section');
-        \register_setting('fvch-options', 'fvch-font-size', ['type' => 'number', 'sanitize_callback' => 'sanitize_text_field']);
+        \add_settings_field(
+            'fvch-font-size',
+            \__('Font Size', 'fvch'),
+            [$this, 'fontSize'],
+            'fvch-options',
+            'fvch_setting_font_section'
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-font-size',
+            [
+                'type'              => 'number',
+                'sanitize_callback' => 'sanitize_text_field',
+            ]
+        );
 
         // Background
-        \add_settings_section('fvch_setting_background_section', \__('Background', 'fvch'), [$this, 'backgroundSection'], 'fvch-options');
+        \add_settings_section(
+            'fvch_setting_background_section',
+            \__('Background', 'fvch'),
+            [$this, 'backgroundSection'],
+            'fvch-options'
+        );
 
-        \add_settings_field('fvch-background', \__('Background', 'fvch'), [$this, 'background'], 'fvch-options', 'fvch_setting_background_section');
-        \register_setting('fvch-options', 'fvch-background', ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field']);
-        \register_setting('fvch-options', 'fvch-background-custom', ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field']);
+        \add_settings_field(
+            'fvch-background',
+            \__('Background', 'fvch'),
+            [$this, 'background'],
+            'fvch-options',
+            'fvch_setting_background_section'
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-background',
+            [
+                'type'              => 'string',
+                'sanitize_callback' => 'sanitize_text_field',
+            ]
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-background-custom',
+            [
+                'type'              => 'string',
+                'sanitize_callback' => 'sanitize_text_field',
+            ]
+        );
 
         // Utilities
-        \add_settings_section('fvch_setting_utility_section', \__('Utilities', 'fvch'), [$this, 'utilitySection'], 'fvch-options');
+        \add_settings_section(
+            'fvch_setting_utility_section',
+            \__('Utilities', 'fvch'),
+            [$this, 'utilitySection'],
+            'fvch-options'
+        );
 
-        \add_settings_field('fvch-line-numbers', \__('Line Numbers', 'fvch'), [$this, 'lineNumbers'], 'fvch-options', 'fvch_setting_utility_section');
-        \register_setting('fvch-options', 'fvch-line-numbers', ['type' => 'boolean', 'sanitize_callback' => 'boolval']);
+        \add_settings_field(
+            'fvch-line-numbers',
+            \__('Line Numbers', 'fvch'),
+            [$this, 'lineNumbers'],
+            'fvch-options',
+            'fvch_setting_utility_section'
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-line-numbers',
+            [
+                'type'              => 'boolean',
+                'sanitize_callback' => 'boolval',
+            ]
+        );
 
-        \add_settings_field('fvch-toolbox', \__('Toolbox', 'fvch'), [$this, 'toolbox'], 'fvch-options', 'fvch_setting_utility_section');
-        \register_setting('fvch-options', 'fvch-toolbox', ['type' => 'boolean', 'sanitize_callback' => 'boolval']);
+        \add_settings_field(
+            'fvch-toolbox',
+            \__('Toolbox', 'fvch'),
+            [$this, 'toolbox'],
+            'fvch-options',
+            'fvch_setting_utility_section'
+        );
+        \register_setting(
+            'fvch-options',
+            'fvch-toolbox',
+            [
+                'type'              => 'boolean',
+                'sanitize_callback' => 'boolval',
+            ]
+        );
 
-        \add_settings_field('fvch-dark-mode', \__('Dark Mode', 'fvch'), [$this, 'darkMode'], 'fvch-options', 'fvch_setting_utility_section');
+        \add_settings_field(
+            'fvch-dark-mode',
+            \__('Dark Mode', 'fvch'),
+            [$this, 'darkMode'],
+            'fvch-options',
+            'fvch_setting_utility_section'
+        );
         \register_setting('fvch-options', 'fvch-dark-mode', ['type' => 'boolean', 'sanitize_callback' => 'boolval']);
     }
 
@@ -84,7 +169,8 @@ class Options
     }
 
     public function fontSection()
-    {}
+    {
+    }
 
     public function fontFamily()
     {
@@ -126,7 +212,8 @@ class Options
     }
 
     public function backgroundSection()
-    {}
+    {
+    }
 
     public function background()
     {
@@ -155,36 +242,60 @@ class Options
     }
 
     public function utilitySection()
-    {}
+    {
+    }
 
     public function lineNumbers()
     {
-        ?>
-        <label>
-            <input type="checkbox" name="fvch-line-numbers" id="fvch-line-numbers" <?php \checked('1', $this->config['fvch-line-numbers']); ?> value="1">
-            <?php \_e('Check to enable line numbers.', 'fvch'); ?>
-        </label>
-        <?php
+        echo $this->checkbox(
+            'fvch-line-numbers',
+            \__('Check to enable line numbers.', 'fvch'),
+            $this->config['fvch-line-numbers']
+        );
     }
 
     public function toolbox()
     {
-        ?>
-        <label>
-            <input type="checkbox" name="fvch-toolbox" id="fvch-toolbox" <?php \checked('1', $this->config['fvch-toolbox']); ?> value="1">
-            <?php \_e('Check to enable the toolbox.', 'fvch'); ?>
-        </label>
-        <?php
+        echo $this->checkbox(
+            'fvch-toolbox',
+            \__('Check to enable the toolbox.', 'fvch'),
+            $this->config['fvch-toolbox']
+        );
     }
 
     public function darkMode()
     {
-        ?>
-        <label>
-            <input type="checkbox" name="fvch-dark-mode" id="fvch-dark-mode" <?php \checked('1', $this->config['fvch-dark-mode']); ?> value="1">
-            <?php \_e('Check to use dark mode.', 'fvch'); ?>
-        </label>
-        <p class="description"><?php \_e('Note: Dark Mode will override the background options.', 'fvch'); ?></p>
-        <?php
+        echo $this->checkbox(
+            'fvch-dark-mode',
+            \__('Check to use dark mode.', 'fvch'),
+            $this->config['fvch-dark-mode'],
+            \__('Note: Dark Mode will override the background options.', 'fvch')
+        );
+    }
+
+    /**
+     * @param mixed $currentValue
+     */
+    private function checkbox(
+        string $name,
+        string $label,
+        $currentValue,
+        string $description = null
+    ): string {
+        if ($description !== null) {
+            $description = \sprintf('<p class="description">%s</p>', $description);
+        }
+
+        return \sprintf(
+            '<label>
+                <input type="checkbox" name="%s" id="%s" value="1" %s>
+                %s
+            </label>%s',
+            $name,
+            $name,
+            \checked('1', $currentValue, false),
+            $label,
+            $description ?? ''
+        );
     }
 }

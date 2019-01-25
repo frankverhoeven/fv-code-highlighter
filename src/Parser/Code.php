@@ -18,17 +18,17 @@ final class Code
         $this->length = \mb_strlen($code);
     }
 
-    public function length() : int
+    public function length(): int
     {
         return $this->length;
     }
 
-    public function sub(int $start, int $length = null) : string
+    public function sub(int $start, int $length = null): string
     {
         return \mb_substr($this->code, $start, $length);
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->code;
     }

@@ -1,19 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Bash;
 
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 
-/**
- * Bash
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Bash extends AbstractHighlighter
+final class Bash extends AbstractHighlighter
 {
-    /**
-     * @var array List of common commands
-     */
+    /** @var string[] List of common commands */
     public static $commands = [
         'alias',
         'apropos',
@@ -278,9 +273,4 @@ class Bash extends AbstractHighlighter
         'yes',
         'zip',
     ];
-
-    public function __construct(array $elements)
-    {
-        $this->elements = $elements;
-    }
 }

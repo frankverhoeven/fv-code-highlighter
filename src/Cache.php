@@ -7,7 +7,7 @@ namespace FvCodeHighlighter;
 final class Cache
 {
     /** @var string */
-    private $cacheDirectory;
+    private $directory;
 
     /** @var bool */
     private $enabled;
@@ -17,24 +17,19 @@ final class Cache
      *  Caching is automatically disabled if the given directory is not
      *  writable or WP_DEBUG is set to true.
      */
-    public function __construct(string $cacheDirectory)
+    public function __construct(string $directory)
     {
-        $this->cacheDirectory = \realpath($cacheDirectory) . '/';
-
-        if (\wp_is_writable($cacheDirectory) && WP_DEBUG !== true) {
-            return;
-        }
-
-        $this->enabled = false;
+        $this->directory = \realpath($directory) . '/';
+        $this->enabled   = \WP_DEBUG === false && \wp_is_writable($directory);
     }
 
     /**
      * Check if the cache file exists.
      *  Returns false if cache is disabled.
      */
-    public function cacheFileExists(string $filename) : bool
+    public function has(string $filename): bool
     {
-        return $this->enabled && \file_exists($this->cacheDirectory . $filename);
+        return $this->enabled && \file_exists($this->directory . $filename);
     }
 
     public function clear()
@@ -43,7 +38,7 @@ final class Cache
             return;
         }
 
-        $handle = \opendir($this->cacheDirectory);
+        $handle = \opendir($this->directory);
 
         if ($handle === false) {
             return;
@@ -54,7 +49,7 @@ final class Cache
                 continue;
             }
 
-            \unlink($this->cacheDirectory . $file);
+            \unlink($this->directory . $file);
         }
 
         \closedir($handle);
@@ -69,29 +64,24 @@ final class Cache
             return;
         }
 
-        \file_put_contents($this->cacheDirectory . $filename, $content);
+        \file_put_contents($this->directory . $filename, $content);
     }
 
     /**
-     * Get the content of a cache file.
-     *  Returns null if cache is disabled.
-     *  An InvalidArgumentException is thrown if the cache file does not exist.
+     * @param mixed $default
      *
-     * @throws \InvalidArgumentException
+     * @return mixed
      */
-    public function getCacheFile(string $filename)
+    public function get(string $filename, $default = null)
     {
-        if (! $this->enabled) {
-            return null;
-        }
-        if (! $this->cacheFileExists($filename)) {
-            throw new \InvalidArgumentException('The requested cache file does not exist');
+        if (!$this->enabled || !$this->has($filename)) {
+            return $default;
         }
 
-        return \file_get_contents($this->cacheDirectory . $filename);
+        return \file_get_contents($this->directory . $filename);
     }
 
-    public function generateHash(string $code, string $language) : string
+    public function generateHash(string $code, string $language): string
     {
         return \sha1($code . $language);
     }

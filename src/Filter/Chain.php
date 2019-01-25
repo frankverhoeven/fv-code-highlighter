@@ -19,7 +19,7 @@ final class Chain implements Filter
         })(...$filters);
     }
 
-    public function filter(string $value) : string
+    public function filter(string $value): string
     {
         foreach ($this->filters as $filter) {
             $value = $filter->filter($value);

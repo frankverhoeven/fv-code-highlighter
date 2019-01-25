@@ -35,7 +35,7 @@ final class Output
         $this->output .= '</span>';
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->output;
     }

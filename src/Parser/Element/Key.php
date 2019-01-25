@@ -56,7 +56,7 @@ final class Key
         string $suffix = null,
         int $prefixLength = null,
         int $suffixLength = null
-    ) : Key {
+    ): Key {
         return new static(
             $keys,
             $cssClass,
@@ -70,7 +70,7 @@ final class Key
     /**
      * @return string[]
      */
-    public function keys() : array
+    public function keys(): array
     {
         return $this->keys;
     }
@@ -80,12 +80,12 @@ final class Key
         return $this->prefix;
     }
 
-    public function hasPrefix() : bool
+    public function hasPrefix(): bool
     {
         return $this->prefix !== null;
     }
 
-    public function prefixLength() : int
+    public function prefixLength(): int
     {
         return $this->prefixLength;
     }
@@ -95,17 +95,17 @@ final class Key
         return $this->suffix;
     }
 
-    public function hasSuffix() : bool
+    public function hasSuffix(): bool
     {
         return $this->suffix !== null;
     }
 
-    public function suffixLength() : int
+    public function suffixLength(): int
     {
         return $this->suffixLength;
     }
 
-    public function cssClass() : string
+    public function cssClass(): string
     {
         return $this->cssClass;
     }

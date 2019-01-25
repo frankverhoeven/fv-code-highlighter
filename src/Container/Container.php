@@ -58,7 +58,7 @@ final class Container
      *
      * @param string $id Identifier of the entry to look for.
      */
-    public function has(string $id) : bool
+    public function has(string $id): bool
     {
         return \array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container);
     }

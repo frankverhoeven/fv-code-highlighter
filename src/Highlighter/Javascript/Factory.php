@@ -11,7 +11,7 @@ use FvCodeHighlighter\Parser\Element\Key;
 
 final class Factory implements FactoryInterface
 {
-    public function __invoke(Container $container, string $requestedName) : Javascript
+    public function __invoke(Container $container, string $requestedName): Javascript
     {
         $elements = [
             Block::create([
