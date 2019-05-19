@@ -31,11 +31,11 @@ final class Container
      */
     public function get(string $id)
     {
-        if (! $this->has($id)) {
+        if (!$this->has($id)) {
             throw new InvalidArgumentException('Entry "' . $id . '" not found.');
         }
 
-        if (! \array_key_exists($id, $this->container)) {
+        if (!\array_key_exists($id, $this->container)) {
             $entry = $this->factories[$id];
 
             if (\is_string($entry) && \class_exists($entry)) {

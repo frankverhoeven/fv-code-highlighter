@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace FvCodeHighlighter\Output;
+namespace FvCodeHighlighter\Hook;
 
 use FvCodeHighlighter\Config;
 
-final class Header implements Output
+final class Header implements Hook
 {
     /** @var Config */
     private $config;
@@ -16,16 +16,21 @@ final class Header implements Output
         $this->config = $config;
     }
 
-    public function __invoke()
+    /**
+     * @param mixed ...$arguments
+     *
+     * @return void
+     */
+    public function __invoke(...$arguments)
     {
         $background = [
             'notepaper' => 'url(' . \plugins_url('public/images/notepaper.png', __DIR__) . ') top left repeat',
             'white' => '#fff',
-            'custom' => \esc_attr($this->config['fvch-background-custom']),
+            'custom' => \esc_attr($this->config->get('fvch-background-custom')),
         ];
-        $background = $background[$this->config['fvch-background']];
+        $background = $background[$this->config->get('fvch-background', 'white')];
 
-        if ($this->config['fvch-dark-mode']) {
+        if ($this->config->get('fvch-dark-mode')) {
             $background = '#2e2e2d';
         }
 
@@ -51,9 +56,9 @@ final class Header implements Output
         </style>
         <meta name="generator" content="FV Code Highlighter - https://frankverhoeven.me/">',
             $background,
-            $this->config['fvch-background'] === 'notepaper' ? '17px' : '1.5em',
-            $font[$this->config['fvch-font-family']],
-            \esc_attr($this->config['fvch-font-size']) . 'em'
+            $this->config->get('fvch-background') === 'notepaper' ? '17px' : '1.5em',
+            $font[$this->config->get('fvch-font-family', 'Monaco')],
+            \esc_attr($this->config->get('fvch-font-size', '0.8')) . 'em'
         );
     }
 }

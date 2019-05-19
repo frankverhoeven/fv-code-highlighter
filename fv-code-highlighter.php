@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+// phpcs:disable PSR1.Files.SideEffects
+// phpcs:disable Squiz.Classes.ClassFileName
+
+namespace FvCodeHighlighter;
+
 /**
  * Plugin Name: FV Code Highlighter
  * Description: Highlighter your code to look beautiful.
@@ -11,22 +16,19 @@ declare(strict_types=1);
  * Version:     2.2
  */
 
-if (version_compare(phpversion(), '7.0', '<')) {
-    die('Your PHP version is too low, please update to 7.1 or higher.');
+if (\PHP_VERSION_ID < 70000) {
+    die('Your PHP version is to low, please upgrade to 7.0 or higher.');
 }
 
-use FvCodeHighlighter\Autoloader;
-use FvCodeHighlighter\Bootstrap;
-use FvCodeHighlighter\Config;
-use FvCodeHighlighter\ConfigProvider;
 use FvCodeHighlighter\Container\Container;
 
+/** @noinspection AutoloadingIssuesInspection */
 final class FvCodeHighlighter
 {
     public function __construct()
     {
-        register_activation_hook(__FILE__, [static::class, 'activation']);
-        register_deactivation_hook(__FILE__, [static::class, 'deactivation']);
+        \register_activation_hook(__FILE__, [self::class, 'activation']);
+        \register_deactivation_hook(__FILE__, [self::class, 'deactivation']);
     }
 
     private function setupAutoloader()
@@ -46,29 +48,29 @@ final class FvCodeHighlighter
         $services                = $config['services'];
         $services[Config::class] = new Config($config['defaults']);
 
-        $bootstrap = new Bootstrap(new Container($services));
-        $bootstrap->bootstrap();
+        $container = new Container($services);
+        $container->get(Bootstrap::class)->bootstrap();
     }
 
     public static function activation()
     {
-        do_action('fvch_activation');
-        register_uninstall_hook(__FILE__, [static::class, 'uninstall']);
+        \do_action('fvch_activation');
+        \register_uninstall_hook(__FILE__, [self::class, 'uninstall']);
     }
 
     public static function deactivation()
     {
-        do_action('fvch_deactivation');
+        \do_action('fvch_deactivation');
     }
 
     public static function uninstall()
     {
-        do_action('fvch_uninstall');
+        \do_action('fvch_uninstall');
     }
 }
 
 
-$fvch = new \FvCodeHighlighter();
+$fvch = new FvCodeHighlighter();
 $fvch->start();
 
 

@@ -54,11 +54,10 @@ final class Request
             'wordpress_url'     => \get_bloginfo('wpurl'),
             'wordpress_version' => \get_bloginfo('version'),
             'plugin_version'    => Version::getCurrentVersion(),
-            'php_version'       => \phpversion(),
+            'php_version'       => \PHP_VERSION,
         ];
 
         foreach ($blogInfo as $key => $value) {
-            // Make sure we do not overwrite data
             if (isset($data[$key])) {
                 continue;
             }

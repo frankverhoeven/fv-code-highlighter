@@ -33,7 +33,13 @@
     "squizlabs/php_codesniffer": "^3.4"
   },
   "scripts": {
+    "check": [
+      "@cs-check",
+      "@test"
+    ],
     "cs-check": "phpcs",
-    "cs-fix": "phpcbf"
+    "cs-fix": "phpcbf",
+    "test": "phpunit --colors=always",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   }
 }

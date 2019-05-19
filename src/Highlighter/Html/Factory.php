@@ -67,7 +67,19 @@ final class Factory implements FactoryInterface
                 'children'  => [$php],
             ]),
             Block::create([
-                'start' => ['<form', '</form', '<input', '<select', '</select', '<option', '</option', '<textarea', '</textarea', '<button', '</button'],
+                'start' => [
+                    '<form',
+                    '</form',
+                    '<input',
+                    '<select',
+                    '</select',
+                    '<option',
+                    '</option',
+                    '<textarea',
+                    '</textarea',
+                    '<button',
+                    '</button',
+                ],
                 'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
                 'cssClass'  => 'html-form-element',
@@ -103,7 +115,22 @@ final class Factory implements FactoryInterface
                 'children'  => $cssAttribute,
             ]),
             Block::create([
-                'start' => ['<table', '</table', '<tbody', '</tbody', '<thead', '</thead', '<tfoot', '</tfoot', '<th', '</th', '<tr', '</tr', '<td', '</td'],
+                'start' => [
+                    '<table',
+                    '</table',
+                    '<tbody',
+                    '</tbody',
+                    '<thead',
+                    '</thead',
+                    '<tfoot',
+                    '</tfoot',
+                    '<th',
+                    '</th',
+                    '<tr',
+                    '</tr',
+                    '<td',
+                    '</td',
+                ],
                 'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
                 'cssClass'  => 'html-table-element',
@@ -124,6 +151,10 @@ final class Factory implements FactoryInterface
             ]),
         ];
 
-        return new Html($elements, $container->get(Css::class), $container->get(Javascript::class));
+        return new Html(
+            $elements,
+            $container->get(Css::class),
+            $container->get(Javascript::class)
+        );
     }
 }

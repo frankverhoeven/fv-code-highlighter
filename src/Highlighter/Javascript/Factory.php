@@ -50,9 +50,24 @@ final class Factory implements FactoryInterface
             Key::create(Javascript::$numbers, 'js-number', '^(?![a-zA-Z]).*$', '^(?![a-zA-Z]).*$'),
             Key::create(Javascript::$brackets, 'js-brackets'),
             Key::create(['function'], 'js-function-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(Javascript::$reservedKeywords, 'js-reserved-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(Javascript::$clientKeywords, 'js-client-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
-            Key::create(Javascript::$nativeKeyword, 'js-native-keyword', '^(?![a-zA-Z0-9_]).*$', '^(?![a-zA-Z0-9_]).*$'),
+            Key::create(
+                Javascript::$reservedKeywords,
+                'js-reserved-keyword',
+                '^(?![a-zA-Z0-9_]).*$',
+                '^(?![a-zA-Z0-9_]).*$'
+            ),
+            Key::create(
+                Javascript::$clientKeywords,
+                'js-client-keyword',
+                '^(?![a-zA-Z0-9_]).*$',
+                '^(?![a-zA-Z0-9_]).*$'
+            ),
+            Key::create(
+                Javascript::$nativeKeyword,
+                'js-native-keyword',
+                '^(?![a-zA-Z0-9_]).*$',
+                '^(?![a-zA-Z0-9_]).*$'
+            ),
         ];
 
         return new Javascript($elements);

@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter;
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-
-final class Config implements ArrayAccess, Countable, Iterator
+final class Config implements \ArrayAccess, \Countable, \Iterator
 {
     /** @var mixed[] */
     private $config;
@@ -23,11 +19,7 @@ final class Config implements ArrayAccess, Countable, Iterator
         }
 
         foreach ($config as $key => $value) {
-            if (\is_array($value)) {
-                $this->config[$key] = new static($value);
-            } else {
-                $this->config[$key] = $value;
-            }
+            $this->config[$key] = $value;
         }
     }
 
@@ -69,11 +61,7 @@ final class Config implements ArrayAccess, Countable, Iterator
      */
     public function add(string $key, $value)
     {
-        if (\is_array($value)) {
-            $value = new static($value);
-        }
-
-        if (! \array_key_exists($key, $this->config)) {
+        if (!\array_key_exists($key, $this->config)) {
             $this->config[$key] = $value;
         }
         \add_option($key, $value);
@@ -86,10 +74,6 @@ final class Config implements ArrayAccess, Countable, Iterator
      */
     public function set(string $key, $value)
     {
-        if (\is_array($value)) {
-            $value = new static($value);
-        }
-
         $this->config[$key] = $value;
         \update_option($key, $value);
     }
@@ -107,7 +91,7 @@ final class Config implements ArrayAccess, Countable, Iterator
      */
     public function delete(string $key)
     {
-        if (! isset($this->config[$key])) {
+        if (!isset($this->config[$key])) {
             return;
         }
 

@@ -8,11 +8,11 @@ use FvCodeHighlighter\Config;
 
 final class Admin
 {
-    /** @var string */
-    protected $optionsPageHook;
-
     /** @var Config */
     private $config;
+
+    /** @var string */
+    private $optionsPageHook;
 
     public function __construct(Config $config)
     {
@@ -26,6 +26,23 @@ final class Admin
      */
     public function enqueueScripts(string $hook)
     {
+        if ($hook === 'post.php') {
+            \wp_enqueue_script(
+                'language-select',
+                \plugins_url('public/js/gutenberg.js', \dirname(__FILE__, 2)),
+                [
+                    'wp-i18n',
+                    'wp-hooks',
+                    'wp-compose',
+                    'wp-element',
+                    'wp-editor',
+                    'wp-components',
+                ],
+                '1.0',
+                true
+            );
+        }
+
         if ($this->optionsPageHook !== $hook) {
             return;
         }
@@ -43,7 +60,8 @@ final class Admin
             'fvch-admin-js',
             \plugins_url('public/js/admin.min.js', \dirname(__FILE__, 2)),
             ['jquery', 'farbtastic'],
-            '1.0'
+            '1.0',
+            true
         );
     }
 

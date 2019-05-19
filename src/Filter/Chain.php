@@ -14,7 +14,7 @@ final class Chain implements Filter
      */
     public function __construct(array $filters)
     {
-        $this->filters = (static function (Filter ...$filter) {
+        $this->filters = (static function (Filter ...$filter): array {
             return $filter;
         })(...$filters);
     }

@@ -58,7 +58,7 @@ final class Autoloader
     {
         // Prevent access to $this/self
         (static function () use ($file) {
-            if (! \file_exists($file)) {
+            if (!\file_exists($file)) {
                 return;
             }
 

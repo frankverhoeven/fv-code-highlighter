@@ -1,0 +1,44 @@
+{
+  "name": "fv-code-highlighter",
+  "scripts": {
+    "start": "npm install && npm run watch",
+    "dev": "cross-env webpack",
+    "production": "cross-env NODE_ENV=production webpack",
+    "build": "npm run production",
+    "watch": "cross-env webpack --watch"
+  },
+  "devDependencies": {
+    "@wordpress/blocks": "^6.2.5",
+    "@wordpress/components": "^7.3.2",
+    "@wordpress/compose": "^3.2.0",
+    "@wordpress/editor": "^9.2.5",
+    "@wordpress/element": "^2.3.0",
+    "@wordpress/hooks": "^2.2.0",
+    "@wordpress/i18n": "^3.3.0",
+    "autoprefixer": "^7.2.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "classnames": "^2.2.6",
+    "cross-env": "3.2.4",
+    "expose-loader": "latest",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.11",
+    "gist-embed": "^2.6.0",
+    "lodash": "^4.17.11",
+    "regenerator-runtime": "^0.12.1",
+    "webpack": "^3.12.0",
+    "webpack-rtl-plugin": "^1.7.0"
+  },
+  "dependencies": {
+    "npm": "^6.9.0"
+  },
+  "engines": {
+    "node": "8.9.1",
+    "npm": "5.5.1"
+  }
+}

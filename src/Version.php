@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter;
 
-use FvCodeHighlighter;
 use FvCodeHighlighter\Diagnostics\Api\Data;
 use FvCodeHighlighter\Diagnostics\Api\Method;
 use FvCodeHighlighter\Diagnostics\Api\Request;

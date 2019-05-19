@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FvCodeHighlighter;
+namespace FvCodeHighlighter\Cache;
 
-final class Cache
+final class Filesystem implements Cache
 {
     /** @var string */
     private $directory;
@@ -23,18 +23,9 @@ final class Cache
         $this->enabled   = \WP_DEBUG === false && \wp_is_writable($directory);
     }
 
-    /**
-     * Check if the cache file exists.
-     *  Returns false if cache is disabled.
-     */
-    public function has(string $filename): bool
-    {
-        return $this->enabled && \file_exists($this->directory . $filename);
-    }
-
     public function clear()
     {
-        if (! $this->enabled) {
+        if (!$this->enabled) {
             return;
         }
 
@@ -56,18 +47,6 @@ final class Cache
     }
 
     /**
-     * Create a new cache file if cache is enabled.
-     */
-    public function createCacheFile(string $filename, string $content)
-    {
-        if (! $this->enabled) {
-            return;
-        }
-
-        \file_put_contents($this->directory . $filename, $content);
-    }
-
-    /**
      * @param mixed $default
      *
      * @return mixed
@@ -81,8 +60,20 @@ final class Cache
         return \file_get_contents($this->directory . $filename);
     }
 
-    public function generateHash(string $code, string $language): string
+    public function has(string $filename): bool
     {
-        return \sha1($code . $language);
+        return $this->enabled && \file_exists($this->directory . $filename);
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function set(string $filename, $content)
+    {
+        if (!$this->enabled) {
+            return;
+        }
+
+        \file_put_contents($this->directory . $filename, $content);
     }
 }

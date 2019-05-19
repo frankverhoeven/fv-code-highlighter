@@ -75,6 +75,9 @@ final class Key
         return $this->keys;
     }
 
+    /**
+     * @return string|null
+     */
     public function prefix()
     {
         return $this->prefix;
@@ -90,6 +93,9 @@ final class Key
         return $this->prefixLength;
     }
 
+    /**
+     * @return string|null
+     */
     public function suffix()
     {
         return $this->suffix;

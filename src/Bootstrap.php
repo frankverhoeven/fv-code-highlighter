@@ -6,77 +6,87 @@ namespace FvCodeHighlighter;
 
 use FvCodeHighlighter\Admin\Admin;
 use FvCodeHighlighter\Container\Container;
+use FvCodeHighlighter\Hook\BlockHighlighter;
+use FvCodeHighlighter\Hook\EnqueueScripts;
+use FvCodeHighlighter\Hook\Header;
+use FvCodeHighlighter\Hook\Highlighter;
 
 final class Bootstrap
 {
+    /** @var BlockHighlighter */
+    private $blockHighlighter;
+
     /** @var Container */
     private $container;
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    /** @var EnqueueScripts */
+    private $enqueueScripts;
+
+    /** @var Header */
+    private $header;
+
+    /** @var Highlighter */
+    private $highlighter;
+
+    /** @var Installer */
+    private $installer;
+
+    public function __construct(
+        BlockHighlighter $blockHighlighter,
+        Container $container,
+        EnqueueScripts $enqueueScripts,
+        Header $header,
+        Highlighter $highlighter,
+        Installer $installer
+    ) {
+        $this->blockHighlighter = $blockHighlighter;
+        $this->container        = $container;
+        $this->enqueueScripts   = $enqueueScripts;
+        $this->header           = $header;
+        $this->highlighter      = $highlighter;
+        $this->installer        = $installer;
     }
 
     public function bootstrap()
     {
-        $this->setupCache();
         $this->initInstaller();
         $this->initOutput();
         $this->initAdmin();
     }
 
-    private function setupCache()
-    {
-        $cacheDir = $this->container->get(Config::class)['fvch-cache-dir'];
-        if ($cacheDir === '' || ! \is_dir($cacheDir)) {
-            $cacheDir = $this->container->get(Config::class)->getDefault('fvch-cache-dir');
-        }
-
-        $this->container->add(Cache::class, new Cache($cacheDir));
-    }
-
     public function initInstaller()
     {
-        $installer = new Installer(
-            $this->container->get(Config::class),
-            $this->container->get(Cache::class)
-        );
+        $this->installer->hasUpdate();
 
-        $installer->hasUpdate();
-
-        if ($installer->isInstall()) {
-            $installer->install();
-        } elseif ($installer->isUpdate()) {
-            $installer->update();
+        if ($this->installer->isInstall()) {
+            $this->installer->install();
+        } elseif ($this->installer->isUpdate()) {
+            $this->installer->update();
         }
     }
 
     public function initOutput()
     {
-        $highlighter = new Output\Highlighter(
-            $this->container->get(Config::class),
-            $this->container->get(Cache::class),
-            $this->container
-        );
+        \add_filter('render_block', $this->blockHighlighter, 10, 2);
 
         // WordPress
-        \add_filter('the_content', $highlighter, 3);
-        \add_filter('comment_text', $highlighter, 3);
+        \add_filter('the_content', $this->highlighter, 9);
+        \add_filter('comment_text', $this->highlighter, 9);
         // bbPress
-        \add_filter('bbp_get_topic_content', $highlighter, 3);
-        \add_filter('bbp_get_reply_content', $highlighter, 3);
+        \add_filter('bbp_get_topic_content', $this->highlighter, 9);
+        \add_filter('bbp_get_reply_content', $this->highlighter, 9);
 
-        \add_action('wp_enqueue_scripts', new Output\Scripts($this->container->get(Config::class)));
-        \add_action('wp_head', new Output\Header($this->container->get(Config::class)));
+        \add_action('wp_enqueue_scripts', $this->enqueueScripts);
+        \add_action('wp_head', $this->header);
     }
 
     public function initAdmin()
     {
-        if (! \is_admin()) {
+        if (!\is_admin()) {
             return;
         }
 
-        $admin = new Admin($this->container->get(Config::class));
+        $admin = $this->container->get(Admin::class);
 
         \add_action('admin_enqueue_scripts', [$admin, 'enqueueScripts']);
         \add_action('admin_menu', [$admin, 'adminMenu']);

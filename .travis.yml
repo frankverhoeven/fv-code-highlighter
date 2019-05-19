@@ -1,0 +1,23 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - '7.0'
+  - '7.1'
+  - '7.2'
+  - '7.3'
+
+install:
+  - travis_retry composer self-update
+  - travis_retry composer update
+  - travis_retry composer require php-coveralls/php-coveralls
+
+script:
+  - composer test-coverage
+  - composer cs-check
+
+after_script:
+  - vendor/bin/php-coveralls -v

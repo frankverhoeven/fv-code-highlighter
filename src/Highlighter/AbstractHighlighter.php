@@ -170,7 +170,7 @@ abstract class AbstractHighlighter implements Highlighter
 
     public function setup()
     {
-        $this->parser = Parser::createWithElements($this->elements);
+        $this->parser = new Parser($this->elements);
     }
 
     /**

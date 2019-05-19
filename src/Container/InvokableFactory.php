@@ -7,7 +7,9 @@ namespace FvCodeHighlighter\Container;
 final class InvokableFactory implements Factory
 {
     /**
-     * @return mixed
+     * phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
+     *
+     * @return object
      */
     public function __invoke(Container $container, string $requestedName)
     {

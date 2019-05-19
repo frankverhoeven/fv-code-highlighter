@@ -12,7 +12,7 @@ final class Block
     /** @var bool */
     private $startIncluded = true;
 
-    /** @var string */
+    /** @var string|null */
     private $startPrefix;
 
     /** @var int */
@@ -42,7 +42,7 @@ final class Block
     /** @var int */
     private $endSuffixLength = 1;
 
-    /** @var string */
+    /** @var string|null */
     private $contains;
 
     /** @var string */
@@ -87,6 +87,9 @@ final class Block
         return $this->startIncluded;
     }
 
+    /**
+     * @return string|null
+     */
     public function startPrefix()
     {
         return $this->startPrefix;
@@ -102,6 +105,9 @@ final class Block
         return $this->startPrefixLength;
     }
 
+    /**
+     * @return string|null
+     */
     public function startSuffix()
     {
         return $this->startSuffix;
@@ -130,6 +136,9 @@ final class Block
         return $this->endIncluded;
     }
 
+    /**
+     * @return string|null
+     */
     public function endPrefix()
     {
         return $this->endPrefix;
@@ -145,6 +154,9 @@ final class Block
         return $this->endPrefixLength;
     }
 
+    /**
+     * @return string|null
+     */
     public function endSuffix()
     {
         return $this->endSuffix;
@@ -160,6 +172,9 @@ final class Block
         return $this->endSuffixLength;
     }
 
+    /**
+     * @return string|null
+     */
     public function contains()
     {
         return $this->contains;

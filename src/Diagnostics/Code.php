@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FvCodeHighlighter\Diagnostics;
 
+use FvCodeHighlighter\Config;
 use FvCodeHighlighter\Diagnostics\Api\Data;
 use FvCodeHighlighter\Diagnostics\Api\Method;
 use FvCodeHighlighter\Diagnostics\Api\Request;
@@ -11,10 +12,18 @@ use FvCodeHighlighter\Diagnostics\Api\Url;
 
 final class Code
 {
-    public static function diagnose(string $code, string $language)
+    /** @var Config */
+    private $config;
+
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
+    public function diagnose(string $code, string $language)
     {
         $hash      = \sha1($code);
-        $submitted = \get_option('fvch-diagnostics-snippets', []);
+        $submitted = $this->config->get('fvch-diagnostics-snippets', []);
 
         if (\in_array($hash, $submitted)) {
             return;
@@ -29,6 +38,6 @@ final class Code
         }
 
         $submitted[] = $hash;
-        \update_option('fvch-diagnostics-snippets', $submitted);
+        $this->config->set('fvch-diagnostics-snippets', $submitted);
     }
 }

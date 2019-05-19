@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FvCodeHighlighter\Output;
+namespace FvCodeHighlighter\Hook;
 
-use FvCodeHighlighter;
 use FvCodeHighlighter\Config;
+use FvCodeHighlighter\FvCodeHighlighter;
 
-final class Scripts implements Output
+final class EnqueueScripts implements Hook
 {
     /** @var Config */
     private $config;
@@ -17,7 +17,12 @@ final class Scripts implements Output
         $this->config = $config;
     }
 
-    public function __invoke()
+    /**
+     * @param mixed ...$arguments
+     *
+     * @return void
+     */
+    public function __invoke(...$arguments)
     {
         $reflection = new \ReflectionClass(FvCodeHighlighter::class);
         $file       = $reflection->getFileName();

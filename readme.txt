@@ -4,7 +4,7 @@ Contributors:       frankverhoeven
 Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  4.0
-Tested up to:       5.0
+Tested up to:       5.2
 Stable tag:         2.2
 
 Highlight your code with beautiful highlighters.
@@ -43,7 +43,7 @@ This section describes how to install the plugin and get it up & running.
 
 In order to successfully use this plugin, you will need the following:
 
-* PHP 7.1 or higher
+* PHP 7.0 or higher
 * WordPress 4.0 or higher
 
 
@@ -83,12 +83,18 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 
 == Changelog ==
 
-For more details on changes, please visit the [WordPress Trac](http://plugins.trac.wordpress.org/log/fv-code-highlighter/ "FV Code Highlighter on WordPress Trac").
+For more details on changes, please see the commits on [GitHub](https://github.com/frankverhoeven/fv-code-highlighter/commits/master "FV Code Highlighter on GitHub").
 
 
 = 2.2 =
 
+* New: Support for Gutenberg code blocks!
 * Improvement: Added the Doctrine coding standard and cleaned up code according to it.
+* Improvement: Various significant performance improvements.
+* Improvement: More content is cached so less has to be parsed each request.
+* Improvement: Various code improvements.
+* Fix: Newlines were not always correctly displayed without line numbers.
+* Fix: Copy code to clipboard now correcly includes newlines.
 
 
 = 2.1.3 =
