@@ -1,38 +1,31 @@
 <?php
 
-namespace FvCodeHighlighter\Output;
+declare(strict_types=1);
 
-use FvCodeHighlighter;
+namespace FvCodeHighlighter\Hook;
+
 use FvCodeHighlighter\Config;
+use FvCodeHighlighter\FvCodeHighlighter;
 
-/**
- * Scripts
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Scripts implements OutputInterface
+final class EnqueueScripts implements Hook
 {
-    /**
-     * @var Config
-     */
+    /** @var Config */
     private $config;
 
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
     /**
-     * @param array $arguments
-     * @return string|void
+     * @param mixed ...$arguments
+     *
+     * @return void
      */
     public function __invoke(...$arguments)
     {
         $reflection = new \ReflectionClass(FvCodeHighlighter::class);
-        $file = $reflection->getFileName();
+        $file       = $reflection->getFileName();
 
         if ($this->config['fvch-toolbox']) {
             \wp_enqueue_script(

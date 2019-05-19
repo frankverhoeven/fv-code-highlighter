@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Filter;
 
-/**
- * Trim
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Trim
-{}
+final class Trim implements Filter
+{
+    public function filter(string $value): string
+    {
+        return \trim($value);
+    }
+}

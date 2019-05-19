@@ -1,72 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Xml;
 
 use FvCodeHighlighter\Container\Container;
-use FvCodeHighlighter\Container\FactoryInterface;
+use FvCodeHighlighter\Container\Factory as FactoryInterface;
 use FvCodeHighlighter\Highlighter\Php\Php;
 use FvCodeHighlighter\Parser\Element\Block;
 use FvCodeHighlighter\Parser\Element\Key;
 
-/**
- * Factory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
-    /**
-     * Create new container object
-     *
-     * @param Container $container
-     * @param string $requestedName
-     * @return mixed
-     */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName): Xml
     {
         $php = Block::create([
-            'start'	=> ['<?php', '<?=', '<?'],
-            'end'	=> ['?>'],
-            'cssClass'	=> 'php',
+            'start' => ['<?php', '<?=', '<?'],
+            'end'   => ['?>'],
+            'cssClass'  => 'php',
             'children' => $container->get(Php::class)->getElements(),
             'highlightWithChildren' => true,
         ]);
 
         $xmlAttribute = [
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'xml-string',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'xml-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
                 'children' => [$php],
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'xml-string',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'xml-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
                 'children' => [$php],
             ]),
-            $php
+            $php,
         ];
 
         $elements = [
             $php,
             Block::create([
-                'start'	=> ['<!--'],
-                'end'	=> ['-->'],
-                'cssClass'	=> 'xml-comment',
+                'start' => ['<!--'],
+                'end'   => ['-->'],
+                'cssClass'  => 'xml-comment',
                 'children' => [$php],
             ]),
             Block::create([
-                'start'	=> ['<'],
+                'start' => ['<'],
                 'startSuf' => '^(?!\?).*$',
-                'end'	=> ['>'],
+                'end'   => ['>'],
                 'endPrefix' => '^(?!\?).*$',
-                'cssClass'	=> 'xml-element',
-                'children'	=> $xmlAttribute,
+                'cssClass'  => 'xml-element',
+                'children'  => $xmlAttribute,
             ]),
             Key::create(Xml::$numbers, 'xml-number', '^(?![a-zA-Z]).*$', '^(?![a-zA-Z]).*$'),
         ];

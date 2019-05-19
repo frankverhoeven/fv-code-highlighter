@@ -1,19 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Css;
 
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 
-/**
- * Css
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Css extends AbstractHighlighter
+final class Css extends AbstractHighlighter
 {
-    /**
-     * @var array List of all CSS Properties (stripped for performance)
-     */
+    /** @var string[] List of all CSS Properties (stripped for performance) */
     public static $properties = [
         '@font-',
         '@keyframes',
@@ -96,14 +91,13 @@ class Css extends AbstractHighlighter
     public function postProcess(string $code): string
     {
         // Fixes
-        $code = \str_replace(':<span class="css-value">', '<span class="css-selector">:</span><span class="css-value">', $code);
+        $code = \str_replace(
+            ':<span class="css-value">',
+            '<span class="css-selector">:</span><span class="css-value">',
+            $code
+        );
         $code = \preg_replace('/\}(\s*?)\}/', '}\\1<span class="css-media">}</span>', $code);
 
         return $code;
-    }
-
-    public function __construct(array $elements)
-    {
-        $this->elements = $elements;
     }
 }

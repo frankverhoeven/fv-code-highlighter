@@ -1,40 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\General;
 
 use FvCodeHighlighter\Container\Container;
-use FvCodeHighlighter\Container\FactoryInterface;
+use FvCodeHighlighter\Container\Factory as FactoryInterface;
 use FvCodeHighlighter\Parser\Element\Block;
 use FvCodeHighlighter\Parser\Element\Key;
 
-/**
- * Factory
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
-    /**
-     * Create new container object
-     *
-     * @param Container $container
-     * @param string $requestedName
-     * @return mixed
-     */
-    public function create(Container $container, string $requestedName)
+    public function __invoke(Container $container, string $requestedName): General
     {
         $elements = [
             Block::create([
-                'start'	=> ['"'],
-                'end'	=> ['"'],
-                'cssClass'	=> 'general-string',
+                'start' => ['"'],
+                'end'   => ['"'],
+                'cssClass'  => 'general-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),
             Block::create([
-                'start'	=> ["'"],
-                'end'	=> ["'"],
-                'cssClass'	=> 'general-string',
+                'start' => ["'"],
+                'end'   => ["'"],
+                'cssClass'  => 'general-string',
                 'endPrefix'=> '.*(?<!\\\)$|[\\\]{2}',
                 'endPrefixLength' => 2,
             ]),

@@ -1,124 +1,117 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Parser\Element;
 
-/**
- * Key
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Key
+final class Key
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $keys;
-    /**
-     * @var string Regex that must match char(s) before $key
-     */
+
+    /** @var string|null Regex that must match char(s) before $key */
     private $prefix;
-    /**
-     * @var int
-     */
-    private $prefixLength = 1;
-    /**
-     * @var string Regex that must match char(s) after $key
-     */
+
+    /** @var int */
+    private $prefixLength;
+
+    /** @var string|null Regex that must match char(s) after $key */
     private $suffix;
-    /**
-     * @var int
-     */
-    private $suffixLength = 1;
-    /**
-     * @var string
-     */
+
+    /** @var int */
+    private $suffixLength;
+
+    /** @var string */
     private $cssClass;
 
     /**
-     * __construct()
-     *
      * @param string[] $keys
-     * @param string $cssClass
-     * @param string $prefix
-     * @param string $suffix
-     * @param int $prefixLength
-     * @param int $suffixLength
      */
-    private function __construct(array $keys, $cssClass, $prefix = null, $suffix = null, $prefixLength = null, $suffixLength = null)
-    {
-        $this->keys = $keys;
+    private function __construct(
+        array $keys,
+        string $cssClass,
+        string $prefix = null,
+        string $suffix = null,
+        int $prefixLength = null,
+        int $suffixLength = null
+    ) {
+        $this->keys     = $keys;
         $this->cssClass = $cssClass;
-        $this->prefix = $prefix;
-        $this->suffix = $suffix;
+        $this->prefix   = $prefix;
+        $this->suffix   = $suffix;
 
-        if (null !== $prefixLength) {
-            $this->prefixLength = $prefixLength;
-        }
-        if (null !== $suffixLength) {
-            $this->suffixLength = $suffixLength;
-        }
+        $this->prefixLength = $prefixLength ?? 1;
+        $this->suffixLength = $suffixLength ?? 1;
     }
 
     /**
      * Create a new key
      *
      * @param string[] $keys
-     * @param string $cssClass
-     * @param string $prefix
-     * @param string $suffix
-     * @param int $prefixLength
-     * @param int $suffixLength
-     * @return Key
      */
-    public static function create(array $keys, $cssClass, $prefix = null, $suffix = null, $prefixLength = null, $suffixLength = null)
-    {
-        return new static($keys, $cssClass, $prefix, $suffix, $prefixLength, $suffixLength);
+    public static function create(
+        array $keys,
+        string $cssClass,
+        string $prefix = null,
+        string $suffix = null,
+        int $prefixLength = null,
+        int $suffixLength = null
+    ): Key {
+        return new static(
+            $keys,
+            $cssClass,
+            $prefix,
+            $suffix,
+            $prefixLength,
+            $suffixLength
+        );
     }
 
     /**
      * @return string[]
      */
-    public function getKeys()
+    public function keys(): array
     {
         return $this->keys;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPrefix()
+    public function prefix()
     {
         return $this->prefix;
     }
 
-    /**
-     * @return int
-     */
-    public function getPrefixLength()
+    public function hasPrefix(): bool
+    {
+        return $this->prefix !== null;
+    }
+
+    public function prefixLength(): int
     {
         return $this->prefixLength;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSuffix()
+    public function suffix()
     {
         return $this->suffix;
     }
 
-    /**
-     * @return int
-     */
-    public function getSuffixLength()
+    public function hasSuffix(): bool
+    {
+        return $this->suffix !== null;
+    }
+
+    public function suffixLength(): int
     {
         return $this->suffixLength;
     }
 
-    /**
-     * @return string
-     */
-    public function getCssClass()
+    public function cssClass(): string
     {
         return $this->cssClass;
     }

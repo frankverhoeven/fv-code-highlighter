@@ -1,16 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Highlighter\Php;
 
 use FvCodeHighlighter\Highlighter\AbstractHighlighter;
 
-/**
- * Php
- *
- * '@author Frank Verhoeven <hi'@frankverhoeven.me>
- */
-class Php extends AbstractHighlighter
+final class Php extends AbstractHighlighter
 {
+    /** @var string[] */
     public static $varTypes = [
         'int',
         'float',
@@ -21,6 +19,7 @@ class Php extends AbstractHighlighter
         'iterable',
     ];
 
+    /** @var string[] */
     public static $keywords = [    // http://nl3.php.net/manual/en/reserved.php
         '__halt_compiler',
         'abstract',
@@ -94,6 +93,7 @@ class Php extends AbstractHighlighter
         'yield',
     ];
 
+    /** @var string[] */
     public static $constants = [        // http://nl3.php.net/manual/en/reserved.constants.php
         'PHP_VERSION',
         'PHP_MAJOR_VERSION',
@@ -342,9 +342,10 @@ class Php extends AbstractHighlighter
         '__CLASS__',
         '__METHOD__',
         '__NAMESPACE__',
-        '__DIR__'
+        '__DIR__',
     ];
 
+    /** @var string[] */
     public static $phpDoc = [
         '@api',
         '@author',
@@ -382,26 +383,16 @@ class Php extends AbstractHighlighter
         '@see',
     ];
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $prefixed = false;
-
-    public function __construct(array $elements)
-    {
-        $this->elements = $elements;
-    }
 
     /**
      * Prefix code with php tag if needed
-     *
-     * @param string $code
-     * @return string
      */
     public function preProcess(string $code): string
     {
-        if (!\strstr($code, '<?')) {
-            $code = '<?php' . \PHP_EOL . $code;
+        if (\strpos($code, '<?') === false) {
+            $code           = '<?php' . \PHP_EOL . $code;
             $this->prefixed = true;
         } else {
             $this->prefixed = false;
@@ -412,9 +403,6 @@ class Php extends AbstractHighlighter
 
     /**
      * Strip prefixed php tag if needed
-     *
-     * @param string $code
-     * @return string
      */
     public function postProcess(string $code): string
     {

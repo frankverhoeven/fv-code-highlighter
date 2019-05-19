@@ -1,33 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter\Container;
 
 use InvalidArgumentException;
 
-/**
- * Container
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-class Container
+final class Container
 {
-    /**
-     * @var array
-     */
-    private $container;
-    /**
-     * @var array
-     */
+    /** @var mixed[] */
+    private $container = [];
+
+    /** @var Factory[] */
     private $factories;
 
     /**
-     * __construct()
-     *
-     * @param array $factories
+     * @param Factory[] $factories
      */
     public function __construct(array $factories)
     {
-        $this->container = [];
         $this->factories = $factories;
     }
 
@@ -35,9 +26,10 @@ class Container
      * Finds an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return mixed Entry.
      */
-    public function get($id)
+    public function get(string $id)
     {
         if (!$this->has($id)) {
             throw new InvalidArgumentException('Entry "' . $id . '" not found.');
@@ -50,8 +42,8 @@ class Container
                 $entry = new $entry();
             }
 
-            if ($entry instanceof FactoryInterface) {
-                $this->container[$id] = $entry->create($this, $id);
+            if ($entry instanceof Factory) {
+                $this->container[$id] = $entry($this, $id);
             } else {
                 $this->container[$id] = $entry;
             }
@@ -65,19 +57,17 @@ class Container
      * Returns false otherwise.
      *
      * @param string $id Identifier of the entry to look for.
-     * @return bool
      */
     public function has(string $id): bool
     {
-        return (\array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container));
+        return \array_key_exists($id, $this->factories) || \array_key_exists($id, $this->container);
     }
 
     /**
      * Add an entry to the container
      *
-     * @param string $id Identifier of the entry.
-     * @param FactoryInterface|mixed $entry
-     * @return void
+     * @param string        $id    Identifier of the entry.
+     * @param Factory|mixed $entry
      */
     public function add(string $id, $entry)
     {

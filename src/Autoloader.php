@@ -1,90 +1,68 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FvCodeHighlighter;
 
-/**
- * AutoLoader
- *
- * @author Frank Verhoeven <hi@frankverhoeven.me>
- */
-final class AutoLoader
+final class Autoloader
 {
+    /** @var string[] */
     private $prefixes = [];
 
     /**
-     * Constructor
-     *
-     * @param array|null $prefixes Array with prefixes as keys and their PSR-4 compatible paths as values.
+     * @param string[]|null $prefixes
      */
     public function __construct(array $prefixes = null)
     {
-        if (null !== $prefixes) {
-            foreach ($prefixes as $prefix => $path) {
-                $this->setPrefix($prefix, $path);
-            }
+        if ($prefixes === null) {
+            return;
+        }
+
+        foreach ($prefixes as $prefix => $path) {
+            $this->setPrefix($prefix, $path);
         }
     }
 
-    /**
-     * Set a prefix, overwrites existing
-     *
-     * @param string $prefix Prefix
-     * @param string $path PSR-4 Compatible Path
-     */
-    public function setPrefix($prefix, $path)
+    public function setPrefix(string $prefix, string $path)
     {
         $this->prefixes[$prefix] = $path;
     }
 
-    /**
-     * Register the autoloader
-     *
-     * @param bool $prepend Whether to prepend to autoloader.
-     */
-    public function register($prepend = false)
+    public function register(bool $prepend = false)
     {
         \spl_autoload_register([$this, 'autoload'], true, $prepend);
     }
 
-    /**
-     * Unregister the autoloader
-     */
     public function unregister()
     {
         \spl_autoload_unregister([$this, 'autoload']);
     }
 
-    /**
-     * Autoloader
-     *
-     * @param string $class Class to load
-     */
-    public function autoload($class)
+    public function autoload(string $class)
     {
         foreach ($this->prefixes as $prefix => $path) {
             $len = \strlen($prefix);
 
-            if (0 === \strncmp($prefix, $class, $len)) {
-                $relativeClass = \substr($class, $len);
-                $file = $path . \str_replace('\\', '/', $relativeClass) . '.php';
-
-                $this->loadFile($file);
+            if (\strncmp($prefix, $class, $len) !== 0) {
+                continue;
             }
+
+            $relativeClass = \substr($class, $len);
+            $file          = $path . \str_replace('\\', '/', $relativeClass) . '.php';
+
+            $this->loadFile($file);
         }
     }
 
-    /**
-     * Load file
-     *
-     * @param string $file File to load
-     */
-    public function loadFile($file)
+    public function loadFile(string $file)
     {
         // Prevent access to $this/self
-        (function() use ($file) {
-            if (\file_exists($file)) {
-                require $file;
+        (static function () use ($file) {
+            if (!\file_exists($file)) {
+                return;
             }
+
+            require $file;
         })();
     }
 }
