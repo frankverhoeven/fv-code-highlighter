@@ -45,6 +45,12 @@ final class Version
                 return self::getCurrentVersion();
             }
 
+            $data = $response->parsedBody();
+
+            if (!\is_array($data) || !isset($data['version'])) {
+                return self::getCurrentVersion();
+            }
+
             self::$latestVersion = $response->parsedBody()['version'];
         }
 
