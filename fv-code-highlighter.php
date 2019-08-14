@@ -13,7 +13,7 @@ namespace FvCodeHighlighter;
  * Plugin URI:  https://frankverhoeven.me/wordpress-plugin-fv-code-highlighter/
  * Author:      Frank Verhoeven
  * Author URI:  https://frankverhoeven.me/
- * Version:     2.2
+ * Version:     2.2.1
  */
 
 if (\PHP_VERSION_ID < 70000) {

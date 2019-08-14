@@ -5,7 +5,7 @@ Tags:               Formatting, Code, Highlight, Code Highlighting
 Donate link:        https://www.paypal.me/FrankVerhoeven
 Requires at least:  4.0
 Tested up to:       5.2
-Stable tag:         2.2
+Stable tag:         2.2.1
 
 Highlight your code with beautiful highlighters.
 
@@ -84,6 +84,10 @@ Visit the post at [https://frankverhoeven.me/wordpress-plugin-fv-code-highlighte
 == Changelog ==
 
 For more details on changes, please see the commits on [GitHub](https://github.com/frankverhoeven/fv-code-highlighter/commits/master "FV Code Highlighter on GitHub").
+
+= 2.2.1 =
+
+* Fix: A failed version check no longer crashes the plugin.
 
 
 = 2.2 =
